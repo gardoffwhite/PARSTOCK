@@ -1,0 +1,7 @@
+Article	Quantity	Total
+Beer, Asahi, S bottle, 33cl (99-200013)	24	THB 940.19
+Champagne, Taittinger, prestige brut (99-814991)	3	THB 5,548.24
+Gin, Anong, 40%, 750ml (99-905966)	2	THB 1,580.00
+Vodka, Absolut, 40%, 1L (99-100234)	5	THB 2,345.00
+Whisky, Jack Daniels, 40%, 70cl (99-300456)	0	THB 0.00
+Rum, Bacardi, white, 75cl (99-400789)	4	THB 1,890.50

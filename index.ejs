@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>N-AGE NEXT Server - หน้าแรก</title>
+    <link rel="icon" href="/images/logo.png" type="image/x-icon" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'nage-dark': '#0a0a0a',
+              'nage-gray': '#1a1a1a',
+              'nage-gold': '#ffd700',
+              'gold-dark': '#b8860b',
+              'gold-light': '#ffff99',
+            },
+            fontFamily: {
+              game: ['Orbitron', 'monospace'],
+              thai: ['Sarabun', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .glow-gold {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      }
+
+      .cyber-border {
+        position: relative;
+      }
+
+      .laser {
+        pointer-events: none;
+      }
+
+      .ranking-scroll {
+        max-height: 550px;
+        overflow-y: auto;
+      }
+
+      .ranking-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .ranking-scroll::-webkit-scrollbar-track {
+        background: #1a1a1a;
+      }
+
+      .ranking-scroll::-webkit-scrollbar-thumb {
+        background: #ffd700;
+        border-radius: 3px;
+      }
+
+      /* Animation for rare drops widget */
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .animate-slideIn {
+        animation: slideIn 0.4s ease-out forwards;
+        opacity: 0;
+      }
+
+      /* Map filter button styles */
+      .map-filter-btn {
+        transition: all 0.2s ease;
+      }
+
+      .map-filter-btn.active {
+        transform: scale(1.05);
+      }
+
+      #map-filter-20.active {
+        background: linear-gradient(135deg, #7f1d1d, #991b1b) !important;
+        color: #fca5a5 !important;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+      }
+    </style>
+  </head>
+
+  <body class="bg-gradient-to-br from-nage-dark via-nage-gray to-nage-dark text-white font-thai">
+    <%- include('../partials/header') %>
+    <%- include('../partials/modal') %>
+    <div class="container mx-auto px-4 py-6">
+      <!-- Top Banner Section -->
+      <div class="flex flex-wrap gap-6 mb-8">
+        <a
+          href="/gameinfo"
+          class="group relative bg-gradient-to-br from-nage-gray/90 to-nage-dark/80 border-2 border-nage-gold/60 rounded-2xl p-6 hover:border-nage-gold hover:shadow-2xl hover:shadow-nage-gold/30 transition-all duration-500 transform hover:scale-[1.02] cyber-border overflow-hidden"
+        >
+          <!-- Background glow effect -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-nage-gold/5 via-transparent to-nage-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          ></div>
+
+          <div class="relative z-10 flex items-center gap-4">
+            <div class="relative flex-shrink-0">
+              <!-- Glowing background for icon -->
+              <div
+                class="absolute inset-0 bg-nage-gold/20 rounded-full blur-xl group-hover:blur-2xl group-hover:bg-nage-gold/30 transition-all duration-500"
+              ></div>
+              <div
+                class="relative w-16 h-16 bg-gradient-to-br from-nage-gold to-gold-light rounded-full flex items-center justify-center shadow-xl group-hover:shadow-nage-gold/60 group-hover:rotate-6 transition-all duration-500"
+              >
+                <i class="fas fa-gamepad text-xl text-black"></i>
+              </div>
+            </div>
+            <div class="flex flex-col flex-1">
+              <h3
+                class="text-nage-gold font-bold text-xl mb-1 group-hover:text-gold-light transition-colors duration-300"
+              >
+                GAMEPLAY
+              </h3>
+              <p
+                class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"
+              >
+                วิธีการเล่นและข้อมูล
+              </p>
+            </div>
+          </div>
+        </a>
+
+     <a
+  href="/iteminfo"
+  class="group relative bg-gradient-to-br from-nage-gray/90 to-nage-dark/80 border-2 border-nage-gold/60 rounded-2xl p-6 hover:border-nage-gold hover:shadow-2xl hover:shadow-nage-gold/30 transition-all duration-500 transform hover:scale-[1.02] cyber-border overflow-hidden"
+>
+  <!-- Background glow effect -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-nage-gold/5 via-transparent to-nage-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+  ></div>
+
+  <div class="relative z-10 flex items-center gap-4">
+    <div class="relative flex-shrink-0">
+      <!-- Glowing background for icon -->
+      <div
+        class="absolute inset-0 bg-nage-gold/20 rounded-full blur-xl group-hover:blur-2xl group-hover:bg-nage-gold/30 transition-all duration-500"
+      ></div>
+      <div
+        class="relative w-16 h-16 bg-gradient-to-br from-nage-gold to-gold-light rounded-full flex items-center justify-center shadow-xl group-hover:shadow-nage-gold/60 group-hover:rotate-6 transition-all duration-500"
+      >
+        <i class="fas fa-shirt text-xl text-black"></i>
+      </div>
+    </div>
+    <div class="flex flex-col flex-1">
+      <h3
+        class="text-nage-gold font-bold text-xl mb-1 group-hover:text-gold-light transition-colors duration-300"
+      >
+        ITEM
+      </h3>
+      <p
+        class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"
+      >
+        ข้อมูลไอเท็ม
+      </p>
+    </div>
+  </div>
+</a>
+
+        <a
+          href="/npcdrops"
+          class="group relative bg-gradient-to-br from-nage-gray/90 to-nage-dark/80 border-2 border-nage-gold/60 rounded-2xl p-6 hover:border-nage-gold hover:shadow-2xl hover:shadow-nage-gold/30 transition-all duration-500 transform hover:scale-[1.02] cyber-border overflow-hidden"
+        >
+          <!-- Background glow effect -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-nage-gold/5 via-transparent to-nage-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          ></div>
+
+          <div class="relative z-10 flex items-center gap-4">
+            <div class="relative flex-shrink-0">
+              <!-- Glowing background for icon -->
+              <div
+                class="absolute inset-0 bg-nage-gold/20 rounded-full blur-xl group-hover:blur-2xl group-hover:bg-nage-gold/30 transition-all duration-500"
+              ></div>
+              <div
+                class="relative w-16 h-16 bg-gradient-to-br from-nage-gold to-gold-light rounded-full flex items-center justify-center shadow-xl group-hover:shadow-nage-gold/60 group-hover:rotate-6 transition-all duration-500"
+              >
+                <i class="fas fa-dragon text-xl text-black"></i>
+              </div>
+            </div>
+            <div class="flex flex-col flex-1">
+              <h3
+                class="text-nage-gold font-bold text-xl mb-1 group-hover:text-gold-light transition-colors duration-300"
+              >
+                MONSTER
+              </h3>
+              <p
+                class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"
+              >
+                มอนสเตอร์/ไอเท็มดรอป
+              </p>
+            </div>
+          </div>
+        </a>
+ </a>
+
+        <a
+          href="/upgrade-prob"
+          class="group relative bg-gradient-to-br from-nage-gray/90 to-nage-dark/80 border-2 border-nage-gold/60 rounded-2xl p-6 hover:border-nage-gold hover:shadow-2xl hover:shadow-nage-gold/30 transition-all duration-500 transform hover:scale-[1.02] cyber-border overflow-hidden"
+        >
+          <!-- Background glow effect -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-nage-gold/5 via-transparent to-nage-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          ></div>
+
+          <div class="relative z-10 flex items-center gap-4">
+            <div class="relative flex-shrink-0">
+              <!-- Glowing background for icon -->
+              <div
+                class="absolute inset-0 bg-nage-gold/20 rounded-full blur-xl group-hover:blur-2xl group-hover:bg-nage-gold/30 transition-all duration-500"
+              ></div>
+              <div
+                class="relative w-16 h-16 bg-gradient-to-br from-nage-gold to-gold-light rounded-full flex items-center justify-center shadow-xl group-hover:shadow-nage-gold/60 group-hover:rotate-6 transition-all duration-500"
+              >
+                <i class="fas fa-gem text-xl text-black"></i>
+              </div>
+            </div>
+            <div class="flex flex-col flex-1">
+              <h3
+                class="text-nage-gold font-bold text-xl mb-1 group-hover:text-gold-light transition-colors duration-300"
+              >
+                UPGRADE
+              </h3>
+              <p
+                class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"
+              >
+                อัตราการตีบวก
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+
+  href="/shop"
+  class="group relative bg-gradient-to-br from-nage-gray/90 to-nage-dark/80 border-2 border-nage-gold/60 rounded-2xl p-6 hover:border-nage-gold hover:shadow-2xl hover:shadow-nage-gold/30 transition-all duration-500 transform hover:scale-[1.02] cyber-border overflow-hidden"
+>
+  <!-- Background glow effect -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-nage-gold/5 via-transparent to-nage-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+  ></div>
+
+  <div class="relative z-10 flex items-center gap-4">
+    <div class="relative flex-shrink-0">
+      <!-- Glowing background for icon -->
+      <div
+        class="absolute inset-0 bg-nage-gold/20 rounded-full blur-xl group-hover:blur-2xl group-hover:bg-nage-gold/30 transition-all duration-500"
+      ></div>
+      <div
+        class="relative w-16 h-16 bg-gradient-to-br from-nage-gold to-gold-light rounded-full flex items-center justify-center shadow-xl group-hover:shadow-nage-gold/60 group-hover:rotate-6 transition-all duration-500"
+      >
+        <i class="fas fa-store text-xl text-black"></i>
+      </div>
+    </div>
+    <div class="flex flex-col flex-1">
+      <h3
+        class="text-nage-gold font-bold text-xl mb-1 group-hover:text-gold-light transition-colors duration-300"
+      >
+        ITEM-MALL
+      </h3>
+      <p
+        class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"
+      >
+        ไอเท็มมอล
+      </p>
+    </div>
+  </div>
+</a>
+
+
+
+
+      </div>
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Left Column -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Online Counter -->
+          <div class="bg-nage-gray border border-nage-gold rounded-lg p-4 glow-gold">
+            <div id="onlineUsersContainer" class="text-center">
+              <div class="text-nage-gold font-bold text-lg mb-2">
+                <i class="fas fa-users mr-2"></i>ผู้เล่นออนไลน์
+              </div>
+              <div class="text-gold-light text-3xl font-black">
+                <span id="onlineCount">กำลังโหลด...</span> คน
+              </div>
+            </div>
+          </div>
+          <!-- Rare Drops Widget -->
+          <section
+            id="rareDropsWidget"
+            class="bg-nage-gray border border-nage-gold rounded-lg p-4 glow-gold"
+          >
+            <div class="mb-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-nage-gold font-bold text-xl">
+                  <i class="fas fa-gem mr-2"></i>Today Rare Drop
+                </h2>
+                <a href="/rare-drops" class="text-xs text-gold-light hover:text-nage-gold transition-colors">
+                  <i class="fas fa-external-link-alt"></i> ดูทั้งหมด
+                </a>
+              </div>
+              <div class="text-xs text-gray-400 mt-1">
+                <i class="fas fa-calendar-day mr-1"></i><span id="currentDateWidget"></span>
+              </div>
+            </div>
+
+            <!-- Info: แสดงเฉพาะไอเทมพิเศษ -->
+            <div class="mb-3 bg-nage-dark/50 rounded-lg p-2 border border-gold-dark/30">
+              <div class="text-xs text-gray-400 text-center">
+                <i class="fas fa-filter mr-1"></i>แสดงเฉพาะไอเทมพิเศษที่ดรอป
+                <button
+                  onclick="showItemListModal()"
+                  class="ml-2 text-nage-gold hover:text-gold-light underline"
+                >
+                  (ดูรายการ)
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-nage-dark rounded-lg p-3 ranking-scroll">
+              <ul id="rareDropsList" class="space-y-2">
+                <li class="text-center py-8 text-nage-gold opacity-50">
+                  <i class="fas fa-spinner fa-spin mr-2"></i>กำลังโหลดข้อมูล...
+                </li>
+              </ul>
+            </div>
+            <div class="mt-3 text-center text-xs text-gray-400">
+              <i class="fas fa-sync-alt mr-1"></i>อัพเดททุก 3 นาที
+            </div>
+          </section>
+
+          <!-- Boss Kill Section -->
+          <section
+            id="bosskillList"
+            class="bg-nage-gray border border-nage-gold rounded-lg p-4 glow-gold"
+          >
+            <h2 class="text-nage-gold font-bold text-xl mb-4 text-center">
+              <i class="fas fa-sword mr-2"></i>DUNGEON BOSS KILL
+            </h2>
+            <div class="bg-nage-dark rounded-lg p-3 ranking-scroll">
+              <ul class="Bosskill-box space-y-1">
+                <li class="text-center py-8 text-nage-gold opacity-50">
+                  <i class="fas fa-spinner fa-spin mr-2"></i>กำลังโหลดข้อมูล...
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Discord Widget -->
+          <section class="bg-nage-gray border border-nage-gold rounded-lg p-4 glow-gold">
+            <h2 class="text-nage-gold font-bold text-xl mb-4 text-center">
+              <i class="fab fa-discord mr-2"></i>DISCORD SERVER
+            </h2>
+            <div class="bg-nage-dark rounded-lg overflow-hidden">
+              <iframe
+                src="https://discord.com/widget?id=1405066599387631656&theme=dark"
+                class="w-full h-64 border-none"
+                frameborder="0"
+                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                allowtransparency="true"
+              >
+              </iframe>
+            </div>
+          </section>
+        </div>
+        <!-- Right Column - Rankings -->
+        <section
+          class="lg:col-span-2 bg-nage-gray border border-nage-gold rounded-lg p-6 glow-gold"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-nage-gold font-bold text-2xl md:text-3xl text-center flex-1">
+              <i class="fas fa-crown mr-2"></i>LORD OF NAGE RANKING
+            </h2>
+          </div>
+
+          <!-- Toggle Buttons -->
+          <div class="flex justify-center gap-2 mb-4">
+            <button
+              id="btn-normal-ranking"
+              onclick="switchRankingMode('normal')"
+              class="px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-gold text-black border-2 border-nage-gold"
+            >
+              <i class="fas fa-trophy mr-2"></i>อันดับ Class
+            </button>
+            <button
+              id="btn-warpoint-ranking"
+              onclick="switchRankingMode('warpoint')"
+              class="px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-dark text-nage-gold border-2 border-gold-dark hover:border-nage-gold"
+            >
+              <i class="fas fa-medal mr-2"></i>อันดับ War Point
+            </button>
+          </div>
+
+          <!-- Normal Class Rankings -->
+          <div id="normal-rankings" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Sword Hero Ranking -->
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-base md:text-lg mb-3 text-center">
+                <i class="fas fa-hammer mr-2"></i>SWORD-HERO
+              </h3>
+              <div id="top_sword" class="ranking-scroll text-sm">
+                <div class="text-center py-4 text-gold-dark">กำลังโหลด...</div>
+              </div>
+            </div>
+            <!-- Fist Hero Ranking -->
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-base md:text-lg mb-3 text-center">
+                <i class="fas fa-fist-raised mr-2"></i>FIST-HERO
+              </h3>
+              <div id="top_fighter" class="ranking-scroll text-sm">
+                <div class="text-center py-4 text-gold-dark">กำลังโหลด...</div>
+              </div>
+            </div>
+            <!-- Gun Hero Ranking -->
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-base md:text-lg mb-3 text-center">
+                <i class="fas fa-crosshairs mr-2"></i>GUN-HERO
+              </h3>
+              <div id="top_gunner" class="ranking-scroll text-sm">
+                <div class="text-center py-4 text-gold-dark">กำลังโหลด...</div>
+              </div>
+            </div>
+            <!-- Magic Hero Ranking -->
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-base md:text-lg mb-3 text-center">
+                <i class="fas fa-magic mr-2"></i>MAGIC-HERO
+              </h3>
+              <div id="top_magic" class="ranking-scroll text-sm">
+                <div class="text-center py-4 text-gold-dark">กำลังโหลด...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- War Point Rankings (Hidden by default) -->
+          <div id="warpoint-rankings" class="hidden">
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-xl mb-4 text-center">
+                <i class="fas fa-medal mr-2"></i>TOP WAR POINT WARRIORS
+              </h3>
+              <div id="top_warpoint" class="ranking-scroll text-sm">
+                <div class="text-center py-4 text-gold-dark">กำลังโหลด...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Facebook Widget - Always visible at bottom -->
+          <div class="mt-6">
+            <div class="bg-nage-dark border border-gold-dark rounded-lg p-4">
+              <h3 class="text-nage-gold font-bold text-xl mb-4 text-center">
+                <i class="fab fa-facebook mr-2"></i>Facebook
+              </h3>
+              <div class="flex justify-center">
+                <div
+                  class="fb-page"
+                  data-href="https://www.facebook.com/NageNext"
+                  data-tabs="timeline"
+                  data-width="500"
+                  data-height="400"
+                  data-small-header="false"
+                  data-adapt-container-width="false"
+                  data-hide-cover="false"
+                  data-show-facepile="true"
+                >
+                  <blockquote cite="https://www.facebook.com/NageNext" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/NageNext">N-age Next</a>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Facebook SDK -->
+    <div id="fb-root"></div>
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v23.0&appId=1085472849767732"
+    ></script>
+    <script>
+      // Boss name mapping - คงเดิม
+      const bossNameMap = {
+        10102: 'Sina',
+        32002: 'Blood',
+        33102: 'Justic',
+        32001: 'MajorCrane',
+        45702: 'Kaiju No.9',
+        45701: ' Samuel Bellamy',
+        41403: ' World-Boss Thunder Jet',
+      };
+
+      // Format time function - คงเดิม
+      function formatTimeNoSeconds(datetimeStr) {
+        const date = new Date(datetimeStr);
+        if (isNaN(date)) return datetimeStr;
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${day}-${hours}:${minutes}`;
+      }
+
+      // Fetch boss kill data - คงเดิม
+      async function fetchBosskillList() {
+        try {
+          const res = await fetch('/api/bosskill');
+          if (!res.ok) throw new Error('Network response was not ok');
+          const data = await res.json();
+
+          const container = document.querySelector('#bosskillList ul.Bosskill-box');
+          container.innerHTML = '';
+
+          if (!data.bosskills.length) {
+            container.innerHTML =
+              '<li class="text-center py-8 text-nage-gold opacity-50">ไม่มีข้อมูล Bosskill</li>';
+            return;
+          }
+
+          data.bosskills.forEach((item) => {
+            const li = document.createElement('li');
+            li.className =
+              'flex justify-between items-center py-2 px-3 border-b border-gold-dark border-opacity-30 last:border-b-0 hover:bg-nage-gold hover:bg-opacity-5 transition-colors';
+
+            const boss = bossNameMap[item.kill_npcPropID] || item.kill_npcPropID;
+            li.innerHTML = `
+                        <div class="flex-1 text-gold-light font-semibold truncate">${item.charname}</div>
+                        <div class="flex-1 text-center text-nage-gold text-sm">${boss}</div>
+                        <div class="flex-1 text-right text-gold-dark text-xs">${formatTimeNoSeconds(item.kill_time)}</div>
+                    `;
+            container.appendChild(li);
+          });
+        } catch (error) {
+          console.error('Error fetching bosskill:', error);
+          const container = document.querySelector('#bosskillList ul.Bosskill-box');
+          container.innerHTML =
+            '<li class="text-center py-8 text-red-400">ไม่สามารถโหลดข้อมูลได้</li>';
+        }
+      }
+
+      // Render ranking function - คงเดิม
+      function renderTopPlayers(data) {
+        const classMap = {
+          sword: 'top_sword',
+          fighter: 'top_fighter',
+          magic: 'top_magic',
+          gunner: 'top_gunner',
+        };
+        for (let cls in data) {
+          const targetId = classMap[cls];
+          let html = '<ul class="space-y-1">';
+          data[cls].forEach((p, i) => {
+            const nameStyle = p.online ? 'text-gold-light font-bold' : 'text-gray-300';
+            html += `
+                        <li class="flex justify-between items-center py-2 px-3 bg-nage-gray bg-opacity-50 rounded border-l-2 border-nage-gold hover:bg-opacity-80 transition-colors">
+                            <span class="${nameStyle} text-sm">${i + 1}. ${p.name}</span>
+                            <div class="text-right text-xs">
+                                <div class="text-nage-gold">Lv.${p.level}</div>
+                                <div class="text-blue-400">INT: ${p.int}</div>
+                                <div class="text-gold-dark">RB.${p.juti_count}</div>
+                            </div>
+                        </li>`;
+          });
+          html += '</ul>';
+          document.getElementById(targetId).innerHTML = html;
+        }
+      }
+
+      // Fetch rare drops widget
+      async function fetchRareDropsWidget() {
+        try {
+          const res = await fetch('/api/rare-drops-widget?limit=50');
+          if (!res.ok) throw new Error('Network response was not ok');
+          const data = await res.json();
+
+          if (data.success && data.drops) {
+            displayDrops(data.drops);
+          } else {
+            const container = document.querySelector('#rareDropsList');
+            container.innerHTML =
+              '<li class="text-center py-8 text-gray-400 text-sm">ยังไม่มี item rare drop</li>';
+          }
+        } catch (error) {
+          console.error('Error fetching rare drops widget:', error);
+          const container = document.querySelector('#rareDropsList');
+          container.innerHTML =
+            '<li class="text-center py-8 text-red-400 text-sm">ไม่สามารถโหลดข้อมูลได้</li>';
+        }
+      }
+
+      // Display drops
+      function displayDrops(drops) {
+        const container = document.querySelector('#rareDropsList');
+        container.innerHTML = '';
+
+        // Limit to 25 items
+        const filteredDrops = drops.slice(0, 25);
+
+        if (filteredDrops.length === 0) {
+          container.innerHTML =
+            '<li class="text-center py-8 text-gray-400 text-sm">ยังไม่มีไอเทมดรอป</li>';
+          return;
+        }
+
+        filteredDrops.forEach((drop, index) => {
+          const li = document.createElement('li');
+
+          // ตรวจสอบว่าเป็นไอเทม +0 หรือไม่
+          const isPlusZero = drop.itemname && drop.itemname.endsWith('+0');
+
+          if (isPlusZero) {
+            li.className = 'bg-gradient-to-r from-yellow-900/20 to-transparent border-l-2 border-yellow-400 rounded p-2 hover:bg-yellow-900/30 transition-all duration-300 animate-slideIn';
+          } else {
+            li.className = 'bg-gradient-to-r from-amber-900/20 to-transparent border-l-2 border-nage-gold rounded p-2 hover:bg-amber-900/30 transition-all duration-300 animate-slideIn';
+          }
+
+          li.style.animationDelay = `${index * 0.05}s`;
+
+          const timeAgo = getTimeAgo(drop.logTime);
+
+          if (isPlusZero) {
+            li.innerHTML = `
+              <div class="flex items-start gap-2">
+                <i class="fas fa-star text-yellow-400 mt-1 animate-pulse"></i>
+                <div class="flex-1 min-w-0">
+                  <div class="text-yellow-400 font-bold text-sm truncate">${drop.itemname}</div>
+                  <div class="flex items-center gap-2 text-xs mt-1">
+                    <span class="text-red-400">
+                      <i class="fas fa-map-marker-alt mr-1"></i>${drop.mapName}
+                    </span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-blue-300 truncate">${drop.charname}</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    <i class="fas fa-clock mr-1"></i>${timeAgo}
+                  </div>
+                </div>
+              </div>
+            `;
+          } else {
+            li.innerHTML = `
+              <div class="flex items-start gap-2">
+                <i class="fas fa-gem text-nage-gold mt-1"></i>
+                <div class="flex-1 min-w-0">
+                  <div class="text-nage-gold font-bold text-sm truncate">${drop.itemname}</div>
+                  <div class="flex items-center gap-2 text-xs mt-1">
+                    <span class="text-red-400">
+                      <i class="fas fa-map-marker-alt mr-1"></i>${drop.mapName}
+                    </span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-blue-300 truncate">${drop.charname}</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    <i class="fas fa-clock mr-1"></i>${timeAgo}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          container.appendChild(li);
+        });
+      }
+
+
+      // Calculate time ago
+      function getTimeAgo(dateTimeStr) {
+        const date = new Date(dateTimeStr);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
+
+        if (diffDays > 0) return `${diffDays} วันที่แล้ว`;
+        if (diffHours > 0) return `${diffHours} ชั่วโมงที่แล้ว`;
+        if (diffMins > 0) return `${diffMins} นาทีที่แล้ว`;
+        return 'เมื่อสักครู่';
+      }
+
+      // Update current date in widget
+      function updateCurrentDate() {
+        const now = new Date();
+        const thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                           'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+        const day = now.getDate();
+        const month = thaiMonths[now.getMonth()];
+        const year = now.getFullYear() + 543; // Convert to Buddhist year
+
+        const dateStr = `${day} ${month} ${year}`;
+        document.getElementById('currentDateWidget').textContent = dateStr;
+      }
+
+      // Item IDs to display
+      const displayItemIds = [28446, 28400, 28354, 28308, 28262, 28216, 28170, 28124, 28018, 27941, 45521, 45518, 21522, 29570, 22519, 12212, 21542];
+
+      // Map names
+      const mapNames = {
+        15: 'Twall', 16: 'Twall1', 17: 'Twall2', 18: 'UnionBattle', 19: 'Twall3',
+        20: 'TwallBoss', 21: 'TwallB1', 22: 'TwallB2', 23: 'TwallB3'
+      };
+
+      // Show item list modal
+      async function showItemListModal() {
+        // แสดง loading modal ก่อน
+        const loadingHTML = `
+          <div id="itemListModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div class="bg-gradient-to-br from-nage-gray to-nage-dark border-2 border-nage-gold rounded-xl p-8 text-center">
+              <i class="fas fa-spinner fa-spin text-nage-gold text-4xl mb-4"></i>
+              <div class="text-nage-gold text-xl">กำลังโหลดข้อมูล...</div>
+            </div>
+          </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', loadingHTML);
+
+        try {
+          // ดึงชื่อไอเทมจาก API
+          const response = await fetch(`/api/item-names?itemIds=${displayItemIds.join(',')}`);
+          const data = await response.json();
+
+          if (!data.success) {
+            throw new Error('Failed to fetch item names');
+          }
+
+          const itemInfo = data.items;
+
+          // สร้าง HTML สำหรับไอเทม
+          let itemsHTML = '';
+          displayItemIds.forEach(itemId => {
+            const itemName = itemInfo[itemId] || `Unknown Item`;
+            itemsHTML += `
+              <div class="bg-nage-gray p-3 rounded border border-gold-dark/30 hover:border-nage-gold transition-all text-center">
+                <div class="text-nage-gold font-bold text-sm">
+                  <i class="fas fa-cube mr-1"></i>${itemName}
+                </div>
+              </div>
+            `;
+          });
+
+          // ลบ loading และแสดง modal จริง
+          const loadingModal = document.getElementById('itemListModal');
+          if (loadingModal) loadingModal.remove();
+
+          const modalHTML = `
+            <div id="itemListModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onclick="closeItemListModal(event)">
+              <div class="bg-gradient-to-br from-nage-gray to-nage-dark border-2 border-nage-gold rounded-xl p-6 max-w-4xl w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+                <div class="flex items-center justify-between mb-4 sticky top-0 bg-nage-gray/95 pb-2">
+                  <h3 class="text-2xl font-bold text-nage-gold">
+                    <i class="fas fa-list mr-2"></i>รายการไอเทมที่แสดงใน Widget
+                  </h3>
+                  <button onclick="closeItemListModal()" class="text-gray-400 hover:text-nage-gold text-2xl">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+
+                <div class="bg-nage-dark rounded-lg p-4 mb-4">
+                  <div class="text-sm text-gray-400 mb-3">
+                    <i class="fas fa-info-circle mr-1"></i>Widget แสดงเฉพาะไอเทมเหล่านี้ที่ดรอปในแผนที่ <span class="text-nage-gold">Twall</span>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+                    ${itemsHTML}
+                  </div>
+                </div>
+
+                <div class="bg-nage-gold/10 border border-nage-gold/30 rounded-lg p-3 mb-4">
+                  <div class="text-nage-gold font-bold text-center mb-2">
+                    <i class="fas fa-map-marked-alt mr-1"></i>แผนที่ที่แสดง
+                  </div>
+                  <div class="grid grid-cols-3 md:grid-cols-5 gap-2 text-xs">
+                    ${Object.values(mapNames).map(name => `
+                      <div class="bg-nage-dark/50 p-2 rounded text-center text-gold-light border border-gold-dark/30">
+                        <div class="font-bold">${name}</div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <div class="bg-nage-gold/10 border border-nage-gold/30 rounded-lg p-3 text-center">
+                  <div class="text-nage-gold font-bold">
+                    <i class="fas fa-star mr-1"></i>รวมทั้งหมด 17 ไอเทม | 9 แผนที่
+                  </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                  <button onclick="closeItemListModal()" class="px-6 py-2 bg-nage-gold text-black font-bold rounded-lg hover:bg-gold-light transition-all">
+                    <i class="fas fa-check mr-2"></i>ปิด
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+
+          document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        } catch (error) {
+          console.error('Error loading item names:', error);
+
+          // ลบ loading modal
+          const loadingModal = document.getElementById('itemListModal');
+          if (loadingModal) loadingModal.remove();
+
+          // แสดง error
+          alert('เกิดข้อผิดพลาดในการโหลดข้อมูลไอเทม');
+        }
+      }
+
+      // Close item list modal
+      function closeItemListModal(event) {
+        if (!event || event.target.id === 'itemListModal') {
+          const modal = document.getElementById('itemListModal');
+          if (modal) {
+            modal.remove();
+          }
+        }
+      }
+
+      // Load data on page load - คงเดิม
+      document.addEventListener('DOMContentLoaded', () => {
+        // Update current date
+        updateCurrentDate();
+
+        // Load rare drops widget
+        fetchRareDropsWidget();
+        // Auto-refresh every 3 minutes (180000 ms)
+        setInterval(() => fetchRareDropsWidget(), 180000);
+
+        // Load boss kills
+        fetchBosskillList();
+
+        // Load top players
+        fetch('/api/top-players')
+          .then((res) => {
+            if (!res.ok) throw new Error('Failed to load top players');
+            return res.json();
+          })
+          .then((data) => {
+            renderTopPlayers(data);
+          })
+          .catch(() => {
+            ['top_fighter', 'top_sword', 'top_magic', 'top_gunner'].forEach((id) => {
+              document.getElementById(id).innerHTML =
+                '<div class="text-center py-4 text-red-400">ไม่สามารถโหลดข้อมูลได้</div>';
+            });
+          });
+
+        // Load online users count
+        fetch('/api/online-users')
+          .then((res) => {
+            if (!res.ok) throw new Error('Failed to load online users');
+            return res.json();
+          })
+          .then((data) => {
+            document.getElementById('onlineCount').textContent = data.onlineUsers;
+          })
+          .catch((err) => {
+            console.error('Error fetching online count:', err);
+            document.getElementById('onlineCount').textContent = 'ผิดพลาด';
+          });
+      });
+
+      // War Point Ranking Functions
+      let currentRankingMode = 'normal';
+
+      function switchRankingMode(mode) {
+        currentRankingMode = mode;
+        const normalRankings = document.getElementById('normal-rankings');
+        const warpointRankings = document.getElementById('warpoint-rankings');
+        const btnNormal = document.getElementById('btn-normal-ranking');
+        const btnWarpoint = document.getElementById('btn-warpoint-ranking');
+
+        if (mode === 'normal') {
+          // แสดงอันดับ Class
+          normalRankings.classList.remove('hidden');
+          warpointRankings.classList.add('hidden');
+
+          // Update button styles
+          btnNormal.className = 'px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-gold text-black border-2 border-nage-gold';
+          btnWarpoint.className = 'px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-dark text-nage-gold border-2 border-gold-dark hover:border-nage-gold';
+        } else {
+          // แสดงอันดับ War Point
+          normalRankings.classList.add('hidden');
+          warpointRankings.classList.remove('hidden');
+
+          // Update button styles
+          btnNormal.className = 'px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-dark text-nage-gold border-2 border-gold-dark hover:border-nage-gold';
+          btnWarpoint.className = 'px-6 py-2 rounded-lg font-bold transition-all duration-300 bg-nage-gold text-black border-2 border-nage-gold';
+
+          // โหลดข้อมูล War Point ถ้ายังไม่เคยโหลด
+          fetchTopWarPoints();
+        }
+      }
+
+      function fetchTopWarPoints() {
+        fetch('/api/top-war-points?limit=20')
+          .then(res => {
+            if (!res.ok) throw new Error('Failed to load War Point ranking');
+            return res.json();
+          })
+          .then(data => {
+            renderTopWarPoints(data.data);
+          })
+          .catch(error => {
+            console.error('Error fetching War Point ranking:', error);
+            document.getElementById('top_warpoint').innerHTML =
+              '<div class="text-center py-4 text-red-400">ไม่สามารถโหลดข้อมูลได้</div>';
+          });
+      }
+
+      function renderTopWarPoints(players) {
+        const container = document.getElementById('top_warpoint');
+
+        if (!players || players.length === 0) {
+          container.innerHTML = '<div class="text-center py-8 text-gray-400">ยังไม่มีข้อมูล War Point</div>';
+          return;
+        }
+
+        const classIcons = {
+          0: '<i class="fas fa-fist-raised text-red-400"></i>', // Fighter
+          2: '<i class="fas fa-hammer text-blue-400"></i>',     // Sword (ค้อน)
+          6: '<i class="fas fa-magic text-purple-400"></i>',    // Magic
+          7: '<i class="fas fa-crosshairs text-green-400"></i>' // Gunner
+        };
+
+        const classNames = {
+          0: 'Fighter',
+          2: 'Sword',
+          6: 'Magic',
+          7: 'Gunner'
+        };
+
+        let html = '<ul class="space-y-0.5">';
+
+        players.forEach((player, index) => {
+          const rankClass = index === 0 ? 'border-l-4 border-nage-gold bg-gradient-to-r from-nage-gold/20 to-transparent' :
+                           index === 1 ? 'border-l-4 border-gray-400 bg-gradient-to-r from-gray-400/10 to-transparent' :
+                           index === 2 ? 'border-l-4 border-orange-600 bg-gradient-to-r from-orange-600/10 to-transparent' :
+                           'border-l-2 border-gold-dark';
+
+          const rankIcon = index === 0 ? '<i class="fas fa-crown text-nage-gold mr-1"></i>' :
+                          index === 1 ? '<i class="fas fa-medal text-gray-400 mr-1"></i>' :
+                          index === 2 ? '<i class="fas fa-medal text-orange-600 mr-1"></i>' : '';
+
+          const classIcon = classIcons[player.baseskill] || '<i class="fas fa-user"></i>';
+
+          html += `
+            <li class="flex justify-between items-center py-1.5 px-2.5 bg-nage-gray bg-opacity-50 rounded ${rankClass} hover:bg-opacity-80 transition-all duration-300">
+              <div class="flex items-center gap-1.5 flex-1 min-w-0">
+                <span class="text-nage-gold font-bold text-sm w-6 flex-shrink-0">${rankIcon}${index + 1}</span>
+                <span class="text-gold-light font-semibold truncate text-xs">${player.charName}</span>
+              </div>
+              <div class="flex items-center gap-1.5 flex-shrink-0">
+                <div class="text-xs text-gray-400">${classIcon}</div>
+                <div class="bg-gradient-to-r from-red-900/50 to-orange-900/50 px-2 py-0.5 rounded border border-red-500/50">
+                  <div class="text-nage-gold font-bold text-xs">${player.WarPoint.toLocaleString()}</div>
+                </div>
+              </div>
+            </li>
+          `;
+        });
+
+        html += '</ul>';
+        container.innerHTML = html;
+      }
+
+      // Laser effect on click - คงเดิม
+      document.addEventListener('click', function (e) {
+        const laserCount = 3 + Math.floor(Math.random() * 2); // 3-4 เส้น
+        for (let i = 0; i < laserCount; i++) {
+          const laser = document.createElement('div');
+          laser.className = 'laser';
+          document.body.appendChild(laser);
+
+          const startX = e.clientX + (Math.random() * 6 - 3); // กระจาย ±3px
+          const startY = e.clientY;
+
+          const length = 150 + Math.random() * 150; // ความยาว 150-300px
+          const endY = startY - length;
+
+          laser.style.position = 'absolute';
+          laser.style.left = startX + 'px';
+          laser.style.top = endY + 'px';
+          laser.style.width = '2px';
+          laser.style.height = length + 'px';
+          laser.style.background = '#ffd700';
+          laser.style.boxShadow = '0 0 8px #ffd700';
+          laser.style.transformOrigin = 'bottom center';
+          laser.style.transform = 'scaleY(0)';
+          laser.style.transition = 'transform 0.3s linear, opacity 0.3s linear';
+          laser.style.opacity = '1';
+          laser.style.pointerEvents = 'none';
+
+          requestAnimationFrame(() => {
+            laser.style.transform = 'scaleY(1)';
+            laser.style.opacity = '0';
+          });
+
+          setTimeout(() => laser.remove(), 300);
+        }
+      });
+    </script>
+  </body>
+</html>
