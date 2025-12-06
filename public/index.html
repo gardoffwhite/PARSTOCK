@@ -562,6 +562,32 @@
                 </div>
                 <div class="message mt-4" id="summaryMessage"></div>
 
+                <!-- Item Search Box -->
+                <div id="itemSearchBox" class="hidden mt-6 p-6 bg-white rounded-xl border-2 border-nage-purple/30 shadow-lg">
+                    <h4 class="text-xl font-bold text-nage-purple mb-4 flex items-center">
+                        <i class="fas fa-search mr-2"></i>ค้นหารายการสินค้า
+                    </h4>
+
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="itemSearchInput"
+                            placeholder="พิมพ์ชื่อสินค้าเพื่อค้นหา..."
+                            class="w-full px-4 py-3 border-2 border-nage-purple/30 rounded-lg focus:border-nage-purple focus:ring-2 focus:ring-nage-purple/20 transition-all pr-10"
+                            autocomplete="off"
+                        >
+                        <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+
+                        <!-- Autocomplete Dropdown -->
+                        <div id="autocompleteResults" class="hidden absolute z-50 w-full mt-2 bg-white border-2 border-nage-purple/30 rounded-lg shadow-xl max-h-64 overflow-y-auto">
+                        </div>
+                    </div>
+
+                    <!-- Selected Item Detail -->
+                    <div id="selectedItemDetail" class="hidden mt-4 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border-l-4 border-nage-purple">
+                    </div>
+                </div>
+
                 <div id="summaryResult" class="mt-6"></div>
             </div>
         </div>
@@ -1262,6 +1288,186 @@
             `;
 
             result.innerHTML = html;
+
+            // Show item search box and initialize autocomplete
+            document.getElementById('itemSearchBox').classList.remove('hidden');
+            initItemSearch(data.comparison);
+        }
+
+        // Item Search with Autocomplete
+        let summaryData = [];
+
+        function initItemSearch(comparisonData) {
+            summaryData = comparisonData;
+            const searchInput = document.getElementById('itemSearchInput');
+            const autocompleteResults = document.getElementById('autocompleteResults');
+            const selectedItemDetail = document.getElementById('selectedItemDetail');
+
+            // Clear previous
+            searchInput.value = '';
+            selectedItemDetail.innerHTML = '';
+            selectedItemDetail.classList.add('hidden');
+            autocompleteResults.classList.add('hidden');
+
+            // Input event - show autocomplete
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim().toLowerCase();
+
+                if (query.length < 1) {
+                    autocompleteResults.classList.add('hidden');
+                    return;
+                }
+
+                // Filter items
+                const filtered = summaryData.filter(item =>
+                    item.name.toLowerCase().includes(query)
+                );
+
+                if (filtered.length === 0) {
+                    autocompleteResults.classList.add('hidden');
+                    return;
+                }
+
+                // Display autocomplete results
+                let html = '';
+                filtered.slice(0, 10).forEach(item => {
+                    const statusIcon = item.type === 'unmatched_sale' ? '⚠️' :
+                                      item.usagePercent > 100 ? '🔴' :
+                                      item.usagePercent > 80 ? '🟡' : '🟢';
+
+                    html += `
+                        <div class="autocomplete-item p-3 hover:bg-purple-50 cursor-pointer border-b border-gray-100 transition-colors" onclick="selectItem('${item.name.replace(/'/g, "\\'")}')">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-800">${statusIcon} ${item.name}</div>
+                                    ${item.matchedName ? `<div class="text-xs text-gray-500 mt-1">→ ${item.matchedName}</div>` : ''}
+                                </div>
+                                <div class="text-sm text-nage-purple font-bold ml-4">
+                                    ${item.usagePercent.toFixed(0)}%
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                autocompleteResults.innerHTML = html;
+                autocompleteResults.classList.remove('hidden');
+            });
+
+            // Click outside to close
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#itemSearchBox')) {
+                    autocompleteResults.classList.add('hidden');
+                }
+            });
+        }
+
+        function selectItem(itemName) {
+            const item = summaryData.find(i => i.name === itemName);
+            if (!item) return;
+
+            const autocompleteResults = document.getElementById('autocompleteResults');
+            const selectedItemDetail = document.getElementById('selectedItemDetail');
+            const searchInput = document.getElementById('itemSearchInput');
+
+            // Close autocomplete
+            autocompleteResults.classList.add('hidden');
+            searchInput.value = item.name;
+
+            // Calculate colors and status
+            let statusClass = '';
+            let statusText = '';
+            let statusIcon = '';
+
+            if (item.type === 'unmatched_sale') {
+                statusClass = 'bg-yellow-100 text-yellow-800';
+                statusText = 'ไม่มีใน PAR Stock';
+                statusIcon = '⚠️';
+            } else if (item.usagePercent > 100) {
+                statusClass = 'bg-red-100 text-red-800';
+                statusText = 'ใช้เกิน PAR';
+                statusIcon = '🔴';
+            } else if (item.usagePercent > 80) {
+                statusClass = 'bg-yellow-100 text-yellow-800';
+                statusText = 'ใกล้หมด';
+                statusIcon = '🟡';
+            } else {
+                statusClass = 'bg-green-100 text-green-800';
+                statusText = 'ปกติ';
+                statusIcon = '🟢';
+            }
+
+            const transferQty = item.transferQty || 0;
+            let transferDisplay = '';
+            let transferClass = '';
+            if (transferQty > 0) {
+                transferDisplay = `+${transferQty.toFixed(2)}`;
+                transferClass = 'text-green-600';
+            } else if (transferQty < 0) {
+                transferDisplay = `${transferQty.toFixed(2)}`;
+                transferClass = 'text-red-600';
+            } else {
+                transferDisplay = '-';
+                transferClass = 'text-gray-400';
+            }
+
+            // Display item details
+            const html = `
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <h5 class="text-xl font-bold text-nage-purple">${item.name}</h5>
+                        ${item.matchedName ? `<p class="text-sm text-gray-600 mt-1">จับคู่กับ: ${item.matchedName}</p>` : ''}
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-sm font-semibold ${statusClass}">
+                        ${statusIcon} ${statusText}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-3 rounded-lg border border-purple-200">
+                        <div class="text-xs text-gray-600 mb-1">PAR Stock</div>
+                        <div class="text-2xl font-bold text-nage-purple">${item.parStock.toFixed(2)}</div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-purple-200">
+                        <div class="text-xs text-gray-600 mb-1">ขายไป</div>
+                        <div class="text-2xl font-bold text-blue-600">${item.convertedSoldQty.toFixed(2)}</div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-purple-200">
+                        <div class="text-xs text-gray-600 mb-1">Transfer</div>
+                        <div class="text-2xl font-bold ${transferClass}">${transferDisplay}</div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-purple-200">
+                        <div class="text-xs text-gray-600 mb-1">คงเหลือ</div>
+                        <div class="text-2xl font-bold ${item.remaining < 0 ? 'text-red-600' : item.remaining === 0 ? 'text-orange-600' : 'text-green-600'}">
+                            ${item.remaining.toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">การใช้งาน</span>
+                        <span class="text-sm font-bold text-nage-purple">${item.usagePercent.toFixed(1)}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
+                        <div class="h-full flex items-center justify-center text-white text-xs font-bold transition-all duration-300 ${
+                            item.usagePercent > 100 ? 'bg-red-500' :
+                            item.usagePercent > 80 ? 'bg-yellow-500' : 'bg-green-500'
+                        }" style="width: ${Math.min(item.usagePercent, 100)}%">
+                            ${item.usagePercent.toFixed(0)}%
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            selectedItemDetail.innerHTML = html;
+            selectedItemDetail.classList.remove('hidden');
+
+            // Scroll to detail
+            selectedItemDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         // Load Daily Sale Dates
