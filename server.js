@@ -48,7 +48,7 @@ const USERS = {
   'admin': {
     username: 'admin',
     // Hash of 'admin123'
-    passwordHash: '$2a$10$XqW8LKZrJZQJKxZ5qC5YLOvKX9vW8VJY5gqH4Z1fJYK5YJYJYJYJYe'
+    passwordHash: '$2a$10$rjp2n4xSb.cJQY6K6KBFsOEUlac7uibUrHG4SBucU5/2sYWTRWj.O'
   }
 };
 
