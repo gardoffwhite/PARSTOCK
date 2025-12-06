@@ -868,18 +868,18 @@
                     <td style="text-align: right;">${item.qty.toFixed(2)}</td>
                     <td>
                         <select class="conversion-select" data-index="${index}" data-par-name="${parMatch || ''}">
-                            <option value="1" ${autoRate === 1 ? 'selected' : ''}>1/1 (1.0) - Bottle</option>
-                            <option value="0.2" ${autoRate === 0.2 ? 'selected' : ''}>1/5 (0.2) - Wine by glass</option>
-                            <option value="0.142857" ${Math.abs(autoRate - 0.142857) < 0.0001 ? 'selected' : ''}>1/7 (0.143) - Wine pairing</option>
-                            <option value="0.0625" ${Math.abs(autoRate - 0.0625) < 0.0001 ? 'selected' : ''}>1/16 (0.063) - 50cl Spirit</option>
-                            <option value="0.05" ${Math.abs(autoRate - 0.05) < 0.0001 ? 'selected' : ''}>1/20 (0.050)</option>
-                            <option value="0.04347826087" ${Math.abs(autoRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>1/23 (0.043) - 70cl Spirit</option>
-                            <option value="0.04" ${Math.abs(autoRate - 0.04) < 0.0001 ? 'selected' : ''}>1/25 (0.040) - 75cl Spirit</option>
-                            <option value="0.0303030303" ${Math.abs(autoRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>1/33 (0.030) - 1L Spirit</option>
-                            <option value="0.125" ${Math.abs(autoRate - 0.125) < 0.0001 ? 'selected' : ''}>2/16 (0.125) - 50cl 2Oz</option>
-                            <option value="0.087" ${Math.abs(autoRate - 0.087) < 0.0001 ? 'selected' : ''}>2/23 (0.087) - 70cl 2Oz</option>
-                            <option value="0.08" ${Math.abs(autoRate - 0.08) < 0.0001 ? 'selected' : ''}>2/25 (0.080) - 75cl 2Oz</option>
-                            <option value="0.0606" ${Math.abs(autoRate - 0.0606) < 0.0001 ? 'selected' : ''}>2/33 (0.061) - 1L 2Oz</option>
+                            <option value="1" ${autoRate === 1 ? 'selected' : ''}>🍾 1/1 (1.0) - Bottle</option>
+                            <option value="0.2" ${autoRate === 0.2 ? 'selected' : ''}>🍷 1/5 (0.2) - Wine by glass</option>
+                            <option value="0.142857" ${Math.abs(autoRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 (0.143) - Wine pairing</option>
+                            <option value="0.0625" ${Math.abs(autoRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 (0.063) - 50cl Spirit</option>
+                            <option value="0.05" ${Math.abs(autoRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20 (0.050)</option>
+                            <option value="0.04347826087" ${Math.abs(autoRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃70 1/23 (0.043) - 70cl 2Oz</option>
+                            <option value="0.04" ${Math.abs(autoRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃75 1/25 (0.040) - 75cl 2Oz</option>
+                            <option value="0.0303030303" ${Math.abs(autoRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 (0.030) - 1L 2Oz</option>
+                            <option value="0.125" ${Math.abs(autoRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 (0.125) - 50cl 2Oz</option>
+                            <option value="0.087" ${Math.abs(autoRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃70 2/23 (0.087) - 70cl 2Oz</option>
+                            <option value="0.08" ${Math.abs(autoRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃75 2/25 (0.080) - 75cl 2Oz</option>
+                            <option value="0.0606" ${Math.abs(autoRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 (0.061) - 1L 2Oz</option>
                         </select>
                     </td>
                 `;
@@ -2009,6 +2009,61 @@
             const thaiMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
                                'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
             return `${date.getDate()} ${thaiMonths[date.getMonth()]} ${date.getFullYear() + 543}`;
+        }
+
+        function getConversionIcon(unit, conversionRate) {
+            if (!unit) {
+                // Check conversion rate patterns
+                if (conversionRate === 0.7 || conversionRate === 0.07 || String(conversionRate).includes('70')) {
+                    return '🥃70'; // Jigger/Rock glass with 70
+                }
+                if (conversionRate === 0.75 || conversionRate === 0.075 || String(conversionRate).includes('75')) {
+                    return '🥃75'; // Jigger/Rock glass with 75
+                }
+                return '📊'; // Generic measurement
+            }
+
+            const unitLower = unit.toLowerCase();
+
+            // Bottle
+            if (unitLower.includes('bottle') || unitLower.includes('ขวด')) {
+                return '🍾';
+            }
+
+            // Wine by glass
+            if (unitLower.includes('wine') && unitLower.includes('glass')) {
+                return '🍷';
+            }
+
+            // Wine pairing
+            if (unitLower.includes('pairing') || unitLower.includes('pair')) {
+                return '🍷🍽️';
+            }
+
+            // Glass (general)
+            if (unitLower.includes('glass') || unitLower.includes('แก้ว')) {
+                return '🥃';
+            }
+
+            // Jigger / measurement (70cl, 75cl)
+            if (unitLower.includes('70') || unitLower.includes('cl') && conversionRate === 0.7) {
+                return '🥃70';
+            }
+            if (unitLower.includes('75') || unitLower.includes('cl') && conversionRate === 0.75) {
+                return '🥃75';
+            }
+
+            // CL measurements
+            if (unitLower.includes('cl')) {
+                return '🥃';
+            }
+
+            // Oz measurements
+            if (unitLower.includes('oz')) {
+                return '🥃';
+            }
+
+            return '📦'; // Default icon
         }
 
         function showMessage(elementId, text, type) {
