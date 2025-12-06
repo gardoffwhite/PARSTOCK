@@ -1568,16 +1568,54 @@
             }
         }
 
+        async function deleteDailySale(date) {
+            if (!confirm(`คุณต้องการลบข้อมูลยอดขายวันที่ ${formatThaiDate(date)} หรือไม่?\n\n⚠️ การลบจะไม่สามารถกู้คืนได้`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/daily-sale/${date}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'ไม่สามารถลบข้อมูลได้');
+                }
+
+                alert('✅ ' + data.message);
+
+                // Reload the dates list and clear the display
+                await loadDailySaleDates();
+                document.getElementById('viewDailySaleDate').value = '';
+                document.getElementById('dailySaleItemsResult').innerHTML = '';
+
+            } catch (error) {
+                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+
         function displayDailySaleItems(data) {
             const result = document.getElementById('dailySaleItemsResult');
 
             let html = `
-                <div style="background: #f0f9ff; border: 2px solid #0284c7; padding: 15px; border-radius: 10px; margin: 20px 0;">
-                    <strong style="color: #0c4a6e;">📅 วันที่: ${formatThaiDate(data.date)}</strong>
-                    <p style="color: #075985; margin-top: 5px; font-size: 14px;">
-                        รายการทั้งหมด: ${data.items.length} รายการ |
-                        ยอดขายรวม: ${data.summary.totalQty.toFixed(2)} หน่วย
-                    </p>
+                <div style="background: #f0f9ff; border: 2px solid #0284c7; padding: 15px; border-radius: 10px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="color: #0c4a6e;">📅 วันที่: ${formatThaiDate(data.date)}</strong>
+                        <p style="color: #075985; margin-top: 5px; font-size: 14px;">
+                            รายการทั้งหมด: ${data.items.length} รายการ |
+                            ยอดขายรวม: ${data.summary.totalQty.toFixed(2)} หน่วย
+                        </p>
+                    </div>
+                    <button onclick="deleteDailySale('${data.date}')"
+                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+                            style="white-space: nowrap;">
+                        <i class="fas fa-trash-alt mr-2"></i>ลบรายการนี้
+                    </button>
                 </div>
 
                 <table class="conversion-table">

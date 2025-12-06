@@ -77,6 +77,18 @@ class DataStorage {
     return allData[date] || null;
   }
 
+  deleteDailyData(date) {
+    const allData = this.loadDailyData();
+
+    if (!allData[date]) {
+      return false;
+    }
+
+    delete allData[date];
+    this.saveDailyData(allData);
+    return true;
+  }
+
   getDailyDataByDateRange(startDate, endDate) {
     const allData = this.loadDailyData();
     const result = [];

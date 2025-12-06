@@ -361,6 +361,29 @@ app.get('/api/daily-sale/:date', async (req, res) => {
   }
 });
 
+// DELETE API: Delete daily sale by date
+app.delete('/api/daily-sale/:date', requireAuth, async (req, res) => {
+  try {
+    const { date } = req.params;
+    const storage = new DataStorage();
+
+    const result = storage.deleteDailyData(date);
+
+    if (!result) {
+      return res.status(404).json({ error: 'ไม่พบข้อมูลวันที่นี้' });
+    }
+
+    res.json({
+      success: true,
+      message: `ลบข้อมูลยอดขายวันที่ ${date} สำเร็จ`
+    });
+
+  } catch (error) {
+    console.error('Error deleting daily sale:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.post('/api/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
