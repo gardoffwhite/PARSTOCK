@@ -26,7 +26,15 @@
       "Bash(git --version:*)",
       "Bash(if not exist \"c:\\Users\\GG\\Desktop\\WebStock\\.gitignore\" echo.)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Hotel Sales & PAR Stock System\n\nFeatures:\n- Daily Sales upload and management\n- PAR Stock tracking\n- Group Items (Cocktails) management\n- Daily Transfer system\n- Fuzzy name matching with word-counting algorithm\n- Excel import/export\n- Modern UI with Tailwind CSS\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git config:*)",
+      "Bash(git remote:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(gh --version:*)",
+      "Bash(git commit:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []
