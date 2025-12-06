@@ -14,6 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Session configuration
+// NOTE: Using MemoryStore for development. For production, use connect-session-sequelize or Redis.
 app.use(session({
   secret: process.env.SESSION_SECRET || 'parstock-secret-key-change-in-production',
   resave: false,
@@ -23,6 +24,7 @@ app.use(session({
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
+  // For production, add: store: new SessionStore(...)
 }));
 
 app.use(cors());
@@ -49,18 +51,6 @@ const USERS = {
     passwordHash: '$2a$10$XqW8LKZrJZQJKxZ5qC5YLOvKX9vW8VJY5gqH4Z1fJYK5YJYJYJYJYe'
   }
 };
-
-// Serve static files AFTER authentication for protected routes
-app.use('/login.html', express.static('public'));
-app.use('/index.html', requireAuth, express.static('public'));
-app.use(express.static('public', {
-  index: false,
-  setHeaders: (res, path) => {
-    if (path.endsWith('.html') && !path.endsWith('login.html')) {
-      // Will be handled by middleware below
-    }
-  }
-}));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -92,9 +82,19 @@ if (!fs.existsSync(reportsDir)) {
   fs.mkdirSync(reportsDir, { recursive: true });
 }
 
+// Serve static files (CSS, JS, images) - no auth required
+app.use(express.static('public', {
+  index: false
+}));
+
 // Routes
 app.get('/', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Login page - no auth required
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Login API
