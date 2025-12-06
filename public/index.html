@@ -2274,6 +2274,7 @@
                 parsedTransferItems = result.items.map(item => ({
                     ...item,
                     direction: direction,
+                    conversionRate: 1, // Default conversion rate is 1 (Bottle)
                     finalQty: direction === 'in' ? item.qty : -item.qty
                 }));
 
@@ -2288,7 +2289,27 @@
             }
         }
 
-        function displayTransferItems(items) {
+        function updateTransferFinalQty(index) {
+            const select = document.querySelector(`.transfer-conversion-select[data-index="${index}"]`);
+            const conversionRate = parseFloat(select.value);
+            const item = parsedTransferItems[index];
+
+            // Calculate new final quantity with conversion rate
+            const baseQty = item.qty * conversionRate;
+            const finalQty = item.direction === 'in' ? baseQty : -baseQty;
+
+            // Update the display
+            const finalQtyCell = document.getElementById(`transfer-final-qty-${index}`);
+            const directionColor = item.direction === 'in' ? '#4CAF50' : '#f44336';
+            finalQtyCell.innerHTML = `${finalQty > 0 ? '+' : ''}${finalQty.toFixed(2)}`;
+            finalQtyCell.style.color = directionColor;
+
+            // Update the item in parsedTransferItems array
+            parsedTransferItems[index].conversionRate = conversionRate;
+            parsedTransferItems[index].finalQty = finalQty;
+        }
+
+        function displayTransferItems(items, isViewMode = false) {
             const container = document.getElementById('transferItemsTable');
             const direction = items[0]?.direction || 'in';
             const directionText = direction === 'in' ? '📥 เข้า (+)' : '📤 ออก (-)';
@@ -2304,6 +2325,7 @@
                             <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">ชื่อสินค้า (Original)</th>
                             <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">PAR Name (ตรวจพบ)</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">จำนวน</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Conversion Rate</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">จำนวนสุดท้าย</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Match Score</th>
                         </tr>
@@ -2315,6 +2337,9 @@
                 const matchColor = item.matchScore >= 0.8 ? '#4CAF50' :
                                  item.matchScore >= 0.6 ? '#FF9800' : '#f44336';
 
+                // Get saved conversion rate or default to 1
+                const savedConversionRate = item.conversionRate || 1;
+
                 html += `
                     <tr style="background: ${index % 2 === 0 ? '#f9f9f9' : 'white'};">
                         <td style="padding: 10px; border: 1px solid #ddd;">${item.originalName}</td>
@@ -2323,7 +2348,23 @@
                             ${item.category ? `<br><small style="color: #666;">${item.category}</small>` : ''}
                         </td>
                         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${item.qty}</td>
-                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; color: ${directionColor}; font-weight: bold;">
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                            <select class="transfer-conversion-select" data-index="${index}" onchange="updateTransferFinalQty(${index})" ${isViewMode ? 'disabled' : ''}>
+                                <option value="1" ${Math.abs(savedConversionRate - 1) < 0.0001 ? 'selected' : ''}>🍾 1/1 (1.0) - Bottle</option>
+                                <option value="0.2" ${Math.abs(savedConversionRate - 0.2) < 0.0001 ? 'selected' : ''}>🍷 1/5 (0.2) - Wine by glass</option>
+                                <option value="0.142857" ${Math.abs(savedConversionRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 (0.143) - Wine pairing</option>
+                                <option value="0.0625" ${Math.abs(savedConversionRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 (0.063) - 50cl Spirit</option>
+                                <option value="0.05" ${Math.abs(savedConversionRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20 (0.050)</option>
+                                <option value="0.04347826087" ${Math.abs(savedConversionRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃70 1/23 (0.043) - 70cl 2Oz</option>
+                                <option value="0.04" ${Math.abs(savedConversionRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃75 1/25 (0.040) - 75cl 2Oz</option>
+                                <option value="0.0303030303" ${Math.abs(savedConversionRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 (0.030) - 1L 2Oz</option>
+                                <option value="0.125" ${Math.abs(savedConversionRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 (0.125) - 50cl 2Oz</option>
+                                <option value="0.087" ${Math.abs(savedConversionRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃70 2/23 (0.087) - 70cl 2Oz</option>
+                                <option value="0.08" ${Math.abs(savedConversionRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃75 2/25 (0.080) - 75cl 2Oz</option>
+                                <option value="0.0606" ${Math.abs(savedConversionRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 (0.061) - 1L 2Oz</option>
+                            </select>
+                        </td>
+                        <td id="transfer-final-qty-${index}" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: ${directionColor}; font-weight: bold;">
                             ${item.finalQty > 0 ? '+' : ''}${item.finalQty.toFixed(2)}
                         </td>
                         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
@@ -2431,7 +2472,7 @@
                     throw new Error(result.error || 'Failed to load transfer data');
                 }
 
-                displayTransferItems(result.items);
+                displayTransferItems(result.items, true); // Pass true for view mode (disabled dropdowns)
                 container.innerHTML = document.getElementById('transferItemsTable').innerHTML;
 
             } catch (error) {
