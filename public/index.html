@@ -1245,18 +1245,19 @@
                 const remaining = item.remaining;
 
                 if (remaining < 0) {
-                    // Negative - Red (out of stock)
+                    // Negative - Red (ใช้เกิน PAR)
                     remainingColor = 'color: #dc2626; font-weight: bold;';
                     remainingBg = 'background: #fee2e2;';
                 } else if (remaining === 0) {
-                    // Zero - Orange
+                    // Zero - Orange (หมด)
                     remainingColor = 'color: #ea580c; font-weight: bold;';
                     remainingBg = 'background: #ffedd5;';
-                } else if (remaining > 0 && remaining <= 1) {
-                    // Low stock (0 < x <= 1) - Yellow
+                } else if (remaining > 0 && remaining < 2) {
+                    // Low stock (0 < x < 2) - Yellow (ใกล้หมด)
                     remainingColor = 'color: #d97706; font-weight: bold;';
                     remainingBg = 'background: #fef3c7;';
                 }
+                // >= 2 is normal (no special color)
 
                 html += `
                     <tr style="${rowStyle}">
@@ -1441,7 +1442,12 @@
 
                     <div class="bg-white p-3 rounded-lg border border-purple-200">
                         <div class="text-xs text-gray-600 mb-1">คงเหลือ</div>
-                        <div class="text-2xl font-bold ${item.remaining < 0 ? 'text-red-600' : item.remaining === 0 ? 'text-orange-600' : 'text-green-600'}">
+                        <div class="text-2xl font-bold ${
+                            item.remaining < 0 ? 'text-red-600' :
+                            item.remaining === 0 ? 'text-orange-600' :
+                            item.remaining < 2 ? 'text-yellow-600' :
+                            'text-green-600'
+                        }">
                             ${item.remaining.toFixed(2)}
                         </div>
                     </div>
