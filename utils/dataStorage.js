@@ -85,7 +85,10 @@ class DataStorage {
     }
 
     delete allData[date];
-    this.saveDailyData(allData);
+
+    // Save directly without calling saveDailyData to avoid parameter mismatch
+    fs.writeFileSync(this.dailyDataFile, JSON.stringify(allData, null, 2));
+
     return true;
   }
 
