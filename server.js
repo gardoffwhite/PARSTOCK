@@ -375,14 +375,23 @@ app.get('/api/export-summary/:parStartDate/:endDate', async (req, res) => {
     // Add daily sales details to summary data
     summary.dailySalesDetails = dailySalesDetails;
 
-    const timestamp = Date.now();
-    const excelPath = path.join(reportsDir, `summary-${parStartDate}-to-${endDate}-${timestamp}.xlsx`);
+    // Format dates as DD-MM-YY for filename (short year format)
+    const formatDate = (dateStr) => {
+      const date = new Date(dateStr);
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const yy = String(date.getFullYear()).slice(-2); // Get last 2 digits of year
+      return `${dd}-${mm}-${yy}`;
+    };
+
+    const fileName = `SbParstock_${formatDate(parStartDate)}_${formatDate(endDate)}.xlsx`;
+    const excelPath = path.join(reportsDir, fileName);
 
     reportGenerator.exportSummaryToExcel(parStartDate, endDate, summary, excelPath);
 
     res.json({
       success: true,
-      excelReportUrl: `/reports/summary-${parStartDate}-to-${endDate}-${timestamp}.xlsx`
+      excelReportUrl: `/reports/${fileName}`
     });
 
   } catch (error) {

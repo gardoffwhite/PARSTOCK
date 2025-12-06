@@ -501,6 +501,10 @@
                         <label class="block text-sm font-semibold text-gray-700 mb-2">วันที่เริ่มต้น PAR:</label>
                         <input type="date" id="parStartDate" class="w-full px-4 py-2 border-2 border-nage-purple/30 rounded-lg focus:border-nage-purple focus:ring-2 focus:ring-nage-purple/20 transition-all">
                     </div>
+                    <div class="flex-1 min-w-[200px]">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ PAR Stock:</label>
+                        <input type="text" id="parStockName" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg bg-gray-50" readonly placeholder="ชื่อจะถูกสร้างอัตโนมัติ">
+                    </div>
                     <input type="file" id="parFileInput" accept=".xls,.xlsx" class="hidden">
                     <button class="px-6 py-2 bg-white border-2 border-nage-purple text-nage-purple font-semibold rounded-lg hover:bg-nage-purple hover:text-white transition-all duration-300" onclick="document.getElementById('parFileInput').click()">
                         <i class="fas fa-folder-open mr-2"></i>เลือกไฟล์ PAR Stock
@@ -702,6 +706,42 @@
             }
         });
 
+        // Function to highlight matching words in Daily Sale name
+        function highlightSalesName(salesName, parName, matchScore) {
+            if (!parName) return salesName;
+
+            // Split both names into words
+            const salesWords = salesName.toLowerCase().split(/\s+/);
+            const parWords = parName.toLowerCase().split(/\s+/);
+
+            // Find which sales words match any PAR words
+            const matchedWords = new Set();
+            salesWords.forEach(word => {
+                if (word.length >= 2) { // Only match words with 2+ characters
+                    parWords.forEach(parWord => {
+                        if (parWord.includes(word) || word.includes(parWord)) {
+                            matchedWords.add(word);
+                        }
+                    });
+                }
+            });
+
+            // Choose color based on match score
+            // Green for 50%+, Orange for less than 50%
+            const highlightColor = matchScore >= 0.5 ? '#16a34a' : '#ea580c'; // Green or Orange
+
+            // Build highlighted HTML - color based on match score
+            const originalWords = salesName.split(/\s+/);
+            const highlighted = originalWords.map(word => {
+                if (matchedWords.has(word.toLowerCase())) {
+                    return `<span style="color: ${highlightColor}; font-weight: 700;">${word}</span>`;
+                }
+                return word;
+            }).join(' ');
+
+            return highlighted;
+        }
+
         function displayConversionTable(data) {
             const tbody = document.getElementById('conversionTableBody');
             tbody.innerHTML = '';
@@ -807,58 +847,40 @@
                     }
                 }
 
-                const matchStyle = parMatch ?
-                    (matchScore >= 0.8 ? 'background: #d1fae5; color: #065f46;' :
-                     matchScore >= 0.6 ? 'background: #fef3c7; color: #92400e;' : '') :
-                    'background: #fee2e2; color: #991b1b;';
-
-                // Build PAR match cell - Always allow editing
+                // Build PAR match cell - Show name with clickable arrow to edit
                 let parMatchCell;
                 if (data.parMatches && data.parMatches.parItems) {
                     const parItems = data.parMatches.parItems;
+                    const options = parItems.map(p =>
+                        `<option value="${p.name}" ${p.name === parMatch ? 'selected' : ''}>${p.name}</option>`
+                    ).join('');
 
-                    if (parMatch) {
-                        // Matched item - show editable input with matched value
-                        parMatchCell = `
-                            <td style="${matchStyle} padding: 8px;">
-                                <input type="text"
-                                    class="par-search-input"
-                                    data-index="${index}"
-                                    value="${parMatch}"
-                                    placeholder="พิมพ์เพื่อค้นหา PAR item..."
-                                    list="parList${index}"
-                                    style="width: 100%; padding: 6px; border: 2px solid ${matchScore >= 0.8 ? '#10b981' : '#f59e0b'}; border-radius: 5px; font-size: 13px;">
-                                <datalist id="parList${index}">
-                                    ${parItems.map(p => `<option value="${p.name}">`).join('')}
-                                </datalist>
-                            </td>
-                        `;
-                    } else {
-                        // Not matched - show empty searchable input
-                        parMatchCell = `
-                            <td style="${matchStyle} padding: 8px;">
-                                <input type="text"
-                                    class="par-search-input"
-                                    data-index="${index}"
-                                    placeholder="พิมพ์เพื่อค้นหา PAR item..."
-                                    list="parList${index}"
-                                    style="width: 100%; padding: 6px; border: 2px solid #f59e0b; border-radius: 5px; font-size: 13px;">
-                                <datalist id="parList${index}">
-                                    ${parItems.map(p => `<option value="${p.name}">`).join('')}
-                                </datalist>
-                                <small style="color: #991b1b; font-size: 11px;">⚠️ ไม่พบใน PAR - เลือกชื่อที่ถูกต้อง</small>
-                            </td>
-                        `;
-                    }
-                } else {
                     parMatchCell = `
-                        <td style="${matchStyle} padding: 8px;">⚠️ ไม่มี PAR Stock</td>
+                        <td style="padding: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="par-name-display" style="flex: 1;">${parMatch || '⚠️ ไม่พบใน PAR'}</span>
+                                <button type="button" class="edit-par-btn" data-index="${index}"
+                                    style="background: #667eea; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                                    ▼ แก้ไข
+                                </button>
+                            </div>
+                            <select class="par-select-dropdown" data-index="${index}"
+                                style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 13px; cursor: pointer; display: none; margin-top: 4px;">
+                                ${!parMatch ? '<option value="">⚠️ เลือก PAR item...</option>' : ''}
+                                ${options}
+                            </select>
+                        </td>
                     `;
+                } else {
+                    parMatchCell = `<td style="padding: 8px; color: #991b1b;">⚠️ ไม่มี PAR Stock</td>`;
                 }
+
+                // Highlight matching words in Daily Sale name
+                const highlightedSalesName = highlightSalesName(item.name, parMatch, matchScore);
 
                 tr.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${item.name}</td>
+                    <td>${highlightedSalesName}</td>
                     ${parMatchCell}
                     <td style="text-align: right;">${item.qty.toFixed(2)}</td>
                     <td>
@@ -881,6 +903,41 @@
 
                 tbody.appendChild(tr);
             });
+
+            // Add event listeners for edit buttons
+            document.querySelectorAll('.edit-par-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    const dropdown = document.querySelector(`.par-select-dropdown[data-index="${index}"]`);
+
+                    if (dropdown.style.display === 'none') {
+                        dropdown.style.display = 'block';
+                        this.textContent = '▲ ซ่อน';
+                    } else {
+                        dropdown.style.display = 'none';
+                        this.textContent = '▼ แก้ไข';
+                    }
+                });
+            });
+
+            // Add event listeners for dropdown changes
+            document.querySelectorAll('.par-select-dropdown').forEach(select => {
+                select.addEventListener('change', function() {
+                    const index = this.getAttribute('data-index');
+                    const newValue = this.value;
+                    const displaySpan = this.parentElement.querySelector('.par-name-display');
+
+                    if (displaySpan) {
+                        displaySpan.textContent = newValue || '⚠️ ไม่พบใน PAR';
+                    }
+
+                    // Update the conversion select's data attribute
+                    const conversionSelect = document.querySelector(`.conversion-select[data-index="${index}"]`);
+                    if (conversionSelect) {
+                        conversionSelect.setAttribute('data-par-name', newValue);
+                    }
+                });
+            });
         }
 
         async function saveWithConversion() {
@@ -896,10 +953,10 @@
                 let parName = select.getAttribute('data-par-name');
                 const originalItem = dailySalesData.items[index];
 
-                // Check if user manually selected a PAR item from search input
-                const searchInput = document.querySelector(`.par-search-input[data-index="${index}"]`);
-                if (searchInput && searchInput.value.trim()) {
-                    parName = searchInput.value.trim();
+                // Check if user selected a PAR item from dropdown
+                const parDropdown = document.querySelector(`.par-select-dropdown[data-index="${index}"]`);
+                if (parDropdown && parDropdown.value.trim()) {
+                    parName = parDropdown.value.trim();
                 }
 
                 // Use PAR name if available, otherwise keep original name
@@ -967,6 +1024,31 @@
         document.getElementById('parFileInput').addEventListener('change', (e) => {
             if (e.target.files[0]) {
                 document.getElementById('uploadParBtn').disabled = false;
+            }
+        });
+
+        // Auto-generate PAR Stock name when date is selected
+        document.getElementById('parStartDate').addEventListener('change', function() {
+            const startDate = this.value;
+            if (startDate) {
+                // Calculate end date (14 days later)
+                const start = new Date(startDate);
+                const end = new Date(start);
+                end.setDate(start.getDate() + 14);
+
+                // Format dates as DD-MM-YY (short year format)
+                const formatDate = (date) => {
+                    const dd = String(date.getDate()).padStart(2, '0');
+                    const mm = String(date.getMonth() + 1).padStart(2, '0');
+                    const yy = String(date.getFullYear()).slice(-2); // Get last 2 digits
+                    return `${dd}-${mm}-${yy}`;
+                };
+
+                // Generate name: SbParstock_DD-MM-YY_DD-MM-YY
+                const parName = `SbParstock_${formatDate(start)}_${formatDate(end)}`;
+                document.getElementById('parStockName').value = parName;
+            } else {
+                document.getElementById('parStockName').value = '';
             }
         });
 
@@ -2003,7 +2085,7 @@
             const date = new Date(dateStr);
             const thaiMonths = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
                                'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-            return `${date.getDate()} ${thaiMonths[date.getMonth()]} ${date.getFullYear() + 543}`;
+            return `${date.getDate()} ${thaiMonths[date.getMonth()]} ${date.getFullYear()}`;
         }
 
         function getConversionIcon(unit, conversionRate) {
