@@ -292,6 +292,39 @@ app.get('/api/export-summary/:parStartDate/:endDate', async (req, res) => {
       return res.status(404).json({ error: 'No data found' });
     }
 
+    // Get daily sales details for each date in the range
+    const dailySalesDetails = [];
+    const start = new Date(parStartDate);
+    const end = new Date(endDate);
+
+    for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+      const dateStr = date.toISOString().split('T')[0];
+      const dailyData = storage.getDailyData(dateStr);
+
+      if (dailyData) {
+        // Calculate total converted qty
+        let totalConverted = 0;
+        if (dailyData.items) {
+          dailyData.items.forEach(item => {
+            const convRate = item.conversionRate || 1;
+            totalConverted += (item.qty || 0) * convRate;
+          });
+        }
+
+        dailySalesDetails.push({
+          date: dateStr,
+          items: dailyData.items || [],
+          summary: {
+            ...dailyData.summary,
+            totalConverted: totalConverted
+          }
+        });
+      }
+    }
+
+    // Add daily sales details to summary data
+    summary.dailySalesDetails = dailySalesDetails;
+
     const timestamp = Date.now();
     const excelPath = path.join(reportsDir, `summary-${parStartDate}-to-${endDate}-${timestamp}.xlsx`);
 

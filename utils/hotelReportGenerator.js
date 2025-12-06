@@ -386,6 +386,7 @@ class HotelReportGenerator {
   exportSummaryToExcel(parStartDate, endDate, summaryData, outputPath) {
     const workbook = XLSX.utils.book_new();
 
+    // ========== Sheet 1: Summary ==========
     // Header with period information
     const excelData = [
       ['PAR Stock & Sales Summary Report'],
@@ -405,7 +406,7 @@ class HotelReportGenerator {
         remainingValue = `🔴 ${remainingValue}`; // Red circle for negative
       } else if (remaining === 0) {
         remainingValue = `🟠 ${remainingValue}`; // Orange circle for zero
-      } else if (remaining > 0 && remaining <= 1) {
+      } else if (remaining > 0 && remaining < 2) {
         remainingValue = `🟡 ${remainingValue}`; // Yellow circle for low stock
       }
 
@@ -434,6 +435,70 @@ class HotelReportGenerator {
     ];
 
     XLSX.utils.book_append_sheet(workbook, sheet, 'Summary');
+
+    // ========== Sheets 2-N: Daily Sales Details ==========
+    if (summaryData.dailySalesDetails && Array.isArray(summaryData.dailySalesDetails)) {
+      summaryData.dailySalesDetails.forEach((dailyData, sheetIndex) => {
+        const dailyExcelData = [
+          [`Daily Sales - ${dailyData.date}`],
+          [],
+          ['#', 'ชื่อสินค้า', 'จำนวนขาย', 'หน่วย', 'Conversion Rate', 'Converted Qty']
+        ];
+
+        // Add daily sales items
+        if (dailyData.items && Array.isArray(dailyData.items)) {
+          dailyData.items.forEach((item, idx) => {
+            const convRate = item.conversionRate || 1;
+            const convertedQty = (item.qty || 0) * convRate;
+
+            dailyExcelData.push([
+              idx + 1,
+              item.name || '-',
+              (item.qty || 0).toFixed(2),
+              item.unit || '-',
+              convRate.toFixed(3),
+              convertedQty.toFixed(2)
+            ]);
+          });
+        }
+
+        // Add totals row
+        if (dailyData.summary) {
+          dailyExcelData.push([]);
+          dailyExcelData.push([
+            '',
+            'รวมทั้งหมด:',
+            (dailyData.summary.totalQty || 0).toFixed(2),
+            '',
+            '',
+            (dailyData.summary.totalConverted || 0).toFixed(2)
+          ]);
+          dailyExcelData.push([
+            '',
+            'จำนวนรายการ:',
+            dailyData.items ? dailyData.items.length : 0
+          ]);
+        }
+
+        const dailySheet = XLSX.utils.aoa_to_sheet(dailyExcelData);
+
+        // Set column widths for daily sheet
+        dailySheet['!cols'] = [
+          { wch: 5 },   // #
+          { wch: 50 },  // ชื่อสินค้า
+          { wch: 12 },  // จำนวนขาย
+          { wch: 10 },  // หน่วย
+          { wch: 15 },  // Conversion Rate
+          { wch: 15 }   // Converted Qty
+        ];
+
+        // Sheet name format: "DD-MM" (e.g., "15-Jan")
+        const dateObj = new Date(dailyData.date);
+        const sheetName = `${String(dateObj.getDate()).padStart(2, '0')}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`;
+
+        XLSX.utils.book_append_sheet(workbook, dailySheet, sheetName);
+      });
+    }
 
     XLSX.writeFile(workbook, outputPath);
     return outputPath;
