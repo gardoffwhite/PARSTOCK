@@ -1,4 +1,6 @@
 const express = require('express');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -11,9 +13,54 @@ const ParStockReader = require('./utils/parStockReader');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'parstock-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+
+// Authentication middleware for HTML pages
+function requireAuth(req, res, next) {
+  if (req.session && req.session.isAuthenticated) {
+    return next();
+  }
+  // Check if it's an API request
+  if (req.path.startsWith('/api')) {
+    return res.status(401).json({ error: 'กรุณาเข้าสู่ระบบก่อนใช้งาน' });
+  }
+  res.redirect('/login.html');
+}
+
+// Default credentials (Username: admin, Password: admin123)
+// In production, store these securely in a database
+const USERS = {
+  'admin': {
+    username: 'admin',
+    // Hash of 'admin123'
+    passwordHash: '$2a$10$XqW8LKZrJZQJKxZ5qC5YLOvKX9vW8VJY5gqH4Z1fJYK5YJYJYJYJYe'
+  }
+};
+
+// Serve static files AFTER authentication for protected routes
+app.use('/login.html', express.static('public'));
+app.use('/index.html', requireAuth, express.static('public'));
+app.use(express.static('public', {
+  index: false,
+  setHeaders: (res, path) => {
+    if (path.endsWith('.html') && !path.endsWith('login.html')) {
+      // Will be handled by middleware below
+    }
+  }
+}));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,8 +92,72 @@ if (!fs.existsSync(reportsDir)) {
   fs.mkdirSync(reportsDir, { recursive: true });
 }
 
-app.get('/', (req, res) => {
+// Routes
+app.get('/', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Login API
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ error: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน' });
+    }
+
+    const user = USERS[username];
+    if (!user) {
+      return res.status(401).json({ error: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
+    }
+
+    // Compare password
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isValid) {
+      return res.status(401).json({ error: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
+    }
+
+    // Set session
+    req.session.isAuthenticated = true;
+    req.session.username = username;
+
+    res.json({ success: true, message: 'เข้าสู่ระบบสำเร็จ' });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });
+  }
+});
+
+// Logout API
+app.post('/api/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'ไม่สามารถออกจากระบบได้' });
+    }
+    res.json({ success: true, message: 'ออกจากระบบสำเร็จ' });
+  });
+});
+
+// Check auth status
+app.get('/api/auth/status', (req, res) => {
+  if (req.session && req.session.isAuthenticated) {
+    res.json({
+      isAuthenticated: true,
+      username: req.session.username
+    });
+  } else {
+    res.json({ isAuthenticated: false });
+  }
+});
+
+// Protect all API routes (except login/logout/auth)
+app.use('/api', (req, res, next) => {
+  // Allow these public endpoints
+  if (req.path === '/login' || req.path === '/logout' || req.path.startsWith('/auth')) {
+    return next();
+  }
+  // Require authentication for all other API routes
+  return requireAuth(req, res, next);
 });
 
 // NEW API: Preview daily sale for conversion rate selection
