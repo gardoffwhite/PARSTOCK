@@ -1056,7 +1056,28 @@
         async function loadDateRangeForPar() {
             const parStartDate = document.getElementById('parPeriodSelect').value;
             if (parStartDate) {
-                document.getElementById('endDateSelect').value = new Date().toISOString().split('T')[0];
+                try {
+                    // Get PAR period date range
+                    const response = await fetch(`/api/dates-in-par-period/${parStartDate}`);
+                    const data = await response.json();
+
+                    if (response.ok && data.dateRange) {
+                        const { startDate, endDate } = data.dateRange;
+                        const endDateInput = document.getElementById('endDateSelect');
+
+                        // Set min and max date for the input
+                        endDateInput.min = startDate;
+                        endDateInput.max = endDate;
+
+                        // Set default to PAR period end date
+                        endDateInput.value = endDate;
+
+                        // Store PAR end date for validation
+                        endDateInput.dataset.parEndDate = endDate;
+                    }
+                } catch (error) {
+                    console.error('Error loading PAR date range:', error);
+                }
 
                 // Load transfer dates for this period
                 await loadTransferDatesForPeriod(parStartDate);
@@ -1121,7 +1142,8 @@
 
         async function loadSummary() {
             const parStartDate = document.getElementById('parPeriodSelect').value;
-            const endDate = document.getElementById('endDateSelect').value;
+            const endDateInput = document.getElementById('endDateSelect');
+            const endDate = endDateInput.value;
 
             if (!parStartDate) {
                 alert('กรุณาเลือก PAR Period');
@@ -1130,6 +1152,14 @@
 
             if (!endDate) {
                 alert('กรุณาเลือกวันที่สิ้นสุด');
+                return;
+            }
+
+            // Validate end date is within PAR period
+            const parEndDate = endDateInput.dataset.parEndDate;
+            if (parEndDate && endDate > parEndDate) {
+                alert(`⚠️ วันที่สิ้นสุดต้องไม่เกิน ${formatThaiDate(parEndDate)}\n\nเพื่อไม่ให้ข้อมูลปนกับ PAR Period ใหม่`);
+                endDateInput.value = parEndDate;
                 return;
             }
 
@@ -1158,7 +1188,8 @@
 
         async function exportSummaryToExcel() {
             const parStartDate = document.getElementById('parPeriodSelect').value;
-            const endDate = document.getElementById('endDateSelect').value;
+            const endDateInput = document.getElementById('endDateSelect');
+            const endDate = endDateInput.value;
 
             if (!parStartDate) {
                 showMessage('summaryMessage', 'กรุณาเลือก PAR Period', 'error');
@@ -1167,6 +1198,14 @@
 
             if (!endDate) {
                 showMessage('summaryMessage', 'กรุณาเลือกวันที่สิ้นสุด', 'error');
+                return;
+            }
+
+            // Validate end date is within PAR period
+            const parEndDate = endDateInput.dataset.parEndDate;
+            if (parEndDate && endDate > parEndDate) {
+                alert(`⚠️ วันที่สิ้นสุดต้องไม่เกิน ${formatThaiDate(parEndDate)}\n\nเพื่อไม่ให้ข้อมูลปนกับ PAR Period ใหม่`);
+                endDateInput.value = parEndDate;
                 return;
             }
 
