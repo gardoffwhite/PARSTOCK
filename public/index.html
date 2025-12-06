@@ -347,7 +347,6 @@
                             <th style="width: 50px;">#</th>
                             <th>ชื่อใน Daily Sale</th>
                             <th>➜ Match กับ PAR</th>
-                            <th>Category</th>
                             <th style="width: 100px; text-align: right;">จำนวน</th>
                             <th style="width: 180px;">Conversion Rate</th>
                         </tr>
@@ -861,7 +860,6 @@
                     <td>${index + 1}</td>
                     <td>${item.name}</td>
                     ${parMatchCell}
-                    <td>${item.category || '-'}</td>
                     <td style="text-align: right;">${item.qty.toFixed(2)}</td>
                     <td>
                         <select class="conversion-select" data-index="${index}" data-par-name="${parMatch || ''}">
