@@ -198,11 +198,47 @@ app.post('/api/preview-daily-sale', upload.single('file'), async (req, res) => {
           // Match sales items with PAR stock
           const NameMatching = require('./utils/nameMatching');
           const salesItems = result.data.map(item => ({ name: item.name }));
-          const matches = NameMatching.matchItems(salesItems, parStock.summary.items, 0.3);
+
+          // First, try to use matching history
+          const matchesWithHistory = salesItems.map(saleItem => {
+            const bestMatch = storage.getBestMatch(saleItem.name);
+
+            if (bestMatch) {
+              // Use historical match
+              return {
+                saleItem: saleItem.name,
+                matched: true,
+                matchedName: bestMatch.parName,
+                score: 1.0, // Perfect match from history
+                conversionRate: bestMatch.conversionRate,
+                unit: bestMatch.unit,
+                fromHistory: true,
+                allMatches: storage.getMatchingHistory(saleItem.name) // All variations
+              };
+            }
+
+            // No history, use fuzzy matching
+            return null;
+          });
+
+          // For items without history, use fuzzy matching
+          const itemsNeedingMatch = salesItems.filter((_, idx) => !matchesWithHistory[idx]);
+          let fuzzyMatches = [];
+
+          if (itemsNeedingMatch.length > 0) {
+            fuzzyMatches = NameMatching.matchItems(itemsNeedingMatch, parStock.summary.items, 0.3);
+          }
+
+          // Combine matches
+          let fuzzyIdx = 0;
+          const finalMatches = matchesWithHistory.map(match => {
+            if (match) return match;
+            return fuzzyMatches[fuzzyIdx++];
+          });
 
           parMatches = {
             parDate: selectedParDate,
-            matches: matches,
+            matches: finalMatches,
             parItems: parStock.summary.items  // Send all PAR items for dropdown
           };
         }
@@ -232,7 +268,7 @@ app.post('/api/preview-daily-sale', upload.single('file'), async (req, res) => {
 // NEW API: Save daily sale with conversion rates
 app.post('/api/save-daily-sale', async (req, res) => {
   try {
-    const { date, items, summary, conversionRates } = req.body;
+    const { date, items, summary, conversionRates, matchedItems } = req.body;
 
     if (!date || !items || !summary || !conversionRates) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -246,6 +282,20 @@ app.post('/api/save-daily-sale', async (req, res) => {
 
     const storage = new DataStorage();
     storage.saveDailySaleWithConversion(date, itemsWithConversion, summary, conversionRates);
+
+    // Save matching history for future use
+    if (matchedItems) {
+      matchedItems.forEach(match => {
+        if (match.matched && match.matchedName) {
+          storage.saveMatchingHistory(
+            match.saleItem,
+            match.matchedName,
+            match.conversionRate || 1,
+            match.unit || null
+          );
+        }
+      });
+    }
 
     res.json({
       success: true,

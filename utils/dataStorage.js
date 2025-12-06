@@ -11,6 +11,7 @@ class DataStorage {
     this.parStockFile = path.join(this.storageDir, 'par_stock.json');
     this.groupItemsFile = path.join(this.storageDir, 'group_items.json');
     this.dailyTransfersFile = path.join(this.storageDir, 'daily_transfers.json');
+    this.matchingHistoryFile = path.join(this.storageDir, 'matching_history.json');
 
     if (!fs.existsSync(this.storageDir)) {
       fs.mkdirSync(this.storageDir, { recursive: true });
@@ -34,6 +35,9 @@ class DataStorage {
     }
     if (!fs.existsSync(this.dailyTransfersFile)) {
       fs.writeFileSync(this.dailyTransfersFile, JSON.stringify({}));
+    }
+    if (!fs.existsSync(this.matchingHistoryFile)) {
+      fs.writeFileSync(this.matchingHistoryFile, JSON.stringify({}));
     }
   }
 
@@ -983,6 +987,76 @@ class DataStorage {
     }
 
     return false;
+  }
+
+  // ==================== Matching History ====================
+
+  loadMatchingHistory() {
+    try {
+      const data = fs.readFileSync(this.matchingHistoryFile, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      return {};
+    }
+  }
+
+  saveMatchingHistory(saleName, parName, conversionRate, unit = null) {
+    const history = this.loadMatchingHistory();
+
+    // Normalize sale name (lowercase, trim)
+    const normalizedSaleName = saleName.toLowerCase().trim();
+
+    // Initialize array if not exists
+    if (!history[normalizedSaleName]) {
+      history[normalizedSaleName] = [];
+    }
+
+    // Check if this exact match already exists
+    const existingIndex = history[normalizedSaleName].findIndex(
+      match => match.parName === parName &&
+               match.conversionRate === conversionRate &&
+               match.unit === unit
+    );
+
+    const matchData = {
+      parName: parName,
+      conversionRate: conversionRate,
+      unit: unit,
+      lastUsed: new Date().toISOString(),
+      useCount: 1
+    };
+
+    if (existingIndex >= 0) {
+      // Update existing match
+      history[normalizedSaleName][existingIndex].lastUsed = new Date().toISOString();
+      history[normalizedSaleName][existingIndex].useCount++;
+    } else {
+      // Add new match
+      history[normalizedSaleName].push(matchData);
+    }
+
+    fs.writeFileSync(this.matchingHistoryFile, JSON.stringify(history, null, 2));
+  }
+
+  getMatchingHistory(saleName) {
+    const history = this.loadMatchingHistory();
+    const normalizedSaleName = saleName.toLowerCase().trim();
+    return history[normalizedSaleName] || [];
+  }
+
+  getBestMatch(saleName) {
+    const matches = this.getMatchingHistory(saleName);
+    if (matches.length === 0) return null;
+
+    // Sort by use count (descending), then by last used (most recent first)
+    matches.sort((a, b) => {
+      if (b.useCount !== a.useCount) {
+        return b.useCount - a.useCount;
+      }
+      return new Date(b.lastUsed) - new Date(a.lastUsed);
+    });
+
+    return matches[0];
   }
 }
 
