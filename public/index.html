@@ -335,10 +335,9 @@
 
             <!-- Conversion Rate Selection Table -->
             <div id="conversionSection" style="display: none;">
-                <h3 style="color: #667eea; margin-bottom: 15px;">🔧 ตั้งค่า Conversion Rate และยืนยันการ Match ชื่อ</h3>
+                <h3 style="color: #667eea; margin-bottom: 15px;">🔧 ตรวจสอบความถูกต้อง</h3>
                 <p style="color: #666; margin-bottom: 15px;">
-                    ระบบได้ทำ fuzzy matching กับ PAR Stock และตรวจจับ conversion rate เบื้องต้นให้แล้ว
-                    กรุณาตรวจสอบและแก้ไขหากจำเป็น
+                    ระบบได้จับคู่ชื่อที่ใกล้เคียงไว้เบื้องต้น กรุณาตรวจสอบและแก้ไขความถูกต้องทุกครั้ง
                 </p>
 
                 <table class="conversion-table" id="conversionTable">
@@ -851,8 +850,8 @@
                 let parMatchCell;
                 if (data.parMatches && data.parMatches.parItems) {
                     const parItems = data.parMatches.parItems;
-                    const options = parItems.map(p =>
-                        `<option value="${p.name}" ${p.name === parMatch ? 'selected' : ''}>${p.name}</option>`
+                    const datalistOptions = parItems.map(p =>
+                        `<option value="${p.name}">`
                     ).join('');
 
                     parMatchCell = `
@@ -864,11 +863,17 @@
                                     ▼ แก้ไข
                                 </button>
                             </div>
-                            <select class="par-select-dropdown" data-index="${index}"
-                                style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 13px; cursor: pointer; display: none; margin-top: 4px;">
-                                ${!parMatch ? '<option value="">⚠️ เลือก PAR item...</option>' : ''}
-                                ${options}
-                            </select>
+                            <input
+                                type="text"
+                                class="par-input-autocomplete"
+                                data-index="${index}"
+                                list="parlist-${index}"
+                                value="${parMatch || ''}"
+                                placeholder="พิมพ์เพื่อค้นหา PAR item..."
+                                style="width: 100%; padding: 6px; border: 2px solid #667eea; border-radius: 5px; font-size: 13px; display: none; margin-top: 4px;">
+                            <datalist id="parlist-${index}">
+                                ${datalistOptions}
+                            </datalist>
                         </td>
                     `;
                 } else {
@@ -885,18 +890,18 @@
                     <td style="text-align: right;">${item.qty.toFixed(2)}</td>
                     <td>
                         <select class="conversion-select" data-index="${index}" data-par-name="${parMatch || ''}">
-                            <option value="1" ${autoRate === 1 ? 'selected' : ''}>🍾 1/1 (1.0) - Bottle</option>
-                            <option value="0.2" ${autoRate === 0.2 ? 'selected' : ''}>🍷 1/5 (0.2) - Wine by glass</option>
-                            <option value="0.142857" ${Math.abs(autoRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 (0.143) - Wine pairing</option>
-                            <option value="0.0625" ${Math.abs(autoRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 (0.063) - 50cl Spirit</option>
-                            <option value="0.05" ${Math.abs(autoRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20 (0.050)</option>
-                            <option value="0.04347826087" ${Math.abs(autoRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃70 1/23 (0.043) - 70cl 2Oz</option>
-                            <option value="0.04" ${Math.abs(autoRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃75 1/25 (0.040) - 75cl 2Oz</option>
-                            <option value="0.0303030303" ${Math.abs(autoRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 (0.030) - 1L 2Oz</option>
-                            <option value="0.125" ${Math.abs(autoRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 (0.125) - 50cl 2Oz</option>
-                            <option value="0.087" ${Math.abs(autoRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃70 2/23 (0.087) - 70cl 2Oz</option>
-                            <option value="0.08" ${Math.abs(autoRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃75 2/25 (0.080) - 75cl 2Oz</option>
-                            <option value="0.0606" ${Math.abs(autoRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 (0.061) - 1L 2Oz</option>
+                            <option value="1" ${autoRate === 1 ? 'selected' : ''}>🍾 1/1 Bottle</option>
+                            <option value="0.2" ${autoRate === 0.2 ? 'selected' : ''}>🍷 1/5 Wine by glass</option>
+                            <option value="0.142857" ${Math.abs(autoRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 Wine pairing</option>
+                            <option value="0.0625" ${Math.abs(autoRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 50cl Spirit</option>
+                            <option value="0.05" ${Math.abs(autoRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20</option>
+                            <option value="0.04347826087" ${Math.abs(autoRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃 1/23 70cl 2Oz</option>
+                            <option value="0.04" ${Math.abs(autoRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃 1/25 75cl 2Oz</option>
+                            <option value="0.0303030303" ${Math.abs(autoRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 1L 2Oz</option>
+                            <option value="0.125" ${Math.abs(autoRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 50cl 2Oz</option>
+                            <option value="0.087" ${Math.abs(autoRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃 2/23 70cl 2Oz</option>
+                            <option value="0.08" ${Math.abs(autoRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃 2/25 75cl 2Oz</option>
+                            <option value="0.0606" ${Math.abs(autoRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 1L 2Oz</option>
                         </select>
                     </td>
                 `;
@@ -908,21 +913,39 @@
             document.querySelectorAll('.edit-par-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const index = this.getAttribute('data-index');
-                    const dropdown = document.querySelector(`.par-select-dropdown[data-index="${index}"]`);
+                    const inputField = document.querySelector(`.par-input-autocomplete[data-index="${index}"]`);
 
-                    if (dropdown.style.display === 'none') {
-                        dropdown.style.display = 'block';
+                    if (inputField.style.display === 'none') {
+                        inputField.style.display = 'block';
+                        inputField.focus(); // Auto-focus on the input
                         this.textContent = '▲ ซ่อน';
                     } else {
-                        dropdown.style.display = 'none';
+                        inputField.style.display = 'none';
                         this.textContent = '▼ แก้ไข';
                     }
                 });
             });
 
-            // Add event listeners for dropdown changes
-            document.querySelectorAll('.par-select-dropdown').forEach(select => {
-                select.addEventListener('change', function() {
+            // Add event listeners for input changes
+            document.querySelectorAll('.par-input-autocomplete').forEach(input => {
+                input.addEventListener('change', function() {
+                    const index = this.getAttribute('data-index');
+                    const newValue = this.value;
+                    const displaySpan = this.parentElement.querySelector('.par-name-display');
+
+                    if (displaySpan) {
+                        displaySpan.textContent = newValue || '⚠️ ไม่พบใน PAR';
+                    }
+
+                    // Update the conversion select's data attribute
+                    const conversionSelect = document.querySelector(`.conversion-select[data-index="${index}"]`);
+                    if (conversionSelect) {
+                        conversionSelect.setAttribute('data-par-name', newValue);
+                    }
+                });
+
+                // Also update on blur (when user clicks away)
+                input.addEventListener('blur', function() {
                     const index = this.getAttribute('data-index');
                     const newValue = this.value;
                     const displaySpan = this.parentElement.querySelector('.par-name-display');
@@ -953,10 +976,10 @@
                 let parName = select.getAttribute('data-par-name');
                 const originalItem = dailySalesData.items[index];
 
-                // Check if user selected a PAR item from dropdown
-                const parDropdown = document.querySelector(`.par-select-dropdown[data-index="${index}"]`);
-                if (parDropdown && parDropdown.value.trim()) {
-                    parName = parDropdown.value.trim();
+                // Check if user entered a PAR item in the input field
+                const parInput = document.querySelector(`.par-input-autocomplete[data-index="${index}"]`);
+                if (parInput && parInput.value.trim()) {
+                    parName = parInput.value.trim();
                 }
 
                 // Use PAR name if available, otherwise keep original name
@@ -2350,18 +2373,18 @@
                         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${item.qty}</td>
                         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
                             <select class="transfer-conversion-select" data-index="${index}" onchange="updateTransferFinalQty(${index})" ${isViewMode ? 'disabled' : ''}>
-                                <option value="1" ${Math.abs(savedConversionRate - 1) < 0.0001 ? 'selected' : ''}>🍾 1/1 (1.0) - Bottle</option>
-                                <option value="0.2" ${Math.abs(savedConversionRate - 0.2) < 0.0001 ? 'selected' : ''}>🍷 1/5 (0.2) - Wine by glass</option>
-                                <option value="0.142857" ${Math.abs(savedConversionRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 (0.143) - Wine pairing</option>
-                                <option value="0.0625" ${Math.abs(savedConversionRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 (0.063) - 50cl Spirit</option>
-                                <option value="0.05" ${Math.abs(savedConversionRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20 (0.050)</option>
-                                <option value="0.04347826087" ${Math.abs(savedConversionRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃70 1/23 (0.043) - 70cl 2Oz</option>
-                                <option value="0.04" ${Math.abs(savedConversionRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃75 1/25 (0.040) - 75cl 2Oz</option>
-                                <option value="0.0303030303" ${Math.abs(savedConversionRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 (0.030) - 1L 2Oz</option>
-                                <option value="0.125" ${Math.abs(savedConversionRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 (0.125) - 50cl 2Oz</option>
-                                <option value="0.087" ${Math.abs(savedConversionRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃70 2/23 (0.087) - 70cl 2Oz</option>
-                                <option value="0.08" ${Math.abs(savedConversionRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃75 2/25 (0.080) - 75cl 2Oz</option>
-                                <option value="0.0606" ${Math.abs(savedConversionRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 (0.061) - 1L 2Oz</option>
+                                <option value="1" ${Math.abs(savedConversionRate - 1) < 0.0001 ? 'selected' : ''}>🍾 1/1 Bottle</option>
+                                <option value="0.2" ${Math.abs(savedConversionRate - 0.2) < 0.0001 ? 'selected' : ''}>🍷 1/5 Wine by glass</option>
+                                <option value="0.142857" ${Math.abs(savedConversionRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 Wine pairing</option>
+                                <option value="0.0625" ${Math.abs(savedConversionRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 50cl Spirit</option>
+                                <option value="0.05" ${Math.abs(savedConversionRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20</option>
+                                <option value="0.04347826087" ${Math.abs(savedConversionRate - 0.04347826087) < 0.0001 ? 'selected' : ''}>🥃 1/23 70cl 2Oz</option>
+                                <option value="0.04" ${Math.abs(savedConversionRate - 0.04) < 0.0001 ? 'selected' : ''}>🥃 1/25 75cl 2Oz</option>
+                                <option value="0.0303030303" ${Math.abs(savedConversionRate - 0.0303030303) < 0.0001 ? 'selected' : ''}>🥃 1/33 1L 2Oz</option>
+                                <option value="0.125" ${Math.abs(savedConversionRate - 0.125) < 0.0001 ? 'selected' : ''}>🥃 2/16 50cl 2Oz</option>
+                                <option value="0.087" ${Math.abs(savedConversionRate - 0.087) < 0.0001 ? 'selected' : ''}>🥃 2/23 70cl 2Oz</option>
+                                <option value="0.08" ${Math.abs(savedConversionRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃 2/25 75cl 2Oz</option>
+                                <option value="0.0606" ${Math.abs(savedConversionRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 1L 2Oz</option>
                             </select>
                         </td>
                         <td id="transfer-final-qty-${index}" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: ${directionColor}; font-weight: bold;">
