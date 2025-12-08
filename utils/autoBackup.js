@@ -86,15 +86,19 @@ ${status.trim()}
    */
   async restoreFromGitHub() {
     try {
+      console.log('🔄 Starting auto-restore check...');
+
       // Check if git is initialized
       const gitDir = path.join(__dirname, '..', '.git');
       if (!fs.existsSync(gitDir)) {
         console.log('⚠️ Git not initialized, skipping restore');
         return false;
       }
+      console.log('✓ Git initialized');
 
       // Check if storage directory exists and has files
       if (!fs.existsSync(this.storageDir)) {
+        console.log('📁 Creating storage directory...');
         fs.mkdirSync(this.storageDir, { recursive: true });
       }
 
@@ -103,36 +107,44 @@ ${status.trim()}
 
       if (hasData) {
         console.log('✓ Storage data already exists, no restore needed');
+        console.log(`📊 Found ${files.length} files in storage`);
         return true;
       }
 
       // Storage is empty, restore from git
-      console.log('📦 Storage is empty, restoring from GitHub...');
+      console.log('📦 Storage is empty, attempting restore from GitHub...');
 
       // Check if remote origin exists
       try {
-        execSync('git remote get-url origin', {
+        const remoteUrl = execSync('git remote get-url origin', {
           cwd: path.join(__dirname, '..'),
           encoding: 'utf-8'
-        });
+        }).trim();
+        console.log('✓ Remote origin found:', remoteUrl.replace(/\/\/.*@/, '//***@')); // Hide credentials
       } catch (remoteError) {
         console.log('⚠️ No remote origin configured, skipping restore');
+        console.log('💡 This is normal for local development');
         return false;
       }
 
       // Pull latest changes from remote
       try {
+        console.log('🔽 Fetching from GitHub...');
         execSync('git fetch origin', {
           cwd: path.join(__dirname, '..'),
-          timeout: 30000 // 30 second timeout
+          timeout: 30000, // 30 second timeout
+          stdio: 'inherit' // Show git output
         });
 
+        console.log('📥 Checking out storage files...');
         execSync('git checkout origin/main -- storage/', {
           cwd: path.join(__dirname, '..'),
           timeout: 10000
         });
 
+        const restoredFiles = fs.readdirSync(this.storageDir);
         console.log('✅ Storage restored from GitHub successfully');
+        console.log(`📊 Restored ${restoredFiles.length} files:`, restoredFiles.join(', '));
         return true;
       } catch (restoreError) {
         console.warn('⚠️ Could not restore from GitHub:', restoreError.message);
@@ -142,6 +154,7 @@ ${status.trim()}
 
     } catch (error) {
       console.error('❌ Restore failed:', error.message);
+      console.error('Stack trace:', error.stack);
       return false;
     }
   }
