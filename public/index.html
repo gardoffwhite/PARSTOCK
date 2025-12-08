@@ -1240,7 +1240,7 @@
             const loading = document.getElementById('dailyLoading');
             const message = document.getElementById('dailyMessage');
 
-            loading.style.display = 'block';
+            if (loading) loading.style.display = 'block';
 
             try {
                 const response = await fetch('/api/save-daily-sale', {
@@ -1260,15 +1260,23 @@
                     throw new Error(data.error || 'เกิดข้อผิดพลาด');
                 }
 
-                message.className = 'message success';
-                message.textContent = `✅ บันทึกข้อมูลยอดขายวันที่ ${formatThaiDate(dailySalesData.date)} สำเร็จ!`;
-                message.style.display = 'block';
+                if (message) {
+                    message.className = 'message success';
+                    message.textContent = `✅ บันทึกข้อมูลยอดขายวันที่ ${formatThaiDate(dailySalesData.date)} สำเร็จ!`;
+                    message.style.display = 'block';
+                }
 
                 // Reset
-                document.getElementById('conversionSection').style.display = 'none';
-                document.getElementById('dailyFileInput').value = '';
-                document.getElementById('uploadDailyBtn').disabled = true;
-                document.querySelector('.upload-text').textContent = 'คลิกเพื่อเลือกไฟล์ Excel ยอดขาย';
+                const conversionSection = document.getElementById('conversionSection');
+                const dailyFileInput = document.getElementById('dailyFileInput');
+                const uploadDailyBtn = document.getElementById('uploadDailyBtn');
+                const uploadText = document.querySelector('.upload-text');
+
+                if (conversionSection) conversionSection.style.display = 'none';
+                if (dailyFileInput) dailyFileInput.value = '';
+                if (uploadDailyBtn) uploadDailyBtn.disabled = true;
+                if (uploadText) uploadText.textContent = 'คลิกเพื่อเลือกไฟล์ Excel ยอดขาย';
+
                 dailySalesData = null;
                 selectedDailyFile = null;
 
@@ -1276,11 +1284,13 @@
                 await loadDailySaleDates();
 
             } catch (error) {
-                message.className = 'message error';
-                message.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
-                message.style.display = 'block';
+                if (message) {
+                    message.className = 'message error';
+                    message.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
+                    message.style.display = 'block';
+                }
             } finally {
-                loading.style.display = 'none';
+                if (loading) loading.style.display = 'none';
             }
         }
 
