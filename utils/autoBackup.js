@@ -109,6 +109,17 @@ ${status.trim()}
       // Storage is empty, restore from git
       console.log('📦 Storage is empty, restoring from GitHub...');
 
+      // Check if remote origin exists
+      try {
+        execSync('git remote get-url origin', {
+          cwd: path.join(__dirname, '..'),
+          encoding: 'utf-8'
+        });
+      } catch (remoteError) {
+        console.log('⚠️ No remote origin configured, skipping restore');
+        return false;
+      }
+
       // Pull latest changes from remote
       try {
         execSync('git fetch origin', {
