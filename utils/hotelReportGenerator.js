@@ -691,13 +691,14 @@ class HotelReportGenerator {
 
       // ชื่อสินค้าและการจับคู่
       let nameDisplay = item.name;
-      if (item.matchedName) {
-        const matchScorePercent = (item.matchScore * 100).toFixed(0);
-        let matchClass = 'match-score';
-        if (item.matchScore < 0.7) matchClass += ' low';
-        else if (item.matchScore < 0.85) matchClass += ' medium';
 
-        nameDisplay += `<br><span class="matched-name">→ ${item.matchedName} <span class="${matchClass}">${matchScorePercent}% match</span></span>`;
+      // แสดง originalNames ทั้งหมดที่ match กับ PAR item นี้
+      if (item.originalNames && item.originalNames.length > 0) {
+        const uniqueNames = [...new Set(item.originalNames)]; // Remove duplicates
+        const namesHtml = uniqueNames.map(name =>
+          `<span class="matched-name">← ${name}</span>`
+        ).join('<br>');
+        nameDisplay += `<br>${namesHtml}`;
       }
 
       // Category badge

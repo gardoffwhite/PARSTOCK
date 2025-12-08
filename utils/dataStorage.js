@@ -323,7 +323,8 @@ class DataStorage {
             salesInPeriod[item.name] = {
               qty: 0,
               category: item.category || '',
-              conversionRate: item.conversionRate || null
+              conversionRate: item.conversionRate || null,
+              originalNames: [] // เก็บชื่อ Daily Sale ทั้งหมดที่ match กับ PAR นี้
             };
           }
           salesInPeriod[item.name].qty += item.qty;
@@ -332,6 +333,17 @@ class DataStorage {
           }
           if (item.conversionRate && !salesInPeriod[item.name].conversionRate) {
             salesInPeriod[item.name].conversionRate = item.conversionRate;
+          }
+
+          // เก็บ originalNames ทั้งหมด (จาก originalNames array หรือ originalName เดี่ยว)
+          if (item.originalNames && Array.isArray(item.originalNames)) {
+            item.originalNames.forEach(origName => {
+              if (!salesInPeriod[item.name].originalNames.includes(origName)) {
+                salesInPeriod[item.name].originalNames.push(origName);
+              }
+            });
+          } else if (item.originalName && !salesInPeriod[item.name].originalNames.includes(item.originalName)) {
+            salesInPeriod[item.name].originalNames.push(item.originalName);
           }
         });
       }
@@ -364,29 +376,19 @@ class DataStorage {
       }
     }
 
-    // จับคู่ชื่อระหว่าง PAR Stock และ Sales
-    const salesItems = Object.keys(salesInPeriod).map(name => ({ name }));
-    const matches = NameMatching.matchItems(parStock.summary.items, salesItems, 0.6);
-
-    // สร้าง mapping สำหรับ matched names
-    const nameMapping = {};
-    matches.forEach(match => {
-      if (match.matched) {
-        nameMapping[match.parName] = match.salesName;
-      }
-    });
-
     // เปรียบเทียบ PAR กับยอดขาย + Transfer
+    // ไม่ต้อง match อีกครั้ง เพราะ salesInPeriod และ transfersInPeriod ใช้ชื่อ PAR เป็น key อยู่แล้ว
     const comparison = [];
     parStock.summary.items.forEach(parItem => {
-      const matchedName = nameMapping[parItem.name] || parItem.name;
-      const salesData = salesInPeriod[matchedName] || { qty: 0, category: '', conversionRate: null };
-      const transferData = transfersInPeriod[matchedName] || { qty: 0, category: '' };
+      // ใช้ชื่อ PAR โดยตรงในการหายอดขาย (เพราะ Daily Sale ที่บันทึกไว้ใช้ชื่อ PAR แล้ว)
+      const salesData = salesInPeriod[parItem.name] || { qty: 0, category: '', conversionRate: null, originalNames: [] };
+      const transferData = transfersInPeriod[parItem.name] || { qty: 0, category: '' };
 
       const soldQty = salesData.qty;
       const transferQty = transferData.qty; // มีเครื่องหมาย: + สำหรับ IN, - สำหรับ OUT
       const category = salesData.category || transferData.category;
       const userConversionRate = salesData.conversionRate;
+      const originalNames = salesData.originalNames || []; // ชื่อ Daily Sale ทั้งหมดที่ match
 
       // คำนวณ conversion: ใช้ user-selected rate ถ้ามี ไม่งั้นใช้ auto-detect
       let conversion;
@@ -397,7 +399,7 @@ class DataStorage {
           unit: 'ขวด'
         };
       } else {
-        conversion = ConversionUnit.convertQty(soldQty, category, matchedName);
+        conversion = ConversionUnit.convertQty(soldQty, category, parItem.name);
       }
 
       const convertedSoldQty = conversion.convertedQty !== null ? conversion.convertedQty : soldQty;
@@ -409,8 +411,6 @@ class DataStorage {
 
       comparison.push({
         name: parItem.name,
-        matchedName: matchedName !== parItem.name ? matchedName : null,
-        matchScore: nameMapping[parItem.name] ? matches.find(m => m.parName === parItem.name)?.matchScore : 1,
         category: category,
         parStock: parItem.parStock,
         soldQty: soldQty,
@@ -420,7 +420,8 @@ class DataStorage {
         unit: conversion.unit,
         remaining: remaining,
         usagePercent: usagePercent,
-        needsReorder: remaining < (parItem.parStock * 0.2)
+        needsReorder: remaining < (parItem.parStock * 0.2),
+        originalNames: originalNames // ชื่อ Daily Sale ทั้งหมดที่ match กับ PAR item นี้
       });
     });
 
@@ -584,33 +585,8 @@ class DataStorage {
       }
     }
 
-    // Match PAR items with sales (bidirectional fuzzy matching)
-    const salesItems = Object.keys(salesInPeriod).map(name => ({ name }));
-    const parToSalesMatches = NameMatching.matchItems(parStock.summary.items, salesItems, 0.6);
-
-    const nameMapping = {}; // par -> sales
-    const reverseNameMapping = {}; // sales -> par
-
-    // First pass: PAR to Sales matching
-    parToSalesMatches.forEach(match => {
-      if (match.matched) {
-        nameMapping[match.parName] = match.salesName;
-        reverseNameMapping[match.salesName] = match.parName;
-      }
-    });
-
-    // Second pass: Sales to PAR matching (for unmatched sales items)
-    const salesToParMatches = NameMatching.matchItems(salesItems, parStock.summary.items, 0.6);
-    salesToParMatches.forEach(match => {
-      if (match.matched && !reverseNameMapping[match.parName]) {
-        // Only add if this sales item wasn't already matched
-        reverseNameMapping[match.parName] = match.salesName;
-        // Also update the reverse mapping
-        if (!nameMapping[match.salesName]) {
-          nameMapping[match.salesName] = match.parName;
-        }
-      }
-    });
+    // ไม่ต้อง match อีกครั้ง เพราะ salesInPeriod และ transfersInPeriod ใช้ชื่อ PAR เป็น key อยู่แล้ว
+    // Daily Sale ที่บันทึกไว้ใช้ชื่อ PAR แล้ว ไม่ต้อง fuzzy matching
 
     // Calculate comparison for PAR items
     const comparison = [];
@@ -620,24 +596,17 @@ class DataStorage {
     let totalUsagePercent = 0;
 
     parStock.summary.items.forEach(parItem => {
-      const matchedName = nameMapping[parItem.name] || parItem.name;
-      const salesData = salesInPeriod[matchedName] || { qty: 0, category: '', conversionRate: 1 };
-      const transferData = transfersInPeriod[matchedName] || { qty: 0, category: '' };
+      // ใช้ชื่อ PAR โดยตรง (เพราะ Daily Sale ที่บันทึกไว้ใช้ชื่อ PAR แล้ว)
+      const salesData = salesInPeriod[parItem.name] || { qty: 0, category: '', conversionRate: 1 };
+      const transferData = transfersInPeriod[parItem.name] || { qty: 0, category: '' };
       const soldQty = salesData.qty;
       const transferQty = transferData.qty;
       const conversionRate = salesData.conversionRate;
 
       // Mark this sales item as matched
-      if (salesInPeriod[matchedName]) {
-        matchedSalesNames.add(matchedName);
+      if (salesInPeriod[parItem.name]) {
+        matchedSalesNames.add(parItem.name);
       }
-
-      // Also check if any sales items matched to this PAR item
-      Object.keys(reverseNameMapping).forEach(salesName => {
-        if (reverseNameMapping[salesName] === parItem.name) {
-          matchedSalesNames.add(salesName);
-        }
-      });
 
       // Apply conversion and include transfer
       const convertedSoldQty = soldQty * conversionRate;
@@ -650,7 +619,6 @@ class DataStorage {
 
       comparison.push({
         name: parItem.name,
-        matchedName: matchedName !== parItem.name ? matchedName : null,
         category: salesData.category,
         parStock: parItem.parStock,
         soldQty: soldQty,
