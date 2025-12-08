@@ -9,6 +9,7 @@ const HotelExcelReader = require('./utils/hotelExcelReader');
 const HotelReportGenerator = require('./utils/hotelReportGenerator');
 const DataStorage = require('./utils/dataStorage');
 const ParStockReader = require('./utils/parStockReader');
+const AutoBackup = require('./utils/autoBackup');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -265,6 +266,121 @@ app.post('/api/preview-daily-sale', upload.single('file'), async (req, res) => {
   }
 });
 
+// NEW API: Get real-time PAR stock levels
+app.post('/api/get-realtime-par', async (req, res) => {
+  try {
+    const { parNames, date } = req.body;
+
+    if (!parNames || !Array.isArray(parNames)) {
+      return res.status(400).json({ error: 'Missing parNames array' });
+    }
+
+    const storage = new DataStorage();
+    const parPeriods = storage.getAllParStockPeriods();
+
+    if (!parPeriods || parPeriods.length === 0) {
+      return res.json({ stocks: {} });
+    }
+
+    // Find the most recent PAR period that is <= the given date
+    // parPeriods is sorted in reverse chronological order (newest first)
+    let selectedParDate = null;
+
+    if (!date) {
+      // If no date specified, use the most recent PAR
+      selectedParDate = parPeriods[0];
+    } else {
+      // Find the most recent PAR that is on or before the given date
+      for (const parDate of parPeriods) {
+        if (parDate <= date) {
+          selectedParDate = parDate;
+          break;
+        }
+      }
+    }
+
+    if (!selectedParDate) {
+      return res.json({ stocks: {} });
+    }
+
+    const parStock = storage.getParStock(selectedParDate);
+    if (!parStock) {
+      console.log(`No PAR stock found for date: ${selectedParDate}`);
+      return res.json({ stocks: {} });
+    }
+
+    console.log(`Using PAR stock from: ${selectedParDate}, Total items: ${parStock.items?.length || 0}`);
+
+    // Get all daily sales in this PAR period
+    const allDailySales = storage.loadDailyData();
+    let totalSales = {};
+
+    // Calculate total sales for each item up to the given date
+    for (const [saleDate, dailySale] of Object.entries(allDailySales)) {
+      if (saleDate >= selectedParDate && (!date || saleDate <= date)) {
+        if (dailySale && dailySale.items) {
+          dailySale.items.forEach(item => {
+            const itemName = item.name;
+            const qty = item.qty * (item.conversionRate || 1);
+            totalSales[itemName] = (totalSales[itemName] || 0) + qty;
+          });
+        }
+      }
+    }
+
+    // Get transfers
+    const allTransfers = storage.loadDailyTransfers();
+    let totalTransfers = {};
+
+    for (const [transferDate, transfer] of Object.entries(allTransfers)) {
+      if (transferDate >= selectedParDate && (!date || transferDate <= date)) {
+        if (transfer && transfer.items) {
+          transfer.items.forEach(item => {
+            const itemName = item.name;
+            const qty = item.finalQty; // Already has direction (+/-)
+            totalTransfers[itemName] = (totalTransfers[itemName] || 0) + qty;
+          });
+        }
+      }
+    }
+
+    // Calculate real-time stock for each requested PAR name
+    const stocks = {};
+    parNames.forEach(parName => {
+      if (!parName) return;
+
+      // Find item in PAR stock
+      const parItem = parStock.items.find(item => item.name === parName);
+      if (parItem) {
+        const openingStock = parseFloat(parItem.parStock || parItem.qty) || 0;
+        const sales = totalSales[parName] || 0;
+        const transfers = totalTransfers[parName] || 0;
+
+        // Formula: Opening Stock - Sales + Transfers
+        const currentStock = openingStock - sales + transfers;
+
+        console.log(`Item: ${parName}, Opening: ${openingStock}, Sales: ${sales}, Transfers: ${transfers}, Current: ${currentStock}`);
+
+        stocks[parName] = {
+          opening: openingStock,
+          sales: sales,
+          transfers: transfers,
+          current: currentStock
+        };
+      } else {
+        console.log(`Item NOT FOUND in PAR: ${parName}`);
+        console.log(`Available PAR items (first 5):`, parStock.items.slice(0, 5).map(i => i.name));
+      }
+    });
+
+    res.json({ stocks, parPeriod: selectedParDate });
+
+  } catch (error) {
+    console.error('Get realtime PAR error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // NEW API: Save daily sale with conversion rates
 app.post('/api/save-daily-sale', async (req, res) => {
   try {
@@ -294,6 +410,14 @@ app.post('/api/save-daily-sale', async (req, res) => {
             match.unit || null
           );
         }
+      });
+    }
+
+    // Auto-backup to GitHub
+    const autoBackup = new AutoBackup();
+    if (autoBackup.isEnabled()) {
+      autoBackup.backupToGitHub(`Save Daily Sale (${date})`).catch(err => {
+        console.error('Backup warning:', err.message);
       });
     }
 
@@ -616,6 +740,14 @@ app.post('/api/upload-par', upload.single('file'), async (req, res) => {
 
     fs.unlinkSync(req.file.path);
 
+    // Auto-backup to GitHub
+    const autoBackup = new AutoBackup();
+    if (autoBackup.isEnabled()) {
+      autoBackup.backupToGitHub(`Upload PAR Stock (${startDate})`).catch(err => {
+        console.error('Backup warning:', err.message);
+      });
+    }
+
     res.json({
       success: true,
       message: 'PAR Stock uploaded successfully',
@@ -760,6 +892,14 @@ app.post('/api/group-items', (req, res) => {
       subItems
     });
 
+    // Auto-backup to GitHub
+    const autoBackup = new AutoBackup();
+    if (autoBackup.isEnabled()) {
+      autoBackup.backupToGitHub(`Create Group Item: ${name}`).catch(err => {
+        console.error('Backup warning:', err.message);
+      });
+    }
+
     res.json({ success: true, item: newGroupItem });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -777,6 +917,14 @@ app.put('/api/group-items/:id', (req, res) => {
       description,
       subItems
     });
+
+    // Auto-backup to GitHub
+    const autoBackup = new AutoBackup();
+    if (autoBackup.isEnabled()) {
+      autoBackup.backupToGitHub(`Update Group Item: ${name || req.params.id}`).catch(err => {
+        console.error('Backup warning:', err.message);
+      });
+    }
 
     res.json({ success: true, item: updatedItem });
   } catch (error) {
@@ -854,6 +1002,14 @@ app.post('/api/save-daily-transfer', (req, res) => {
     }
 
     const result = dataStorage.saveDailyTransfer(date, items, direction);
+
+    // Auto-backup to GitHub
+    const autoBackup = new AutoBackup();
+    if (autoBackup.isEnabled()) {
+      autoBackup.backupToGitHub(`Save Daily Transfer (${date}, ${direction})`).catch(err => {
+        console.error('Backup warning:', err.message);
+      });
+    }
 
     res.json({
       success: true,
