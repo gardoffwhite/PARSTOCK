@@ -1,0 +1,289 @@
+{
+  "2025-11-29": {
+    "date": "2025-11-29",
+    "uploadedAt": "2025-12-08T17:31:37.096Z",
+    "summary": {
+      "date": "2025-11-29",
+      "totalQty": 31,
+      "totalItems": 16,
+      "allItems": [
+        {
+          "name": "Wine Pairing 5 Glasses",
+          "category": "",
+          "totalQty": 4
+        },
+        {
+          "name": "3.Domaene Gobelsburg Riesling",
+          "category": "",
+          "totalQty": 4
+        },
+        {
+          "name": "12.Massolino Moscato",
+          "category": "",
+          "totalQty": 4
+        },
+        {
+          "name": "1.Rabl Gruner Veltliner",
+          "category": "",
+          "totalQty": 3
+        },
+        {
+          "name": "5.Au Bon",
+          "category": "",
+          "totalQty": 3
+        },
+        {
+          "name": "9.Vina Ardanza Reserva",
+          "category": "",
+          "totalQty": 3
+        },
+        {
+          "name": "Chatri IPA",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "SAY PLAY NANO IPA",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "Sato Kaowong Stick Rice-Bottle",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "WWG Domaine Christian Moreau Chablis",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "RWG Ruffino Riserva Ducale, Chianti",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "RWG Montes Alpha Malbec",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "Crémant Paul-Edouard d’Alsace Extra Brut",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "2.Granmonte Viognier",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "6. Whispering Angel Rose",
+          "category": "",
+          "totalQty": 1
+        },
+        {
+          "name": "10.La Closerie des Thorins",
+          "category": "",
+          "totalQty": 1
+        }
+      ]
+    },
+    "items": [
+      {
+        "name": "Beer, Chatri, 33cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "Chatri IPA",
+        "conversionRate": 1,
+        "originalNames": [
+          "Chatri IPA"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Beer SAY PLAY NANO IPA (Non Alcoholic) 330ml.",
+        "qty": 1,
+        "category": "",
+        "originalName": "SAY PLAY NANO IPA",
+        "conversionRate": 1,
+        "originalNames": [
+          "SAY PLAY NANO IPA"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "qty": 1,
+        "category": "",
+        "originalName": "Sato Kaowong Stick Rice-Bottle",
+        "conversionRate": 0.18,
+        "originalNames": [
+          "Sato Kaowong Stick Rice-Bottle"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "White wine, Domaine Christian Moreau Vaillons, chablis premier cru, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "WWG Domaine Christian Moreau Chablis",
+        "conversionRate": 0.2,
+        "originalNames": [
+          "WWG Domaine Christian Moreau Chablis"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "RWG Ruffino Riserva Ducale, Chianti",
+        "conversionRate": 0.2,
+        "originalNames": [
+          "RWG Ruffino Riserva Ducale, Chianti"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Red wine, Montes Alpha, Malbec, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "RWG Montes Alpha Malbec",
+        "conversionRate": 0.2,
+        "originalNames": [
+          "RWG Montes Alpha Malbec"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "qty": 1,
+        "category": "",
+        "originalName": "Crémant Paul-Edouard d’Alsace Extra Brut",
+        "conversionRate": 1,
+        "originalNames": [
+          "Crémant Paul-Edouard d’Alsace Extra Brut"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Wine Pairing 5 Glasses",
+        "qty": 4,
+        "category": "",
+        "originalName": "Wine Pairing 5 Glasses",
+        "conversionRate": 1,
+        "originalNames": [
+          "Wine Pairing 5 Glasses"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "qty": 3,
+        "category": "",
+        "originalName": "1.Rabl Gruner Veltliner",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "1.Rabl Gruner Veltliner"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "qty": 4,
+        "category": "",
+        "originalName": "3.Domaene Gobelsburg Riesling",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "3.Domaene Gobelsburg Riesling"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "White wine, Au Bon Climat Chardonnay",
+        "qty": 3,
+        "category": "",
+        "originalName": "5.Au Bon",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "5.Au Bon"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "qty": 3,
+        "category": "",
+        "originalName": "9.Vina Ardanza Reserva",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "9.Vina Ardanza Reserva"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "2.Granmonte Viognier",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "2.Granmonte Viognier"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "6. Whispering Angel Rose",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "6. Whispering Angel Rose"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "qty": 1,
+        "category": "",
+        "originalName": "10.La Closerie des Thorins",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "10.La Closerie des Thorins"
+        ],
+        "isExpanded": false
+      },
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "qty": 4,
+        "category": "",
+        "originalName": "12.Massolino Moscato",
+        "conversionRate": 0.142857,
+        "originalNames": [
+          "12.Massolino Moscato"
+        ],
+        "isExpanded": false
+      }
+    ],
+    "conversionRates": {
+      "Beer, Chatri, 33cl": 1,
+      "Beer SAY PLAY NANO IPA (Non Alcoholic) 330ml.": 1,
+      "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml": 0.18,
+      "White wine, Domaine Christian Moreau Vaillons, chablis premier cru, 75cl": 0.2,
+      "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl": 0.2,
+      "Red wine, Montes Alpha, Malbec, 75cl": 0.2,
+      "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml": 1,
+      "Wine Pairing 5 Glasses": 1,
+      "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl": 0.142857,
+      "White wine, Domaene Gobelsburg, riesling, 75cl": 0.142857,
+      "White wine, Au Bon Climat Chardonnay": 0.142857,
+      "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva": 0.142857,
+      "White wine, GranMonte, viognier, 75cl": 0.142857,
+      "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl": 0.142857,
+      "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl": 0.142857,
+      "Sparkling wine, Massolino, moscato d asti, 75cl": 0.142857
+    }
+  }
+}

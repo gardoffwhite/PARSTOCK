@@ -5,7 +5,7 @@ node_modules/
 data/
 uploads/
 reports/
-storage/
+# storage/ - REMOVED: Need to backup storage for Render auto-restore
 
 # Environment variables
 .env
