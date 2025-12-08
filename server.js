@@ -1086,7 +1086,14 @@ app.delete('/api/daily-transfer/:date', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log(`Upload Excel files to generate Hotel Sales reports`);
+
+  // Auto-restore data from GitHub if storage is empty (for Render restarts)
+  const autoBackup = new AutoBackup();
+  if (autoBackup.isEnabled()) {
+    console.log('🔄 Checking if data restore is needed...');
+    await autoBackup.restoreFromGitHub();
+  }
 });

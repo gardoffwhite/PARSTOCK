@@ -79,6 +79,61 @@ ${status.trim()}
   isEnabled() {
     return process.env.DISABLE_AUTO_BACKUP !== 'true';
   }
+
+  /**
+   * Restore storage files from GitHub if they're missing
+   * Useful when restarting on Render (ephemeral filesystem)
+   */
+  async restoreFromGitHub() {
+    try {
+      // Check if git is initialized
+      const gitDir = path.join(__dirname, '..', '.git');
+      if (!fs.existsSync(gitDir)) {
+        console.log('⚠️ Git not initialized, skipping restore');
+        return false;
+      }
+
+      // Check if storage directory exists and has files
+      if (!fs.existsSync(this.storageDir)) {
+        fs.mkdirSync(this.storageDir, { recursive: true });
+      }
+
+      const files = fs.readdirSync(this.storageDir);
+      const hasData = files.some(f => f.endsWith('.json') && fs.statSync(path.join(this.storageDir, f)).size > 2);
+
+      if (hasData) {
+        console.log('✓ Storage data already exists, no restore needed');
+        return true;
+      }
+
+      // Storage is empty, restore from git
+      console.log('📦 Storage is empty, restoring from GitHub...');
+
+      // Pull latest changes from remote
+      try {
+        execSync('git fetch origin', {
+          cwd: path.join(__dirname, '..'),
+          timeout: 30000 // 30 second timeout
+        });
+
+        execSync('git checkout origin/main -- storage/', {
+          cwd: path.join(__dirname, '..'),
+          timeout: 10000
+        });
+
+        console.log('✅ Storage restored from GitHub successfully');
+        return true;
+      } catch (restoreError) {
+        console.warn('⚠️ Could not restore from GitHub:', restoreError.message);
+        console.log('💡 Starting with empty storage');
+        return false;
+      }
+
+    } catch (error) {
+      console.error('❌ Restore failed:', error.message);
+      return false;
+    }
+  }
 }
 
 module.exports = AutoBackup;

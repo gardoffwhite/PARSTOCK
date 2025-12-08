@@ -333,7 +333,7 @@
                 <div id="dailySaleItemsResult"></div>
             </div>
 
-            <!-- Conversion Rate Selection Table -->
+            <!-- แปลงหน่วย Selection Table -->
             <div id="conversionSection" style="display: none;">
                 <h3 style="color: #667eea; margin-bottom: 15px;">🔧 ตรวจสอบความถูกต้อง</h3>
                 <p style="color: #666; margin-bottom: 15px;">
@@ -347,7 +347,8 @@
                             <th>ชื่อใน Daily Sale</th>
                             <th>➜ Match กับ PAR</th>
                             <th style="width: 100px; text-align: right;">จำนวน</th>
-                            <th style="width: 180px;">Conversion Rate</th>
+                            <th style="width: 180px;">แปลงหน่วย</th>
+                            <th style="width: 150px; text-align: center;">สต็อกคงเหลือ</th>
                         </tr>
                     </thead>
                     <tbody id="conversionTableBody">
@@ -745,6 +746,27 @@
             const tbody = document.getElementById('conversionTableBody');
             tbody.innerHTML = '';
 
+            // Combine items with same name (for split orders from Excel)
+            // This ensures we use the correct PAR name for stock deduction
+            const combinedItemsMap = new Map();
+            data.items.forEach(item => {
+                const itemName = item.name;
+                if (combinedItemsMap.has(itemName)) {
+                    // Add qty to existing item
+                    const existing = combinedItemsMap.get(itemName);
+                    existing.qty += item.qty;
+                } else {
+                    // Create new entry with cloned item
+                    combinedItemsMap.set(itemName, { ...item });
+                }
+            });
+
+            // Convert map back to array
+            const combinedItems = Array.from(combinedItemsMap.values());
+
+            // Update data.items with combined items
+            data.items = combinedItems;
+
             data.items.forEach((item, index) => {
                 const tr = document.createElement('tr');
 
@@ -753,6 +775,10 @@
                 const category = (item.category || '').toLowerCase();
                 const salesName = item.name;
                 const salesNameLower = salesName.toLowerCase();
+
+                // Check if we have a remembered conversion rate for this item
+                const rememberedRates = JSON.parse(localStorage.getItem('conversionRates') || '{}');
+                const rememberedRate = rememberedRates[salesName];
 
                 // Get PAR name for matching bottle size
                 let parName = '';
@@ -773,6 +799,12 @@
                 const isBeer = category.includes('beer') || category.includes('lager') ||
                               salesNameLower.includes('beer') || salesNameLower.includes('lager') ||
                               parNameLower.includes('beer') || parNameLower.includes('lager');
+
+                // Check if this is Sato/Shochu (3 Oz per glass)
+                const isSato = parNameLower.includes('sato') ||
+                              parNameLower.includes('shochu') ||
+                              salesNameLower.includes('sato') ||
+                              salesNameLower.includes('shochu');
 
                 // Check if this is Spirit by checking PAR stock name for spirit types
                 const isSpirit = parNameLower.includes('vodka') ||
@@ -816,6 +848,12 @@
                 else if (isBeer) {
                     autoRate = 1; // Bottle
                 }
+                // Sato/Shochu (50cl = 500ml, 3 Oz per glass)
+                // 50cl / 3 Oz = 16.67 / 3 = 5.56 glasses per bottle
+                // Conversion rate = 1 / 5.56 = 0.18 (approximately)
+                else if (isSato) {
+                    autoRate = 0.18; // 3 Oz from 50cl bottle (1/5.56)
+                }
                 // Spirit (DEFAULT = 2 Oz) - Check from PAR stock name
                 else if (isSpirit) {
                     let bottleMultiplier = 0.04; // Default to 75cl (most common)
@@ -833,6 +871,11 @@
 
                     // Default to 2 Oz for all spirits (vodka, gin, whisky, rum, tequila, etc.)
                     autoRate = bottleMultiplier * 2;
+                }
+
+                // Override with remembered rate if available
+                if (rememberedRate !== undefined && rememberedRate !== null) {
+                    autoRate = rememberedRate;
                 }
 
                 // Find PAR match for this item
@@ -887,11 +930,12 @@
                     <td>${index + 1}</td>
                     <td>${highlightedSalesName}</td>
                     ${parMatchCell}
-                    <td style="text-align: right;">${item.qty.toFixed(2)}</td>
+                    <td style="text-align: right;">${formatQty(item.qty)}</td>
                     <td>
-                        <select class="conversion-select" data-index="${index}" data-par-name="${parMatch || ''}">
+                        <select class="conversion-select" data-index="${index}" data-item-name="${salesName}" data-par-name="${parMatch || ''}" onchange="saveConversionRate(${index}); updateRealtimeStock(${index})">
                             <option value="1" ${autoRate === 1 ? 'selected' : ''}>🍾 1/1 Bottle</option>
                             <option value="0.2" ${autoRate === 0.2 ? 'selected' : ''}>🍷 1/5 Wine by glass</option>
+                            <option value="0.18" ${Math.abs(autoRate - 0.18) < 0.0001 ? 'selected' : ''}>🥃 Sato/Shochu 3Oz</option>
                             <option value="0.142857" ${Math.abs(autoRate - 0.142857) < 0.0001 ? 'selected' : ''}>🍷🍽️ 1/7 Wine pairing</option>
                             <option value="0.0625" ${Math.abs(autoRate - 0.0625) < 0.0001 ? 'selected' : ''}>🥃 1/16 50cl Spirit</option>
                             <option value="0.05" ${Math.abs(autoRate - 0.05) < 0.0001 ? 'selected' : ''}>🥃 1/20</option>
@@ -903,6 +947,9 @@
                             <option value="0.08" ${Math.abs(autoRate - 0.08) < 0.0001 ? 'selected' : ''}>🥃 2/25 75cl 2Oz</option>
                             <option value="0.0606" ${Math.abs(autoRate - 0.0606) < 0.0001 ? 'selected' : ''}>🥃 2/33 1L 2Oz</option>
                         </select>
+                    </td>
+                    <td id="realtime-stock-${index}" style="text-align: center; padding: 8px;">
+                        <span style="color: #666;">กำลังโหลด...</span>
                     </td>
                 `;
 
@@ -959,8 +1006,173 @@
                     if (conversionSelect) {
                         conversionSelect.setAttribute('data-par-name', newValue);
                     }
+
+                    // Update realtime stock when PAR name changes
+                    updateRealtimeStock(parseInt(index));
                 });
             });
+
+            // Load real-time PAR stock for all items
+            loadRealtimeStockForAll();
+        }
+
+        // Global variable to store real-time stock data
+        let realtimeStockData = {};
+
+        async function loadRealtimeStockForAll() {
+            if (!dailySalesData) return;
+
+            // Collect all PAR names
+            const parNames = [];
+            const selects = document.querySelectorAll('.conversion-select');
+            selects.forEach(select => {
+                const parName = select.getAttribute('data-par-name');
+                if (parName && !parNames.includes(parName)) {
+                    parNames.push(parName);
+                }
+            });
+
+            if (parNames.length === 0) return;
+
+            try {
+                const response = await fetch('/api/get-realtime-par', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        parNames: parNames,
+                        date: dailySalesData.date
+                    })
+                });
+
+                const result = await response.json();
+                realtimeStockData = result.stocks || {};
+
+                // Update all stock displays
+                selects.forEach(select => {
+                    const index = parseInt(select.getAttribute('data-index'));
+                    updateRealtimeStock(index);
+                });
+
+            } catch (error) {
+                console.error('Load realtime stock error:', error);
+            }
+        }
+
+        // Save conversion rate to localStorage
+        function saveConversionRate(index) {
+            const select = document.querySelector(`.conversion-select[data-index="${index}"]`);
+            if (!select) {
+                console.warn(`No select found for index ${index}`);
+                return;
+            }
+
+            const itemName = select.getAttribute('data-item-name');
+            if (!itemName) {
+                console.warn(`No item name found for index ${index}`);
+                return;
+            }
+
+            const conversionRate = parseFloat(select.value);
+
+            // Load existing rates
+            const rememberedRates = JSON.parse(localStorage.getItem('conversionRates') || '{}');
+
+            // Save this rate
+            rememberedRates[itemName] = conversionRate;
+
+            // Store back to localStorage
+            localStorage.setItem('conversionRates', JSON.stringify(rememberedRates));
+
+            console.log(`Saved conversion rate for "${itemName}": ${conversionRate}`);
+        }
+
+        async function updateRealtimeStock(index) {
+            const select = document.querySelector(`.conversion-select[data-index="${index}"]`);
+            const parInput = document.querySelector(`.par-input-autocomplete[data-index="${index}"]`);
+            const stockCell = document.getElementById(`realtime-stock-${index}`);
+
+            if (!stockCell || !select) return;
+
+            // Get PAR name (from input or select attribute)
+            let parName = select.getAttribute('data-par-name');
+            if (parInput && parInput.value.trim()) {
+                parName = parInput.value.trim();
+            }
+
+            if (!parName || !dailySalesData) {
+                stockCell.innerHTML = '<span style="color: #999;">-</span>';
+                return;
+            }
+
+            // Get current item quantity and conversion rate
+            const item = dailySalesData.items[index];
+            if (!item) return; // Item might not exist after combining
+
+            const conversionRate = parseFloat(select.value) || 1;
+            const currentSaleQty = item.qty * conversionRate;
+
+            // Get stock data - if not in cache, fetch it
+            let stockData = realtimeStockData[parName];
+
+            if (!stockData) {
+                // Fetch this specific item's stock data
+                stockCell.innerHTML = '<span style="color: #666;">โหลด...</span>';
+
+                try {
+                    const response = await fetch('/api/get-realtime-par', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            parNames: [parName],
+                            date: dailySalesData.date
+                        })
+                    });
+                    const result = await response.json();
+                    stockData = result.stocks[parName];
+
+                    if (stockData) {
+                        realtimeStockData[parName] = stockData;
+                    }
+                } catch (error) {
+                    console.error('Fetch stock error:', error);
+                }
+            }
+
+            if (!stockData) {
+                stockCell.innerHTML = '<span style="color: #999;">ไม่มีข้อมูล</span>';
+                return;
+            }
+
+            // Calculate: Opening - (Previous Sales + Current Sale) + Transfers
+            const remaining = stockData.current - currentSaleQty;
+
+            // Color coding
+            let color = '#16a34a'; // Green
+            let icon = '✅';
+            if (remaining < 0) {
+                color = '#dc2626'; // Red
+                icon = '⚠️';
+            } else if (remaining < 5) {
+                color = '#ea580c'; // Orange
+                icon = '⚡';
+            }
+
+            stockCell.innerHTML = `
+                <div style="font-size: 12px; color: #999;">ปัจจุบัน: ${formatQty(stockData.current)}</div>
+                <div style="font-weight: bold; color: ${color}; font-size: 14px;">
+                    ${icon} ${formatQty(remaining)} btl
+                </div>
+            `;
+        }
+
+        // Helper function to format decimal numbers
+        // Show minimum decimals needed (up to 3 max)
+        function formatQty(num) {
+            const rounded = Math.round(num * 1000) / 1000; // Round to 3 decimals
+
+            // Remove trailing zeros
+            const str = rounded.toFixed(3);
+            return str.replace(/\.?0+$/, ''); // Remove trailing zeros and decimal point if not needed
         }
 
         async function saveWithConversion() {
@@ -971,6 +1183,8 @@
             const itemsWithParNames = [];
             const selects = document.querySelectorAll('.conversion-select');
 
+            // First, collect all items with their final names
+            const tempItems = [];
             selects.forEach(select => {
                 const index = parseInt(select.getAttribute('data-index'));
                 let parName = select.getAttribute('data-par-name');
@@ -986,7 +1200,7 @@
                 const finalName = parName || originalItem.name;
                 const convRate = parseFloat(select.value);
 
-                itemsWithParNames.push({
+                tempItems.push({
                     ...originalItem,
                     name: finalName,
                     originalName: originalItem.name,
@@ -995,6 +1209,36 @@
 
                 conversionRates[finalName] = convRate;
             });
+
+            // Combine items with same PAR name (for stock deduction)
+            // Collect all originalNames to show which Daily Sale items matched this PAR
+            const combinedItemsMap = new Map();
+            tempItems.forEach(item => {
+                if (combinedItemsMap.has(item.name)) {
+                    // Add qty to existing item with same PAR name
+                    const existing = combinedItemsMap.get(item.name);
+                    existing.qty += item.qty;
+
+                    // Collect all unique originalNames
+                    if (!existing.originalNames) {
+                        existing.originalNames = existing.originalName ? [existing.originalName] : [];
+                    }
+                    if (item.originalName && !existing.originalNames.includes(item.originalName)) {
+                        existing.originalNames.push(item.originalName);
+                    }
+                } else {
+                    // Create new entry
+                    const newItem = { ...item };
+                    // Initialize originalNames array with the first originalName
+                    if (item.originalName) {
+                        newItem.originalNames = [item.originalName];
+                    }
+                    combinedItemsMap.set(item.name, newItem);
+                }
+            });
+
+            // Convert map back to array
+            itemsWithParNames.push(...Array.from(combinedItemsMap.values()));
 
             const loading = document.getElementById('dailyLoading');
             const message = document.getElementById('dailyMessage');
@@ -1371,9 +1615,9 @@
                 const transferQty = item.transferQty || 0;
                 let transferDisplay = '';
                 if (transferQty > 0) {
-                    transferDisplay = `<span style="color: #059669; font-weight: bold;">+${transferQty.toFixed(2)}</span>`;
+                    transferDisplay = `<span style="color: #059669; font-weight: bold;">+${formatQty(transferQty)}</span>`;
                 } else if (transferQty < 0) {
-                    transferDisplay = `<span style="color: #dc2626; font-weight: bold;">${transferQty.toFixed(2)}</span>`;
+                    transferDisplay = `<span style="color: #dc2626; font-weight: bold;">${formatQty(transferQty)}</span>`;
                 } else {
                     transferDisplay = `<span style="color: #9ca3af;">-</span>`;
                 }
@@ -1398,18 +1642,29 @@
                 }
                 // >= 2 is normal (no special color)
 
+                // Build list of Daily Sale names that matched this PAR item
+                let matchedNamesHtml = '';
+                if (item.originalNames && item.originalNames.length > 0) {
+                    const uniqueNames = [...new Set(item.originalNames)]; // Remove duplicates
+                    matchedNamesHtml = uniqueNames.map(name =>
+                        `<br><small style="color: #666; font-style: italic;">← ${name}</small>`
+                    ).join('');
+                } else if (item.originalName && item.originalName !== item.name) {
+                    matchedNamesHtml = `<br><small style="color: #666; font-style: italic;">← ${item.originalName}</small>`;
+                }
+
                 html += `
                     <tr style="${rowStyle}">
                         <td>${index + 1}</td>
                         <td>
                             ${item.name}
-                            ${item.matchedName ? `<br><small style="color: #666; font-style: italic;">→ ${item.matchedName}</small>` : ''}
+                            ${matchedNamesHtml}
                             ${item.type === 'unmatched_sale' ? '<br><small style="color: #f59e0b; font-weight: bold;">⚠️ ไม่มีใน PAR</small>' : ''}
                         </td>
-                        <td style="text-align: right;">${item.parStock.toFixed(2)}</td>
-                        <td style="text-align: right;">${item.convertedSoldQty.toFixed(2)}</td>
+                        <td style="text-align: right;">${formatQty(item.parStock)}</td>
+                        <td style="text-align: right;">${formatQty(item.convertedSoldQty)}</td>
                         <td style="text-align: right;">${transferDisplay}</td>
-                        <td style="text-align: right; ${remainingColor} ${remainingBg}">${item.remaining.toFixed(2)}</td>
+                        <td style="text-align: right; ${remainingColor} ${remainingBg}">${formatQty(item.remaining)}</td>
                         <td>
                             ${item.type === 'par_item' ? `
                             <div class="progress-bar">
@@ -1475,12 +1730,23 @@
                                       item.usagePercent > 100 ? '🔴' :
                                       item.usagePercent > 80 ? '🟡' : '🟢';
 
+                    // Build matched names for list view
+                    let matchedNamesListHtml = '';
+                    if (item.originalNames && item.originalNames.length > 0) {
+                        const uniqueNames = [...new Set(item.originalNames)];
+                        matchedNamesListHtml = uniqueNames.map(name =>
+                            `<div class="text-xs text-gray-500 mt-1">← ${name}</div>`
+                        ).join('');
+                    } else if (item.originalName && item.originalName !== item.name) {
+                        matchedNamesListHtml = `<div class="text-xs text-gray-500 mt-1">← ${item.originalName}</div>`;
+                    }
+
                     html += `
                         <div class="autocomplete-item p-3 hover:bg-purple-50 cursor-pointer border-b border-gray-100 transition-colors" onclick="selectItem('${item.name.replace(/'/g, "\\'")}')">
                             <div class="flex items-center justify-between">
                                 <div class="flex-1">
                                     <div class="font-semibold text-gray-800">${statusIcon} ${item.name}</div>
-                                    ${item.matchedName ? `<div class="text-xs text-gray-500 mt-1">→ ${item.matchedName}</div>` : ''}
+                                    ${matchedNamesListHtml}
                                 </div>
                                 <div class="text-sm text-nage-purple font-bold ml-4">
                                     ${item.usagePercent.toFixed(0)}%
@@ -1541,14 +1807,25 @@
             let transferDisplay = '';
             let transferClass = '';
             if (transferQty > 0) {
-                transferDisplay = `+${transferQty.toFixed(2)}`;
+                transferDisplay = `+${formatQty(transferQty)}`;
                 transferClass = 'text-green-600';
             } else if (transferQty < 0) {
-                transferDisplay = `${transferQty.toFixed(2)}`;
+                transferDisplay = `${formatQty(transferQty)}`;
                 transferClass = 'text-red-600';
             } else {
                 transferDisplay = '-';
                 transferClass = 'text-gray-400';
+            }
+
+            // Build list of Daily Sale names for card view
+            let matchedNamesCardHtml = '';
+            if (item.originalNames && item.originalNames.length > 0) {
+                const uniqueNames = [...new Set(item.originalNames)];
+                matchedNamesCardHtml = uniqueNames.map(name =>
+                    `<p class="text-sm text-gray-600 mt-1">← ${name}</p>`
+                ).join('');
+            } else if (item.originalName && item.originalName !== item.name) {
+                matchedNamesCardHtml = `<p class="text-sm text-gray-600 mt-1">← ${item.originalName}</p>`;
             }
 
             // Display item details
@@ -1556,7 +1833,7 @@
                 <div class="flex items-start justify-between mb-4">
                     <div>
                         <h5 class="text-xl font-bold text-nage-purple">${item.name}</h5>
-                        ${item.matchedName ? `<p class="text-sm text-gray-600 mt-1">จับคู่กับ: ${item.matchedName}</p>` : ''}
+                        ${matchedNamesCardHtml}
                     </div>
                     <span class="px-3 py-1 rounded-full text-sm font-semibold ${statusClass}">
                         ${statusIcon} ${statusText}
@@ -1566,12 +1843,12 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="bg-white p-3 rounded-lg border border-purple-200">
                         <div class="text-xs text-gray-600 mb-1">PAR Stock</div>
-                        <div class="text-2xl font-bold text-nage-purple">${item.parStock.toFixed(2)}</div>
+                        <div class="text-2xl font-bold text-nage-purple">${formatQty(item.parStock)}</div>
                     </div>
 
                     <div class="bg-white p-3 rounded-lg border border-purple-200">
                         <div class="text-xs text-gray-600 mb-1">ขายไป</div>
-                        <div class="text-2xl font-bold text-blue-600">${item.convertedSoldQty.toFixed(2)}</div>
+                        <div class="text-2xl font-bold text-blue-600">${formatQty(item.convertedSoldQty)}</div>
                     </div>
 
                     <div class="bg-white p-3 rounded-lg border border-purple-200">
@@ -1587,7 +1864,7 @@
                             item.remaining < 2 ? 'text-yellow-600' :
                             'text-green-600'
                         }">
-                            ${item.remaining.toFixed(2)}
+                            ${formatQty(item.remaining)}
                         </div>
                     </div>
                 </div>
@@ -1708,7 +1985,7 @@
                         <strong style="color: #0c4a6e;">📅 วันที่: ${formatThaiDate(data.date)}</strong>
                         <p style="color: #075985; margin-top: 5px; font-size: 14px;">
                             รายการทั้งหมด: ${data.items.length} รายการ |
-                            ยอดขายรวม: ${data.summary.totalQty.toFixed(2)} หน่วย
+                            ยอดขายรวม: ${formatQty(data.summary.totalQty)} หน่วย
                         </p>
                     </div>
                     <button onclick="deleteDailySale('${data.date}')"
@@ -1723,9 +2000,8 @@
                         <tr>
                             <th style="width: 50px;">#</th>
                             <th>ชื่อสินค้า</th>
-                            <th>Category</th>
                             <th style="width: 120px; text-align: right;">จำนวน</th>
-                            <th style="width: 150px; text-align: center;">Conversion Rate</th>
+                            <th style="width: 150px; text-align: center;">แปลงหน่วย</th>
                             <th style="width: 120px; text-align: right;">Converted Qty</th>
                         </tr>
                     </thead>
@@ -1740,15 +2016,14 @@
                     <tr>
                         <td>${index + 1}</td>
                         <td>${item.name}</td>
-                        <td>${item.category || '-'}</td>
-                        <td style="text-align: right;">${item.qty.toFixed(2)}</td>
+                        <td style="text-align: right;">${formatQty(item.qty)}</td>
                         <td style="text-align: center;">
                             <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 15px; font-size: 13px;">
-                                ${convRate.toFixed(3)}
+                                ${formatQty(convRate)}
                             </span>
                         </td>
                         <td style="text-align: right; font-weight: bold; color: #667eea;">
-                            ${convertedQty.toFixed(2)}
+                            ${formatQty(convertedQty)}
                         </td>
                     </tr>
                 `;
@@ -2324,7 +2599,7 @@
             // Update the display
             const finalQtyCell = document.getElementById(`transfer-final-qty-${index}`);
             const directionColor = item.direction === 'in' ? '#4CAF50' : '#f44336';
-            finalQtyCell.innerHTML = `${finalQty > 0 ? '+' : ''}${finalQty.toFixed(2)}`;
+            finalQtyCell.innerHTML = `${finalQty > 0 ? '+' : ''}${formatQty(Math.abs(finalQty))}`;
             finalQtyCell.style.color = directionColor;
 
             // Update the item in parsedTransferItems array
@@ -2348,7 +2623,7 @@
                             <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">ชื่อสินค้า (Original)</th>
                             <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">PAR Name (ตรวจพบ)</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">จำนวน</th>
-                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Conversion Rate</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">แปลงหน่วย</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">จำนวนสุดท้าย</th>
                             <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Match Score</th>
                         </tr>
@@ -2388,7 +2663,7 @@
                             </select>
                         </td>
                         <td id="transfer-final-qty-${index}" style="padding: 10px; border: 1px solid #ddd; text-align: center; color: ${directionColor}; font-weight: bold;">
-                            ${item.finalQty > 0 ? '+' : ''}${item.finalQty.toFixed(2)}
+                            ${item.finalQty > 0 ? '+' : ''}${formatQty(Math.abs(item.finalQty))}
                         </td>
                         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
                             <span style="color: ${matchColor}; font-weight: bold;">
@@ -2538,7 +2813,10 @@
                 const data = await response.json();
 
                 if (data.isAuthenticated) {
-                    document.getElementById('currentUser').textContent = data.username;
+                    const userElement = document.getElementById('currentUser');
+                    if (userElement) {
+                        userElement.textContent = data.username;
+                    }
                 } else {
                     window.location.href = '/login.html';
                 }
