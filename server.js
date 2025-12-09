@@ -9,7 +9,6 @@ const HotelExcelReader = require('./utils/hotelExcelReader');
 const HotelReportGenerator = require('./utils/hotelReportGenerator');
 const DataStorage = require('./utils/dataStorage');
 const ParStockReader = require('./utils/parStockReader');
-const AutoBackup = require('./utils/autoBackup');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -413,14 +412,6 @@ app.post('/api/save-daily-sale', async (req, res) => {
       });
     }
 
-    // Auto-backup to GitHub
-    const autoBackup = new AutoBackup();
-    if (autoBackup.isEnabled()) {
-      autoBackup.backupToGitHub(`Save Daily Sale (${date})`).catch(err => {
-        console.error('Backup warning:', err.message);
-      });
-    }
-
     res.json({
       success: true,
       message: 'Daily sale saved successfully',
@@ -740,14 +731,6 @@ app.post('/api/upload-par', upload.single('file'), async (req, res) => {
 
     fs.unlinkSync(req.file.path);
 
-    // Auto-backup to GitHub
-    const autoBackup = new AutoBackup();
-    if (autoBackup.isEnabled()) {
-      autoBackup.backupToGitHub(`Upload PAR Stock (${startDate})`).catch(err => {
-        console.error('Backup warning:', err.message);
-      });
-    }
-
     res.json({
       success: true,
       message: 'PAR Stock uploaded successfully',
@@ -892,14 +875,6 @@ app.post('/api/group-items', (req, res) => {
       subItems
     });
 
-    // Auto-backup to GitHub
-    const autoBackup = new AutoBackup();
-    if (autoBackup.isEnabled()) {
-      autoBackup.backupToGitHub(`Create Group Item: ${name}`).catch(err => {
-        console.error('Backup warning:', err.message);
-      });
-    }
-
     res.json({ success: true, item: newGroupItem });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -917,14 +892,6 @@ app.put('/api/group-items/:id', (req, res) => {
       description,
       subItems
     });
-
-    // Auto-backup to GitHub
-    const autoBackup = new AutoBackup();
-    if (autoBackup.isEnabled()) {
-      autoBackup.backupToGitHub(`Update Group Item: ${name || req.params.id}`).catch(err => {
-        console.error('Backup warning:', err.message);
-      });
-    }
 
     res.json({ success: true, item: updatedItem });
   } catch (error) {
@@ -1003,14 +970,6 @@ app.post('/api/save-daily-transfer', (req, res) => {
 
     const result = dataStorage.saveDailyTransfer(date, items, direction);
 
-    // Auto-backup to GitHub
-    const autoBackup = new AutoBackup();
-    if (autoBackup.isEnabled()) {
-      autoBackup.backupToGitHub(`Save Daily Transfer (${date}, ${direction})`).catch(err => {
-        console.error('Backup warning:', err.message);
-      });
-    }
-
     res.json({
       success: true,
       data: result
@@ -1086,14 +1045,7 @@ app.delete('/api/daily-transfer/:date', (req, res) => {
   }
 });
 
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log(`Upload Excel files to generate Hotel Sales reports`);
-
-  // Auto-restore data from GitHub if storage is empty (for Render restarts)
-  const autoBackup = new AutoBackup();
-  if (autoBackup.isEnabled()) {
-    console.log('🔄 Checking if data restore is needed...');
-    await autoBackup.restoreFromGitHub();
-  }
 });
