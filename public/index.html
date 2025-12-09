@@ -743,6 +743,20 @@
             const tbody = document.getElementById('conversionTableBody');
             tbody.innerHTML = '';
 
+            // Create a map: itemName -> parMatch (before combining)
+            const parMatchMap = new Map();
+            if (data.parMatches && data.parMatches.matches) {
+                data.items.forEach((item, idx) => {
+                    const match = data.parMatches.matches[idx];
+                    if (match && match.matched) {
+                        parMatchMap.set(item.name, {
+                            parName: match.salesName || match.matchedName,
+                            matchScore: match.matchScore || match.score
+                        });
+                    }
+                });
+            }
+
             // Combine items with same name (for split orders from Excel)
             // This ensures we use the correct PAR name for stock deduction
             const combinedItemsMap = new Map();
@@ -780,12 +794,10 @@
                 // Get PAR name for matching bottle size
                 let parName = '';
                 let parNameLower = '';
-                if (data.parMatches && data.parMatches.matches) {
-                    const match = data.parMatches.matches[index];
-                    if (match && match.matched && match.salesName) {
-                        parName = match.salesName;
-                        parNameLower = parName.toLowerCase();
-                    }
+                const itemMatch = parMatchMap.get(salesName);
+                if (itemMatch) {
+                    parName = itemMatch.parName;
+                    parNameLower = parName.toLowerCase();
                 }
 
                 // Check if this is Wine or Beer (should NOT be converted to Oz)
@@ -878,12 +890,9 @@
                 // Find PAR match for this item
                 let parMatch = null;
                 let matchScore = 0;
-                if (data.parMatches && data.parMatches.matches) {
-                    const match = data.parMatches.matches[index];
-                    if (match && match.matched) {
-                        parMatch = match.salesName;
-                        matchScore = match.matchScore;
-                    }
+                if (itemMatch) {
+                    parMatch = itemMatch.parName;
+                    matchScore = itemMatch.matchScore;
                 }
 
                 // Build PAR match cell - Show name with clickable arrow to edit
