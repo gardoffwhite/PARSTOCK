@@ -11,7 +11,7 @@ const DataStorage = require('./utils/dataStorage');
 const ParStockReader = require('./utils/parStockReader');
 
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 
 // Session configuration
 // NOTE: Using MemoryStore for development. For production, use connect-session-sequelize or Redis.
