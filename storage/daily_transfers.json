@@ -1,1 +1,1054 @@
-{}
+{
+  "2025-12-12": {
+    "date": "2025-12-12",
+    "uploadedAt": "2025-12-12T04:15:29.841Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Beer, Asahi, S bottle, 33cl",
+        "originalName": "Beer, Asahi, S bottle, 33cl",
+        "category": "",
+        "qty": 24,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 24
+      },
+      {
+        "name": "Champagne, Taittinger, prestige brut",
+        "originalName": "Champagne, Taittinger, prestige brut",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Gin, Anong, 40%, 750ml",
+        "originalName": "Gin, Anong, 40%, 750ml",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Vodka, Absolut, 70cl",
+        "originalName": "Vodka, Absolut, 40%, 1L",
+        "category": "",
+        "qty": 5,
+        "matchScore": 0.5,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "Rum, Bacardi, white, 70cl",
+        "originalName": "Rum, Bacardi, white, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 0.75,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      }
+    ]
+  },
+  "2025-12-18": {
+    "date": "2025-12-18",
+    "uploadedAt": "2025-12-21T09:23:01.784Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "PRAKAAN DOUBLE CASK",
+        "originalName": "PRAKAAN DOUBLE CASK",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "originalName": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
+        "originalName": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "originalName": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "originalName": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "category": "",
+        "qty": 7,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 7
+      },
+      {
+        "name": "Thai wine, Wildflower blossom honey, 750ml.",
+        "originalName": "Thai wine, Wildflower blossom honey, 750ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "originalName": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      }
+    ]
+  },
+  "2025-12-15": {
+    "date": "2025-12-15",
+    "uploadedAt": "2025-12-21T09:23:48.314Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Beer, Chatri, 33cl",
+        "originalName": "Beer, Chatri, 33cl",
+        "category": "",
+        "qty": 24,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 24
+      },
+      {
+        "name": "Beer, Singha, S bottle, 32cl",
+        "originalName": "Beer, Singha, S bottle, 32cl",
+        "category": "",
+        "qty": 24,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 24
+      },
+      {
+        "name": "Gin, Anong, 40%, 750ml",
+        "originalName": "Gin, Anong, 40%, 750ml",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Liqueur, Drambuie, 40%, 70cl",
+        "originalName": "Liqueur, Drambuie, 40%, 70cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "originalName": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red wine, Mouton Cade, margaux, reserve, 75cl",
+        "originalName": "Red wine, Mouton Cade, margaux, reserve, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Red wine, Tinhof, st laurent eisenstadt, 75cl",
+        "originalName": "Red wine, Tinhof, st laurent eisenstadt, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White wine, Au Bon Climat Chardonnay",
+        "originalName": "White wine, Au Bon Climat Chardonnay",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "originalName": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White wine, Montes alpha, chardonnay, 75cl",
+        "originalName": "White wine, Montes alpha, chardonnay, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      }
+    ]
+  },
+  "2025-12-16": {
+    "date": "2025-12-16",
+    "uploadedAt": "2025-12-21T09:26:40.728Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Champagne, Dom Perignon, 2015, 75cl",
+        "originalName": "Champagne, Dom Perignon, 2015, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 1500 ml.",
+        "originalName": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 1500 ml.",
+        "category": "Unknown",
+        "qty": 1,
+        "matchScore": 0,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "originalName": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "category": "Unknown",
+        "qty": 2,
+        "matchScore": 0,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "hite wine, Albamar, albarino, 75cl",
+        "originalName": "White wine, Albamar, albarino, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 0.8,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3,
+        "manuallyEdited": true
+      },
+      {
+        "name": "White wine, chateau la nerthe chateauneuf-du-pape, blanc",
+        "originalName": "White wine, chateau la nerthe chateauneuf-du-pape, blanc",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France, 750 ml.",
+        "originalName": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 0.3,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3,
+        "manuallyEdited": true
+      }
+    ]
+  },
+  "2025-12-11": {
+    "date": "2025-12-11",
+    "uploadedAt": "2025-12-21T09:27:30.260Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "originalName": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "originalName": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "originalName": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      }
+    ]
+  },
+  "2025-12-09": {
+    "date": "2025-12-09",
+    "uploadedAt": "2025-12-21T09:27:48.135Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Red wine, Arzuaga, crianza, 75cl",
+        "originalName": "Red wine, Arzuaga, crianza, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "Red wine, Monsoon Valley, cuvee de siam rouge, 75cl",
+        "originalName": "Red wine, Monsoon Valley, cuvee de siam rouge, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White wine, Domaine Zind Humbrecht, gewurztraminer, 75cl",
+        "originalName": "White wine, Domaine Zind Humbrecht, gewurztraminer, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White wine, Domaine Zind Humbrecht, pinot gris, 75cl",
+        "originalName": "White wine, Domaine Zind Humbrecht, pinot gris, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White wine, Monsoon Valley, signature white, 75cl",
+        "originalName": "White wine, Monsoon Valley, signature white, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      }
+    ]
+  },
+  "2025-12-08": {
+    "date": "2025-12-08",
+    "uploadedAt": "2025-12-21T09:28:03.611Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Champagne, Dom Perignon, 2015, 75cl",
+        "originalName": "Champagne, Dom Perignon, 2015, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      }
+    ]
+  },
+  "2025-12-04": {
+    "date": "2025-12-04",
+    "uploadedAt": "2025-12-21T09:29:01.737Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Beer, Singha, S bottle, 32cl",
+        "originalName": "Beer, Singha, S bottle, 32cl",
+        "category": "",
+        "qty": 24,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 24
+      },
+      {
+        "name": "Champagne, Taittinger, prestige brut",
+        "originalName": "Champagne, Taittinger, prestige brut",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Liqueur, Cointreau, orange, 70cl",
+        "originalName": "Liqueur, Cointreau, orange, 70cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "originalName": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "originalName": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "originalName": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "originalName": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "originalName": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "category": "",
+        "qty": 6,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 6
+      },
+      {
+        "name": "Tequila, Jose Cuervo, gold, 70cl",
+        "originalName": "Tequila, Jose Cuervo, gold, 70cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Thai wine, Wildflower blossom honey, 750ml.",
+        "originalName": "Thai wine, Wildflower blossom honey, 750ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Vodka, Absolut, 70cl",
+        "originalName": "Vodka, Absolut, 70cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "originalName": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, Au Bon Climat Chardonnay",
+        "originalName": "White wine, Au Bon Climat Chardonnay",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "originalName": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "category": "",
+        "qty": 6,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 6
+      },
+      {
+        "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "originalName": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "originalName": "White wine, GranMonte, viognier, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "originalName": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      }
+    ]
+  },
+  "2025-12-01": {
+    "date": "2025-12-01",
+    "uploadedAt": "2025-12-21T09:29:55.522Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Red wine, GranMonte, asoke, cabernet sauvignon, syrah, 2022, 75cl",
+        "originalName": "Red wine, GranMonte, asoke, cabernet sauvignon, syrah, 2022, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "originalName": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "originalName": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "Red wine, Montes Alpha, Malbec, 75cl",
+        "originalName": "Red wine, Montes Alpha, Malbec, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "originalName": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
+        "originalName": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "originalName": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "originalName": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "originalName": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "category": "",
+        "qty": 6,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 6
+      },
+      {
+        "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "originalName": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White wine, Au Bon Climat Chardonnay",
+        "originalName": "White wine, Au Bon Climat Chardonnay",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "originalName": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "originalName": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
+        "originalName": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "originalName": "White wine, GranMonte, viognier, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      },
+      {
+        "name": "White wine, Pascal Jolivet, pouilly fume, 75cl",
+        "originalName": "White wine, Pascal Jolivet, pouilly fume, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 0.7142857142857143,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2,
+        "manuallyEdited": true
+      },
+      {
+        "name": "White wine, Pascal Jolivet, sancerre, 75cl",
+        "originalName": "White wine, Pascal Jolivet, sancerre, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "originalName": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      }
+    ]
+  },
+  "2026-01-05": {
+    "date": "2026-01-05",
+    "uploadedAt": "2026-01-07T09:10:03.961Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "originalName": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "category": "",
+        "qty": 4,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 4
+      }
+    ]
+  },
+  "2026-01-06": {
+    "date": "2026-01-06",
+    "uploadedAt": "2026-01-18T08:55:19.204Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "originalName": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "Red Wine, Pinot Noir, Salomon & Andrew, Central Otago, New Zealand, 750 ml.",
+        "originalName": "Red Wine, Pinot Noir, Salomon & Andrew, Central Otago, New Zealand, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Sweet Wine, Schloss Gobelsburg Gruner Veltliner Eiswein, Niederosterreich, Austria, 375 ml.",
+        "originalName": "Sweet Wine, Schloss Gobelsburg Gruner Veltliner Eiswein, Niederosterreich, Austria, 375 ml.",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "Terroir Històric Negre, Terroir al Límit, Priorat, Spain",
+        "originalName": "Terroir Històric Negre, Terroir al Límit, Priorat, Spain",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "originalName": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White wine, Albamar, albarino, 75cl",
+        "originalName": "White wine, Albamar, albarino, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White Wine, Fernand & Laurent Pillot Chassagne-Montrachet, Cote de Beaune, France, 750 ml.",
+        "originalName": "White Wine, Fernand & Laurent Pillot Chassagne-Montrachet, Cote de Beaune, France, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "originalName": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France,  750 ml.",
+        "originalName": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White Wine, Reyneke Sauvignon Blanc, Stellenbosch, South Africa, 750 ml.",
+        "originalName": "White Wine, Reyneke Sauvignon Blanc, Stellenbosch, South Africa, 750 ml.",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      },
+      {
+        "name": "White Wine, Vietti Cascinetta, Moscato d'Asti DOCG, Italy, 750 ml.",
+        "originalName": "White Wine, Vietti Cascinetta, Moscato d'Asti DOCG, Italy, 750 ml.",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White Wine, Weingut Fred Loimer Gruner Veltliner, Kamptal DAC, Austria, 750 ml.",
+        "originalName": "White Wine, Weingut Fred Loimer Gruner Veltliner, Kamptal DAC, Austria, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "originalName": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "Red Wine, Pinot Noir, Salomon & Andrew, Central Otago, New Zealand, 750 ml.",
+        "originalName": "Red Wine, Pinot Noir, Salomon & Andrew, Central Otago, New Zealand, 750 ml.",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      },
+      {
+        "name": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "originalName": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      }
+    ]
+  },
+  "2026-01-07": {
+    "date": "2026-01-07",
+    "uploadedAt": "2026-01-18T08:57:57.690Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "White wine, Willm, gewurztraminer reserve, 75cl",
+        "originalName": "White wine, Willm, gewurztraminer reserve, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 0.6666666666666666,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2,
+        "manuallyEdited": true
+      },
+      {
+        "name": "White wine, Joh. Jos. Prum, bernkasteler, riesling, 75cl",
+        "originalName": "White wine, Joh. Jos. Prum, bernkasteler, riesling, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      }
+    ]
+  },
+  "2026-01-12": {
+    "date": "2026-01-12",
+    "uploadedAt": "2026-01-18T08:58:44.018Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "originalName": "White wine, GranMonte, viognier, 75cl",
+        "category": "",
+        "qty": 1,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 1
+      }
+    ]
+  },
+  "2026-01-13": {
+    "date": "2026-01-13",
+    "uploadedAt": "2026-01-18T08:59:26.961Z",
+    "direction": "in",
+    "items": [
+      {
+        "name": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "originalName": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White Wine, Reyneke Sauvignon Blanc, Stellenbosch, South Africa, 750 ml.",
+        "originalName": "White Wine, Reyneke Sauvignon Blanc, Stellenbosch, South Africa, 750 ml.",
+        "category": "",
+        "qty": 5,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 5
+      },
+      {
+        "name": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
+        "originalName": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
+        "category": "",
+        "qty": 2,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 2
+      },
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "originalName": "White wine, GranMonte, viognier, 75cl",
+        "category": "",
+        "qty": 3,
+        "matchScore": 1,
+        "direction": "in",
+        "conversionRate": 1,
+        "finalQty": 3
+      }
+    ]
+  }
+}

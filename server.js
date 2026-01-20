@@ -82,6 +82,24 @@ if (!fs.existsSync(reportsDir)) {
   fs.mkdirSync(reportsDir, { recursive: true });
 }
 
+// Helper function to delete old report files of the same type
+function deleteOldReports(reportPrefix) {
+  try {
+    const files = fs.readdirSync(reportsDir);
+    const pattern = new RegExp(`^${reportPrefix}.*\\.(html|xlsx)$`);
+
+    files.forEach(file => {
+      if (pattern.test(file)) {
+        const filePath = path.join(reportsDir, file);
+        fs.unlinkSync(filePath);
+        console.log(`Deleted old report: ${file}`);
+      }
+    });
+  } catch (error) {
+    console.error('Error deleting old reports:', error);
+  }
+}
+
 // Serve static files (CSS, JS, images) - no auth required
 app.use(express.static('public', {
   index: false
@@ -224,9 +242,10 @@ app.post('/api/preview-daily-sale', upload.single('file'), async (req, res) => {
           // For items without history, use fuzzy matching
           const itemsNeedingMatch = salesItems.filter((_, idx) => !matchesWithHistory[idx]);
           let fuzzyMatches = [];
+          const parItems = parStock.summary?.items || parStock.items || [];
 
           if (itemsNeedingMatch.length > 0) {
-            fuzzyMatches = NameMatching.matchItems(itemsNeedingMatch, parStock.summary.items, 0.3);
+            fuzzyMatches = NameMatching.matchItems(itemsNeedingMatch, parItems, 0.3);
           }
 
           // Combine matches
@@ -239,7 +258,7 @@ app.post('/api/preview-daily-sale', upload.single('file'), async (req, res) => {
           parMatches = {
             parDate: selectedParDate,
             matches: finalMatches,
-            parItems: parStock.summary.items  // Send all PAR items for dropdown
+            parItems: parItems  // Send all PAR items for dropdown
           };
         }
       }
@@ -308,7 +327,8 @@ app.post('/api/get-realtime-par', async (req, res) => {
       return res.json({ stocks: {} });
     }
 
-    console.log(`Using PAR stock from: ${selectedParDate}, Total items: ${parStock.items?.length || 0}`);
+    const parItems = parStock.summary?.items || parStock.items || [];
+    console.log(`Using PAR stock from: ${selectedParDate}, Total items: ${parItems.length}`);
 
     // Get all daily sales in this PAR period
     const allDailySales = storage.loadDailyData();
@@ -349,7 +369,7 @@ app.post('/api/get-realtime-par', async (req, res) => {
       if (!parName) return;
 
       // Find item in PAR stock
-      const parItem = parStock.items.find(item => item.name === parName);
+      const parItem = parItems.find(item => item.name === parName);
       if (parItem) {
         const openingStock = parseFloat(parItem.parStock || parItem.qty) || 0;
         const sales = totalSales[parName] || 0;
@@ -368,7 +388,7 @@ app.post('/api/get-realtime-par', async (req, res) => {
         };
       } else {
         console.log(`Item NOT FOUND in PAR: ${parName}`);
-        console.log(`Available PAR items (first 5):`, parStock.items.slice(0, 5).map(i => i.name));
+        console.log(`Available PAR items (first 5):`, parItems.slice(0, 5).map(i => i.name));
       }
     });
 
@@ -383,7 +403,7 @@ app.post('/api/get-realtime-par', async (req, res) => {
 // NEW API: Save daily sale with conversion rates
 app.post('/api/save-daily-sale', async (req, res) => {
   try {
-    const { date, items, summary, conversionRates, matchedItems } = req.body;
+    const { date, items, summary, conversionRates, matchedItems, updateParStock } = req.body;
 
     if (!date || !items || !summary || !conversionRates) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -412,11 +432,83 @@ app.post('/api/save-daily-sale', async (req, res) => {
       });
     }
 
-    res.json({
+    const response = {
       success: true,
       message: 'Daily sale saved successfully',
       date: date
-    });
+    };
+
+    // Update PAR Stock if requested
+    if (updateParStock) {
+      const parStockUpdates = {
+        updated: [],
+        added: [],
+        notFound: []
+      };
+
+      // Get all PAR Stock dates to find the latest one
+      const parStockDates = storage.getAllParStockPeriods();
+
+      if (parStockDates.length > 0) {
+        // Sort dates descending and get the latest
+        const latestParDate = parStockDates.sort((a, b) => new Date(b) - new Date(a))[0];
+        const parStock = storage.getParStock(latestParDate);
+
+        if (parStock) {
+          const parItems = parStock.summary?.items || parStock.items || [];
+          let hasChanges = false;
+
+          // Process each Daily Sale item
+          items.forEach(saleItem => {
+            // Find matching PAR Stock item by name (case-insensitive)
+            const parIndex = parItems.findIndex(
+              parItem => parItem.name.toLowerCase() === saleItem.name.toLowerCase()
+            );
+
+            if (parIndex !== -1) {
+              // Item exists - update name if manually edited
+              if (saleItem.manuallyEdited) {
+                const oldName = parItems[parIndex].name;
+                parItems[parIndex].name = saleItem.name;
+
+                // Keep other properties intact
+                if (saleItem.category) {
+                  parItems[parIndex].category = saleItem.category;
+                }
+
+                parStockUpdates.updated.push(saleItem.name);
+                console.log(`Updated PAR Stock from Daily Sale: "${oldName}" -> "${saleItem.name}"`);
+                hasChanges = true;
+              }
+            } else {
+              // Item not found - add new item to PAR Stock
+              const newParItem = {
+                name: saleItem.name,
+                category: saleItem.category || 'Uncategorized',
+                opening: 0,
+                current: 0,
+                parStock: 0
+              };
+
+              parItems.push(newParItem);
+              parStockUpdates.added.push(saleItem.name);
+              console.log(`Added new item to PAR Stock from Daily Sale: "${saleItem.name}"`);
+              hasChanges = true;
+            }
+          });
+
+          // Save updated PAR Stock if any changes were made
+          if (hasChanges) {
+            storage.saveParStock(latestParDate, parItems);
+            console.log(`PAR Stock updated from Daily Sale: ${parStockUpdates.updated.length} updated, ${parStockUpdates.added.length} added`);
+          }
+        }
+      }
+
+      response.parStockUpdates = parStockUpdates;
+    }
+
+    res.json(response);
 
   } catch (error) {
     console.error('Error saving daily sale:', error);
@@ -440,6 +532,88 @@ app.get('/api/summary/:parStartDate/:endDate', async (req, res) => {
 
   } catch (error) {
     console.error('Error generating summary:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get item details (daily sales + transfers)
+app.get('/api/item-details/:itemName', async (req, res) => {
+  try {
+    const { itemName } = req.params;
+    const { parStartDate, endDate } = req.query;
+
+    if (!parStartDate || !endDate) {
+      return res.status(400).json({ error: 'Missing parStartDate or endDate' });
+    }
+
+    const storage = new DataStorage();
+    const dailyData = storage.loadDailyData();
+    const transferData = storage.loadDailyTransfers();
+
+    // Collect daily sales for this item
+    const dailySales = [];
+    let totalSales = 0;
+    let totalConverted = 0;
+
+    for (const [date, data] of Object.entries(dailyData)) {
+      if (date >= parStartDate && date <= endDate && data.items && Array.isArray(data.items)) {
+        data.items.forEach(item => {
+          if (item.name === itemName) {
+            const conversionRate = item.conversionRate || 1;
+            const convertedQty = item.qty * conversionRate;
+
+            dailySales.push({
+              date: date,
+              qty: item.qty,
+              conversionRate: conversionRate,
+              convertedQty: convertedQty
+            });
+
+            totalSales += item.qty;
+            totalConverted += convertedQty;
+          }
+        });
+      }
+    }
+
+    // Sort by date
+    dailySales.sort((a, b) => a.date.localeCompare(b.date));
+
+    // Collect transfers for this item
+    const transfers = [];
+    let totalTransfer = 0;
+
+    for (const [date, data] of Object.entries(transferData)) {
+      if (date >= parStartDate && date <= endDate && data.items && Array.isArray(data.items)) {
+        data.items.forEach(item => {
+          if (item.name === itemName) {
+            transfers.push({
+              date: date,
+              direction: data.direction,
+              qty: item.qty,
+              finalQty: item.finalQty
+            });
+
+            totalTransfer += item.finalQty;
+          }
+        });
+      }
+    }
+
+    // Sort by date
+    transfers.sort((a, b) => a.date.localeCompare(b.date));
+
+    res.json({
+      itemName: itemName,
+      dailySales: dailySales,
+      totalSales: totalSales,
+      totalConverted: totalConverted,
+      transfers: transfers,
+      totalTransfer: totalTransfer
+    });
+
+  } catch (error) {
+    console.error('Error fetching item details:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -582,6 +756,9 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     const parsedRate = conversionRate ? parseFloat(conversionRate) : null;
     storage.saveDailyData(result.date, result.data, summary, parsedRate);
 
+    // Delete old daily reports for this date
+    deleteOldReports(`daily-${result.date}`);
+
     const timestamp = Date.now();
     const htmlReport = reportGenerator.generateDailyHTMLReport(result.date, summary, result.data);
     const htmlPath = path.join(reportsDir, `daily-${result.date}-${timestamp}.html`);
@@ -662,6 +839,9 @@ app.get('/api/monthly/:yearMonth', (req, res) => {
       return res.status(404).json({ error: 'No data found for this month' });
     }
 
+    // Delete old monthly reports for this month
+    deleteOldReports(`monthly-${req.params.yearMonth}`);
+
     const timestamp = Date.now();
     const htmlReport = reportGenerator.generateMonthlyHTMLReport(req.params.yearMonth, data);
     const htmlPath = path.join(reportsDir, `monthly-${req.params.yearMonth}-${timestamp}.html`);
@@ -688,6 +868,9 @@ app.get('/api/daterange/:startDate/:endDate', (req, res) => {
     if (!dateRangeData || dateRangeData.totalItems === 0) {
       return res.status(404).json({ error: 'No data found for this date range' });
     }
+
+    // Delete old date range reports for this range
+    deleteOldReports(`daterange-${startDate}-to-${endDate}`);
 
     const timestamp = Date.now();
     const htmlReport = reportGenerator.generateDateRangeHTMLReport(startDate, endDate, dateRangeData);
@@ -759,6 +942,10 @@ app.get('/api/par-comparison/:parStartDate', (req, res) => {
     if (!comparison) {
       return res.status(404).json({ error: 'No PAR Stock data found for this period' });
     }
+
+    // Delete old PAR comparison reports for this period
+    const reportPrefix = date ? `par-comparison-${parStartDate}-${date}` : `par-comparison-${parStartDate}`;
+    deleteOldReports(reportPrefix);
 
     const timestamp = Date.now();
     const htmlReport = reportGenerator.generateParComparisonHTMLReport(parStartDate, comparison);
@@ -954,7 +1141,7 @@ app.post('/api/parse-transfer', (req, res) => {
 app.post('/api/save-daily-transfer', (req, res) => {
   try {
     const dataStorage = new DataStorage();
-    const { date, items, direction } = req.body;
+    const { date, items, direction, updateParStock } = req.body;
 
     if (!date) {
       return res.status(400).json({ error: 'Date is required' });
@@ -970,10 +1157,82 @@ app.post('/api/save-daily-transfer', (req, res) => {
 
     const result = dataStorage.saveDailyTransfer(date, items, direction);
 
-    res.json({
+    const response = {
       success: true,
       data: result
-    });
+    };
+
+    // Update PAR Stock if requested
+    if (updateParStock) {
+      const parStockUpdates = {
+        updated: [],
+        added: [],
+        notFound: []
+      };
+
+      // Get all PAR Stock dates to find the latest one
+      const parStockDates = dataStorage.getAllParStockPeriods();
+
+      if (parStockDates.length > 0) {
+        // Sort dates descending and get the latest
+        const latestParDate = parStockDates.sort((a, b) => new Date(b) - new Date(a))[0];
+        const parStock = dataStorage.getParStock(latestParDate);
+
+        if (parStock) {
+          const parItems = parStock.summary?.items || parStock.items || [];
+          let hasChanges = false;
+
+          // Process each transfer item
+          items.forEach(transferItem => {
+            // Find matching PAR Stock item by name (case-insensitive)
+            const parIndex = parItems.findIndex(
+              parItem => parItem.name.toLowerCase() === transferItem.name.toLowerCase()
+            );
+
+            if (parIndex !== -1) {
+              // Item exists - update name if manually edited
+              if (transferItem.manuallyEdited) {
+                const oldName = parItems[parIndex].name;
+                parItems[parIndex].name = transferItem.name;
+
+                // Keep other properties intact
+                if (transferItem.category) {
+                  parItems[parIndex].category = transferItem.category;
+                }
+
+                parStockUpdates.updated.push(transferItem.name);
+                console.log(`Updated PAR Stock: "${oldName}" -> "${transferItem.name}"`);
+                hasChanges = true;
+              }
+            } else {
+              // Item not found - add new item to PAR Stock
+              const newParItem = {
+                name: transferItem.name,
+                category: transferItem.category || 'Uncategorized',
+                opening: 0,
+                current: 0,
+                parStock: 0
+              };
+
+              parItems.push(newParItem);
+              parStockUpdates.added.push(transferItem.name);
+              console.log(`Added new item to PAR Stock: "${transferItem.name}"`);
+              hasChanges = true;
+            }
+          });
+
+          // Save updated PAR Stock if any changes were made
+          if (hasChanges) {
+            dataStorage.saveParStock(latestParDate, parItems);
+            console.log(`PAR Stock updated: ${parStockUpdates.updated.length} updated, ${parStockUpdates.added.length} added`);
+          }
+        }
+      }
+
+      response.parStockUpdates = parStockUpdates;
+    }
+
+    res.json(response);
 
   } catch (error) {
     console.error('Save transfer error:', error);

@@ -35,7 +35,13 @@
       "Bash(gh --version:*)",
       "Bash(git commit:*)",
       "Bash(git restore:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(node test_api.js:*)",
+      "Bash(xargs:*)",
+      "Bash(node check_data.js:*)",
+      "Bash(node test_comparison.js:*)",
+      "Bash(del nul)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": [],
     "ask": []

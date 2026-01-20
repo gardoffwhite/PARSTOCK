@@ -322,12 +322,18 @@ class DataStorage {
           if (!salesInPeriod[item.name]) {
             salesInPeriod[item.name] = {
               qty: 0,
+              convertedQty: 0, // เพิ่ม convertedQty เพื่อเก็บจำนวนที่แปลงแล้ว
               category: item.category || '',
               conversionRate: item.conversionRate || null,
               originalNames: [] // เก็บชื่อ Daily Sale ทั้งหมดที่ match กับ PAR นี้
             };
           }
+          // คำนวณ converted quantity สำหรับแต่ละ item
+          const itemConversionRate = item.conversionRate || 1;
+          const itemConvertedQty = item.qty * itemConversionRate;
+
           salesInPeriod[item.name].qty += item.qty;
+          salesInPeriod[item.name].convertedQty += itemConvertedQty; // รวม convertedQty แทน qty
           if (!salesInPeriod[item.name].category && item.category) {
             salesInPeriod[item.name].category = item.category;
           }
@@ -379,32 +385,28 @@ class DataStorage {
     // เปรียบเทียบ PAR กับยอดขาย + Transfer
     // ไม่ต้อง match อีกครั้ง เพราะ salesInPeriod และ transfersInPeriod ใช้ชื่อ PAR เป็น key อยู่แล้ว
     const comparison = [];
-    parStock.summary.items.forEach(parItem => {
+    const parItems = parStock.summary?.items || parStock.items || [];
+    parItems.forEach(parItem => {
       // ใช้ชื่อ PAR โดยตรงในการหายอดขาย (เพราะ Daily Sale ที่บันทึกไว้ใช้ชื่อ PAR แล้ว)
-      const salesData = salesInPeriod[parItem.name] || { qty: 0, category: '', conversionRate: null, originalNames: [] };
+      const salesData = salesInPeriod[parItem.name] || { qty: 0, convertedQty: 0, category: '', conversionRate: null, originalNames: [] };
       const transferData = transfersInPeriod[parItem.name] || { qty: 0, category: '' };
 
       const soldQty = salesData.qty;
+      const convertedSoldQty = salesData.convertedQty; // ใช้ convertedQty ที่รวมมาแล้ว
       const transferQty = transferData.qty; // มีเครื่องหมาย: + สำหรับ IN, - สำหรับ OUT
       const category = salesData.category || transferData.category;
       const userConversionRate = salesData.conversionRate;
       const originalNames = salesData.originalNames || []; // ชื่อ Daily Sale ทั้งหมดที่ match
 
-      // คำนวณ conversion: ใช้ user-selected rate ถ้ามี ไม่งั้นใช้ auto-detect
-      let conversion;
-      if (userConversionRate !== null && userConversionRate !== undefined) {
-        conversion = {
-          convertedQty: soldQty * userConversionRate,
-          conversionRate: userConversionRate,
-          unit: 'ขวด'
-        };
-      } else {
-        conversion = ConversionUnit.convertQty(soldQty, category, parItem.name);
+      // คำนวณ conversion rate เฉลี่ย (สำหรับแสดงผล)
+      let displayConversionRate = userConversionRate;
+      let displayUnit = 'ขวด';
+
+      if (soldQty > 0 && convertedSoldQty > 0) {
+        displayConversionRate = convertedSoldQty / soldQty;
       }
 
-      const convertedSoldQty = conversion.convertedQty !== null ? conversion.convertedQty : soldQty;
-
-      // คำนวณคงเหลือ: PAR - ขาย + Transfer (transfer IN เป็น +, OUT เป็น -)
+      // คำนวณคงเหลือ: PAR - ขาย (converted) + Transfer (transfer IN เป็น +, OUT เป็น -)
       // Transfer เป็นขวดเต็มอยู่แล้ว ไม่ต้อง convert
       const remaining = parItem.parStock - convertedSoldQty + transferQty;
       const usagePercent = parItem.parStock > 0 ? (convertedSoldQty / parItem.parStock * 100) : 0;
@@ -416,8 +418,8 @@ class DataStorage {
         soldQty: soldQty,
         convertedSoldQty: convertedSoldQty,
         transferQty: transferQty, // เพิ่ม transfer quantity
-        conversionRate: conversion.conversionRate,
-        unit: conversion.unit,
+        conversionRate: displayConversionRate,
+        unit: displayUnit,
         remaining: remaining,
         usagePercent: usagePercent,
         needsReorder: remaining < (parItem.parStock * 0.2),
@@ -428,7 +430,7 @@ class DataStorage {
     return {
       parStartDate: parStartDate,
       dateRange: dateRange,
-      totalParItems: parStock.summary.items.length,
+      totalParItems: parItems.length,
       comparison: comparison.sort((a, b) => b.convertedSoldQty - a.convertedSoldQty)
     };
   }
@@ -439,19 +441,19 @@ class DataStorage {
 
     // Check if this is a spirit (needs oz conversion)
     const isSpirit = parNameLower.includes('vodka') ||
-                    parNameLower.includes('gin') ||
-                    parNameLower.includes('rum') ||
-                    parNameLower.includes('tequila') ||
-                    parNameLower.includes('whisky') ||
-                    parNameLower.includes('whiskey') ||
-                    parNameLower.includes('bourbon') ||
-                    parNameLower.includes('cognac') ||
-                    parNameLower.includes('brandy') ||
-                    parNameLower.includes('aperitif') ||
-                    parNameLower.includes('liqueur') ||
-                    parNameLower.includes('mezcal') ||
-                    parNameLower.includes('grappa') ||
-                    parNameLower.includes('sake');
+      parNameLower.includes('gin') ||
+      parNameLower.includes('rum') ||
+      parNameLower.includes('tequila') ||
+      parNameLower.includes('whisky') ||
+      parNameLower.includes('whiskey') ||
+      parNameLower.includes('bourbon') ||
+      parNameLower.includes('cognac') ||
+      parNameLower.includes('brandy') ||
+      parNameLower.includes('aperitif') ||
+      parNameLower.includes('liqueur') ||
+      parNameLower.includes('mezcal') ||
+      parNameLower.includes('grappa') ||
+      parNameLower.includes('sake');
 
     if (!isSpirit) {
       // Not a spirit - no conversion needed
@@ -555,19 +557,33 @@ class DataStorage {
     const transfersInPeriod = {};
 
     // Aggregate ALL sales from parStartDate to endDate
+    // Track original names that matched each PAR name
     for (const [date, data] of Object.entries(dailyData)) {
       if (date >= parStartDate && date <= endDate && data.items && Array.isArray(data.items)) {
         data.items.forEach(item => {
           if (!salesInPeriod[item.name]) {
             salesInPeriod[item.name] = {
               qty: 0,
+              convertedQty: 0, // เพิ่ม convertedQty
               category: item.category || '',
-              conversionRate: item.conversionRate || 1
+              conversionRate: item.conversionRate || 1,
+              originalNames: [] // Track all original names that matched this PAR name
             };
           }
+          // คำนวณ converted quantity สำหรับแต่ละ item
+          const itemConversionRate = item.conversionRate || 1;
+          const itemConvertedQty = item.qty * itemConversionRate;
+
           salesInPeriod[item.name].qty += item.qty;
+          salesInPeriod[item.name].convertedQty += itemConvertedQty; // รวม convertedQty
           if (!salesInPeriod[item.name].category && item.category) {
             salesInPeriod[item.name].category = item.category;
+          }
+          // Collect original names
+          if (item.originalName && item.originalName !== item.name) {
+            if (!salesInPeriod[item.name].originalNames.includes(item.originalName)) {
+              salesInPeriod[item.name].originalNames.push(item.originalName);
+            }
           }
         });
       }
@@ -595,11 +611,15 @@ class DataStorage {
     let totalRemaining = 0;
     let totalUsagePercent = 0;
 
-    parStock.summary.items.forEach(parItem => {
+    // Support both old format (items only) and new format (with summary)
+    const parItems = parStock.summary?.items || parStock.items || [];
+
+    parItems.forEach(parItem => {
       // ใช้ชื่อ PAR โดยตรง (เพราะ Daily Sale ที่บันทึกไว้ใช้ชื่อ PAR แล้ว)
-      const salesData = salesInPeriod[parItem.name] || { qty: 0, category: '', conversionRate: 1 };
+      const salesData = salesInPeriod[parItem.name] || { qty: 0, convertedQty: 0, category: '', conversionRate: 1 };
       const transferData = transfersInPeriod[parItem.name] || { qty: 0, category: '' };
       const soldQty = salesData.qty;
+      const convertedSoldQty = salesData.convertedQty; // ใช้ convertedQty ที่รวมมาแล้ว
       const transferQty = transferData.qty;
       const conversionRate = salesData.conversionRate;
 
@@ -608,8 +628,7 @@ class DataStorage {
         matchedSalesNames.add(parItem.name);
       }
 
-      // Apply conversion and include transfer
-      const convertedSoldQty = soldQty * conversionRate;
+      // คำนวณคงเหลือโดยใช้ convertedSoldQty ที่รวมมาแล้ว
       const remaining = parItem.parStock - convertedSoldQty + transferQty;
       const usagePercent = parItem.parStock > 0 ? (convertedSoldQty / parItem.parStock * 100) : 0;
 
@@ -627,7 +646,8 @@ class DataStorage {
         conversionRate: conversionRate,
         remaining: remaining,
         usagePercent: usagePercent,
-        type: 'par_item'
+        type: 'par_item',
+        originalNames: salesData.originalNames || [] // Include original names from Daily Sale
       });
     });
 
@@ -642,7 +662,7 @@ class DataStorage {
         const salesData = salesInPeriod[salesName];
         const transferData = transfersInPeriod[salesName] || { qty: 0 };
         const conversionRate = salesData.conversionRate;
-        const convertedSoldQty = salesData.qty * conversionRate;
+        const convertedSoldQty = salesData.convertedQty; // ใช้ convertedQty ที่รวมมาแล้ว
         const transferQty = transferData.qty;
 
         unmatchedSales.push({
@@ -670,11 +690,11 @@ class DataStorage {
     return {
       parStartDate: parStartDate,
       endDate: endDate,
-      totalParItems: parStock.summary.items.length,
+      totalParItems: parItems.length,
       totalSalesItems: Object.keys(salesInPeriod).length,
       totalSold: totalSold,
       totalRemaining: totalRemaining,
-      avgUsagePercent: parStock.summary.items.length > 0 ? totalUsagePercent / parStock.summary.items.length : 0,
+      avgUsagePercent: parItems.length > 0 ? totalUsagePercent / parItems.length : 0,
       unmatchedSalesCount: unmatchedSales.length,
       comparison: allItems
     };
@@ -858,11 +878,11 @@ class DataStorage {
   parseTransferWithPAR(items, date) {
     const parStock = this.findParStockForDate(date);
 
-    if (!parStock || !parStock.summary || !parStock.summary.items) {
+    if (!parStock) {
       throw new Error('ไม่พบข้อมูล PAR Stock กรุณาอัพโหลด PAR ก่อน');
     }
 
-    const parItems = parStock.summary.items;
+    const parItems = parStock.summary?.items || parStock.items || [];
     const parNames = parItems.map(item => item.name);
     const matchedItems = [];
 
@@ -900,15 +920,34 @@ class DataStorage {
   saveDailyTransfer(date, items, direction) {
     const allTransfers = this.loadDailyTransfers();
 
-    allTransfers[date] = {
-      date: date,
-      uploadedAt: new Date().toISOString(),
-      direction: direction, // 'in' or 'out'
-      items: items
-    };
+    if (allTransfers[date]) {
+      // Merge with existing data
+      // If direction is different, we might have mixed directions.
+      // But typically user uploads "Transfer IN" then "Transfer OUT".
+      // We should append items.
+
+      // Check if existing data has 'items' array.
+      const existingItems = allTransfers[date].items || [];
+      const newItems = items;
+
+      allTransfers[date].items = [...existingItems, ...newItems];
+      allTransfers[date].uploadedAt = new Date().toISOString();
+      // Direction might track the *last* upload direction, but individual items store their own direction in memory/frontend?
+      // Let's check frontend logic. Ideally items should preserve their direction.
+      // For now, update global direction to 'mixed' if different? Or just keep latest.
+      allTransfers[date].direction = direction;
+    } else {
+      // New entry
+      allTransfers[date] = {
+        date: date,
+        uploadedAt: new Date().toISOString(),
+        direction: direction, // 'in' or 'out'
+        items: items
+      };
+    }
 
     fs.writeFileSync(this.dailyTransfersFile, JSON.stringify(allTransfers, null, 2));
-    console.log(`✅ Saved transfer data for ${date}`);
+    console.log(`✅ Saved transfer data for ${date} (Items: ${items.length})`);
 
     return allTransfers[date];
   }
@@ -982,8 +1021,8 @@ class DataStorage {
     // Check if this exact match already exists
     const existingIndex = history[normalizedSaleName].findIndex(
       match => match.parName === parName &&
-               match.conversionRate === conversionRate &&
-               match.unit === unit
+        match.conversionRate === conversionRate &&
+        match.unit === unit
     );
 
     const matchData = {

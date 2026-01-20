@@ -1,814 +1,7 @@
 {
   "2025-11-28": {
     "startDate": "2025-11-28",
-    "uploadedAt": "2025-12-08T17:23:44.828Z",
-    "summary": {
-      "startDate": "2025-11-28",
-      "totalItems": 200,
-      "totalParStock": 496.2200000000001,
-      "items": [
-        {
-          "name": "Beer, Asahi, S bottle, 33cl",
-          "parStock": 28
-        },
-        {
-          "name": "Beer, Bussaba, ex weisse, bottle, 33cl",
-          "parStock": 18
-        },
-        {
-          "name": "Beer, Chang, classic, S bottle, 32cl",
-          "parStock": 16
-        },
-        {
-          "name": "Beer, Singha, S bottle, 32cl",
-          "parStock": 16
-        },
-        {
-          "name": "Beer, Chatri, 33cl",
-          "parStock": 14
-        },
-        {
-          "name": "Champagne, Moet&Chandon, brut imperial, 20cl",
-          "parStock": 10
-        },
-        {
-          "name": "Champagne, Louis Roederer, brut, 75cl",
-          "parStock": 9
-        },
-        {
-          "name": "Red wine, Arzuaga, reserva, 75cl",
-          "parStock": 7
-        },
-        {
-          "name": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
-          "parStock": 6.2
-        },
-        {
-          "name": "Beer SAY PLAY NANO IPA (Non Alcoholic) 330ml.",
-          "parStock": 6
-        },
-        {
-          "name": "Champagne, Taittinger, prestige brut",
-          "parStock": 6
-        },
-        {
-          "name": "Red wine, Twomey, pinot noir, anderson, 75cl",
-          "parStock": 6
-        },
-        {
-          "name": "Rice wine, akaya, usa, 350ml",
-          "parStock": 6
-        },
-        {
-          "name": "White wine, Edouard Delaunay, septembre bourgogne, chardonnay, 75cl",
-          "parStock": 6
-        },
-        {
-          "name": "White wine, Joh. Jos. Prum, bernkasteler, riesling, 75cl",
-          "parStock": 6
-        },
-        {
-          "name": "White wine, Weingut Robert Weil, tradition riesling, 75cl",
-          "parStock": 6
-        },
-        {
-          "name": "Red wine, Montes Alpha, Malbec, 75cl",
-          "parStock": 5.4
-        },
-        {
-          "name": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
-          "parStock": 5
-        },
-        {
-          "name": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
-          "parStock": 5
-        },
-        {
-          "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
-          "parStock": 5
-        },
-        {
-          "name": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
-          "parStock": 5
-        },
-        {
-          "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
-          "parStock": 4.8
-        },
-        {
-          "name": "White wine, Domaine du Tariquet, premieres grives, 75cl",
-          "parStock": 4.8
-        },
-        {
-          "name": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
-          "parStock": 4.6
-        },
-        {
-          "name": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
-          "parStock": 4.4
-        },
-        {
-          "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
-          "parStock": 4.4
-        },
-        {
-          "name": "White spirit, Maa jai dum, flowery, 40%, 70cl",
-          "parStock": 4.35
-        },
-        {
-          "name": "Red wine, Chateau La Communion",
-          "parStock": 4
-        },
-        {
-          "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
-          "parStock": 4
-        },
-        {
-          "name": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
-          "parStock": 4
-        },
-        {
-          "name": "Thai wine, Wildflower blossom honey, 750ml.",
-          "parStock": 4
-        },
-        {
-          "name": "White wine, Au Bon Climat Chardonnay",
-          "parStock": 4
-        },
-        {
-          "name": "White wine, GranMonte, viognier, 75cl",
-          "parStock": 4
-        },
-        {
-          "name": "White wine, Montes alpha, chardonnay, 75cl",
-          "parStock": 4
-        },
-        {
-          "name": "Red wine, GranMonte, asoke, cabernet sauvignon, syrah, 2022, 75cl",
-          "parStock": 3.8
-        },
-        {
-          "name": "White wine, Domaine Weinbach, gewurztraminer, 75cl",
-          "parStock": 3.6
-        },
-        {
-          "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
-          "parStock": 3.4
-        },
-        {
-          "name": "Champagne, Louis Roederer, rose, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Champange, leclerc-briant reserve extra brut",
-          "parStock": 3
-        },
-        {
-          "name": "Pet nat, into the light wine",
-          "parStock": 3
-        },
-        {
-          "name": "Red wine, Arzuaga, crianza, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Red wine, Chateau Barrail Du Blanc, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Red wine, Fontanabianca, barbaresco, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Red wine, Robert Mondavi, napa, cabernet sauvignon, 2019, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Rose wine, Chateau Miraval, cotes de provence, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Taittinger Prestige Rose Champagne France 750ml.",
-          "parStock": 3
-        },
-        {
-          "name": "White wine, Bodega Garzon, reserva albarino, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "White wine, E Guigal, condrieu, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "White wine, Monsoon Valley, signature white, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "White wine, Penfolds, cellar tasmania, reserve, chardonnay, 75cl",
-          "parStock": 3
-        },
-        {
-          "name": "Rum, Nasan, 40% ABV, 70cl",
-          "parStock": 2.87
-        },
-        {
-          "name": "Liqueur, Choya, classic umeshu, 65cl",
-          "parStock": 2.59
-        },
-        {
-          "name": "Gin, Bombay, sapphire, 75cl",
-          "parStock": 2.32
-        },
-        {
-          "name": "Champagne, Louis Roederer, blanc de blancs, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Champagne, Louis Roederer, cristal, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Champagne, Veuve Clicquot Ponsadin, Brut, yellow label, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Dessert wine, Klein Constantia, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Liqueur, Drambuie, 40%, 70cl",
-          "parStock": 2
-        },
-        {
-          "name": "Pet nat, kind of blue",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Antinori, chianti classico, badia a passignano, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Antinori, cont ugo bolgheri, DOC, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Chateau Fontenil, merlot, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, chateau la nerthe chateauneuf-du-pape rouge",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Chateau Les Barraillots, margaux, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, chateau malescasse",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Chateau mazeyres",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Chateau, moulin borie, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Cortonesi, brunello di moltalcino, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, domaine des senechaux, Chateauneuf du Pap, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Domaine Jean Chauvenet, nuits saint georges, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Felton Road, bannockburn, pinot noir, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Gaja, ca marcanda, promis, toscana, 2021, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Javelier Laurin, gevrey chambertin, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Kaiken, ultra, cabernet sauvignon, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Monsoon Valley, cuvee de siam rouge, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Montes, folly, syrah, 2020, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Pascal Jolivet, attitude, pinot noir, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Staglin Family Vineyard, salus, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, The Chocolate Block, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Red wine, Two Paddocks, pinot noir, estate, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Rum, Bacardi, white, 70cl",
-          "parStock": 2
-        },
-        {
-          "name": "Seii Umeshu 500ml",
-          "parStock": 2
-        },
-        {
-          "name": "Sweet wine, Emilio Lustau, East India, Solera, 50cl",
-          "parStock": 2
-        },
-        {
-          "name": "Whisky, Mekhong, klom, 700ml",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, chateau la nerthe chateauneuf-du-pape, blanc",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Cloudy Bay, sauvignon blanc, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Domaine Christian Moreau Vaillons, chablis premier cru, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Domaine Zind Humbrecht, gewurztraminer, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Domaine Zind Humbrecht, riesling, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Edouard Delaunay, chassagne montrachet, AOC, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Edouard Delaunay, meursault, le village, AOC, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Eulogio Pomares, maceracion con pirles, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Felton Road, block 2, chardonnay, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Gianni Gagliardo, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White Wine, Joh. Jos. Prum Wehlener Sonnenuhr Riesling Kabinett",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Johannes Zillinger, parcellaire, sauvignon blanc, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Peter Jakob Kuhn, lenchen EL kabinett, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Robert Mondavi Private Selection Chardonnay, Rmps, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Rotem & Mounir Saouma, cotes du rhone villages, inopia blanc, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Stella Bella, chardonnay, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Terlano, cuvee terlaner, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Tio Pepe, sherry, 70cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Trimbach, riesling, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "White wine, Verget, pouilly fuisse, terres de pierres, 75cl",
-          "parStock": 2
-        },
-        {
-          "name": "Gin, Iron balls, 70cl",
-          "parStock": 1.87
-        },
-        {
-          "name": "Rum, Malibu, 70cl",
-          "parStock": 1.87
-        },
-        {
-          "name": "Liqueur, Midori, melon, 70cl",
-          "parStock": 1.78
-        },
-        {
-          "name": "Liqueur, Pernod, 70cl",
-          "parStock": 1.78
-        },
-        {
-          "name": "Rum, Phraya, 75cl",
-          "parStock": 1.64
-        },
-        {
-          "name": "Gin, Anong, 40%, 750ml",
-          "parStock": 1.52
-        },
-        {
-          "name": "Pharya Rum 8 Years 700ml.",
-          "parStock": 1.52
-        },
-        {
-          "name": "Liqueur, Hiram Walker, peach schnapps, 75cl",
-          "parStock": 1.48
-        },
-        {
-          "name": "Whisky, Wild Turkey, bourbon, 81proof, 75cl",
-          "parStock": 1.4
-        },
-        {
-          "name": "White wine, Pascal Jolivet, sancerre, 75cl",
-          "parStock": 1.4
-        },
-        {
-          "name": "Cognac, Remy Martin, 1738, accord royal, 70cl",
-          "parStock": 1.35
-        },
-        {
-          "name": "Whisky, The Macallan, double cask, 12years, 70cl",
-          "parStock": 1.35
-        },
-        {
-          "name": "PRAKAAN DOUBLE CASK",
-          "parStock": 1.3
-        },
-        {
-          "name": "Whisky, Jack Daniels, no.7, 70cl",
-          "parStock": 1.09
-        },
-        {
-          "name": "Gin, Bulldog, 75cl",
-          "parStock": 1.08
-        },
-        {
-          "name": "Tequila, Don Julio, reposado, 75cl",
-          "parStock": 1.08
-        },
-        {
-          "name": "Beer, Heineken, S bottle, non alcohol, 0.0, 33cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Arlaux, grande cuvee, 1er cru, NV, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Billecart Salmon, brut reserve, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Dom Perignon, 2015, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Laurent Perrier, rose brut, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Moet&Chandon, brut imperial, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Champagne, Taittinger, comtes, blanc de blancs, brut, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "CHM Louis Roederer Cristal Rose",
-          "parStock": 1
-        },
-        {
-          "name": "Gin, Caorunn, Ka-roon, small batch scottish, 41.8%, 70cl",
-          "parStock": 1
-        },
-        {
-          "name": "Gin, Lady Trieu, contemporary, 70cl",
-          "parStock": 1
-        },
-        {
-          "name": "Liqueur, Cointreau, orange, 70cl",
-          "parStock": 1
-        },
-        {
-          "name": "Mezcal, Creyente, joven, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Orange wine, Maturana wines, Naranjo",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Chateau Les Hauts Conseillants, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red Wine, Chateau Pichon-Longueville au Baron de Pichon-Longueville, Pauillac, France",
-          "parStock": 1
-        },
-        {
-          "name": "Red Wine, Chateau Smith Haut Lafitte, Pessac-Leognan, France",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, E Guigal, cote rotie chateau d ampuis, cote rotie, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, E Guigal, gigondas, AOC, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Gaja, sito moresco, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Gianni Gagliardo, Barolo, DOCG, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Kaiken, mai the first A. montes, malbec, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Mouton Cade, margaux, reserve, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Pio Cesare, oltre langhe, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Rocca Di Frassinello, le sughere, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Red wine, Tinhof, st laurent eisenstadt, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Sparkling wine, Ferrari, maximum blanc de blanc, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Sparkling wine, Ferrari, perle brut trento, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Tequila, 1800 Tequila, cristalino, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Tequila, McCormick, rose strawberry, 70cl",
-          "parStock": 1
-        },
-        {
-          "name": "Vermouth, Martini, rosso, 1l",
-          "parStock": 1
-        },
-        {
-          "name": "Whisky, The Macallan, classic cut, 70cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Domaine Weinbach, gewurztraminer, cuvee laurence, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Domaine Weinbach, riesling, cuvee colette, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Domaine Zind Humbrecht, pinot gris, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Leeuwin Estate, art series, 2006, riesling, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Peter Lauer, feils, riesling, no 13, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Peter Lehmann, Senior Fass 6, resling, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "White wine, Wabi Sabi, orange moon, 75cl",
-          "parStock": 1
-        },
-        {
-          "name": "Liqueur, Baileys, original, irish cream, 70cl",
-          "parStock": 0.96
-        },
-        {
-          "name": "Liqueur, Bols, creme de cassis, 70cl",
-          "parStock": 0.96
-        },
-        {
-          "name": "Liqueur, Bols, dry orange, 70cl",
-          "parStock": 0.96
-        },
-        {
-          "name": "Rose wine, Cocchi Americano, rosa, 75cl",
-          "parStock": 0.88
-        },
-        {
-          "name": "Tequila, Patron, silver, 75cl",
-          "parStock": 0.88
-        },
-        {
-          "name": "Cognac, Martell, cordon bleu, 70cl",
-          "parStock": 0.87
-        },
-        {
-          "name": "Gin, Hendricks, 70cl",
-          "parStock": 0.87
-        },
-        {
-          "name": "Liqueur, Benedictine, DOM, 70cl",
-          "parStock": 0.87
-        },
-        {
-          "name": "Liqueur, Kahlua, 70cl",
-          "parStock": 0.87
-        },
-        {
-          "name": "Whisky, Compass Box, the peat monster, 70cl",
-          "parStock": 0.87
-        },
-        {
-          "name": "Liqueur, Luxardo, maraschino, 1l",
-          "parStock": 0.85
-        },
-        {
-          "name": "Aperitif, Dubonnet, 75cl",
-          "parStock": 0.8
-        },
-        {
-          "name": "White wine, Domaine Du Clos Naudin, vouvray sec, 75cl",
-          "parStock": 0.8
-        },
-        {
-          "name": "Whisky, Chivas Regal, 18years, 70cl",
-          "parStock": 0.78
-        },
-        {
-          "name": "Seii Nama sake 720ml",
-          "parStock": 0.75
-        },
-        {
-          "name": "Fortified wine, Penfolds, father, 10year, grand tawny, 75cl",
-          "parStock": 0.72
-        },
-        {
-          "name": "Liqueur, Hiram Walker, amaretto, 75cl",
-          "parStock": 0.72
-        },
-        {
-          "name": "Sherry wine, Harveys, Bristol Cream, 75cl",
-          "parStock": 0.72
-        },
-        {
-          "name": "PRAKAAN PEATED MALT",
-          "parStock": 0.7
-        },
-        {
-          "name": "Tequila, Jose Cuervo, gold, 70cl",
-          "parStock": 0.7
-        },
-        {
-          "name": "Liqueur, Campari, 75cl",
-          "parStock": 0.64
-        },
-        {
-          "name": "Whisky, Suntory, hibiki, 43%, 70cl",
-          "parStock": 0.61
-        },
-        {
-          "name": "Whisky, The Macallan, double cask, 15years, 70cl",
-          "parStock": 0.61
-        },
-        {
-          "name": "Rum, Captain Morgan, dark, 75cl",
-          "parStock": 0.56
-        },
-        {
-          "name": "Liqueur, Aperol, 70cl",
-          "parStock": 0.52
-        },
-        {
-          "name": "PRAKAAN SELECT CASK",
-          "parStock": 0.52
-        },
-        {
-          "name": "Rum, Canario, cashaca, 70cl",
-          "parStock": 0.52
-        },
-        {
-          "name": "Rum, Chalong bay, 70cl",
-          "parStock": 0.52
-        },
-        {
-          "name": "Vodka, Absolut, 70cl",
-          "parStock": 0.52
-        },
-        {
-          "name": "Gin, Nakin, 40%, 750ml",
-          "parStock": 0.48
-        },
-        {
-          "name": "Vermouth, Martini, bianco, 1l",
-          "parStock": 0.48
-        },
-        {
-          "name": "Vermouth, Martini, extra dry, 1l",
-          "parStock": 0.48
-        },
-        {
-          "name": "Vodka, Grey Goose, original, 75cl",
-          "parStock": 0.48
-        },
-        {
-          "name": "Vodka, Ketel One, 75cl",
-          "parStock": 0.48
-        },
-        {
-          "name": "Whisky, Johnnie Walker, black label, 70cl",
-          "parStock": 0.43
-        },
-        {
-          "name": "Whisky, Old Pulteney, 21years, 70cl",
-          "parStock": 0.43
-        },
-        {
-          "name": "Whisky, John Jameson, 40%, 70cl",
-          "parStock": 0.35
-        },
-        {
-          "name": "Whisky, The Macallan, double cask, 18years, 70cl",
-          "parStock": 0.35
-        },
-        {
-          "name": "Liqueur, Ricard, 75cl",
-          "parStock": 0.32
-        },
-        {
-          "name": "Liqueur, Bols, kiwi, 70cl",
-          "parStock": 0.26
-        },
-        {
-          "name": "Vodka, Belvedere, 70cl",
-          "parStock": 0.09
-        }
-      ]
-    },
+    "uploadedAt": "2025-12-21T09:29:55.528Z",
     "items": [
       {
         "name": "Beer, Asahi, S bottle, 33cl",
@@ -1609,6 +802,1059 @@
       {
         "name": "Vodka, Belvedere, 70cl",
         "parStock": 0.09
+      },
+      {
+        "name": "Botanical Muse",
+        "parStock": 0
+      },
+      {
+        "name": "Martini Vodka",
+        "parStock": 0
+      },
+      {
+        "name": "Margarita",
+        "parStock": 0
+      },
+      {
+        "name": "Escape Glow",
+        "parStock": 0
+      },
+      {
+        "name": "Old Fashioned",
+        "parStock": 0
+      },
+      {
+        "name": "Negroni",
+        "parStock": 0
+      },
+      {
+        "name": "Wine Pairing 5 Glasses",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Wine Pairing 7 Glasses",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Wine Pairing 3 Glasses",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 1500 ml.",
+        "category": "Unknown",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "category": "Unknown",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "hite wine, Albamar, albarino, 75cl",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France, 750 ml.",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Coca cola, can, 325ml",
+        "category": "Unknown",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "White wine, Pascal Jolivet, pouilly fume, 75cl",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      }
+    ],
+    "conversionSettings": {}
+  },
+  "2025-12-30": {
+    "startDate": "2025-12-30",
+    "uploadedAt": "2026-01-18T08:57:57.694Z",
+    "items": [
+      {
+        "name": "Beer, Chang, classic, S bottle, 32cl",
+        "parStock": 48
+      },
+      {
+        "name": "Beer, Chatri, 33cl",
+        "parStock": 26
+      },
+      {
+        "name": "Beer, Singha, S bottle, 32cl",
+        "parStock": 25
+      },
+      {
+        "name": "Beer, Asahi, S bottle, 33cl",
+        "parStock": 21
+      },
+      {
+        "name": "Champagne, Louis Roederer, brut, 75cl",
+        "parStock": 13
+      },
+      {
+        "name": "Beer, Bussaba, ex weisse, bottle, 33cl",
+        "parStock": 12
+      },
+      {
+        "name": "White wine, Montes alpha, chardonnay, 75cl",
+        "parStock": 9
+      },
+      {
+        "name": "White wine, Edouard Delaunay, septembre bourgogne, chardonnay, 75cl",
+        "parStock": 8.2
+      },
+      {
+        "name": "Sparkling wine, Massolino, moscato d asti, 75cl",
+        "parStock": 7.4
+      },
+      {
+        "name": "Champagne, Moet&Chandon, brut imperial, 20cl",
+        "parStock": 7
+      },
+      {
+        "name": "Red wine, Arzuaga, reserva, 75cl",
+        "parStock": 7
+      },
+      {
+        "name": "White wine, Domaine Weinbach, gewurztraminer, 75cl",
+        "parStock": 6.6
+      },
+      {
+        "name": "White wine, GranMonte, viognier, 75cl",
+        "parStock": 6.2
+      },
+      {
+        "name": "White wine, Pascal Jolivet, sancerre, 75cl",
+        "parStock": 6.2
+      },
+      {
+        "name": "Rice wine, sato asita black, nanuanchun, 9%abv, 500ml",
+        "parStock": 6
+      },
+      {
+        "name": "Sparkling Wine, Paul-Edouard Crémant d’Alsace Extra Brut, Domaine Bott Geyl, Alsace, France, 75",
+        "parStock": 6
+      },
+      {
+        "name": "White Wine, Joh. Jos. Prum Wehlener Sonnenuhr Riesling Kabinett",
+        "parStock": 6
+      },
+      {
+        "name": "White Wine, Weingut Fred Loimer Gruner Veltliner, Kamptal DAC, Austria, 750 ml.",
+        "parStock": 6
+      },
+      {
+        "name": "White wine, Weingut Robert Weil, tradition riesling, 75cl",
+        "parStock": 6
+      },
+      {
+        "name": "White wine, Rabl, Guner Veltliner, sweet dream, 2022, 75cl",
+        "parStock": 5.4
+      },
+      {
+        "name": "Beer SAY PLAY NANO IPA (Non Alcoholic) 330ml.",
+        "parStock": 5
+      },
+      {
+        "name": "Champagne, Taittinger, prestige brut",
+        "parStock": 5
+      },
+      {
+        "name": "Red wine, La Rioja Alta S.A. Vina Ardaza Reserva",
+        "parStock": 5
+      },
+      {
+        "name": "Red wine, Twomey, pinot noir, anderson, 75cl",
+        "parStock": 5
+      },
+      {
+        "name": "Rice wine, akaya, usa, 350ml",
+        "parStock": 5
+      },
+      {
+        "name": "Rose wine, Chateau d Esclans, whispering angel, cotes de provence, 75cl",
+        "parStock": 5
+      },
+      {
+        "name": "White wine, Domaene Gobelsburg, riesling, 75cl",
+        "parStock": 5
+      },
+      {
+        "name": "White Wine, Reyneke Sauvignon Blanc, Stellenbosch, South Africa, 750 ml.",
+        "parStock": 5
+      },
+      {
+        "name": "White wine, Verget, pouilly fuisse, terres de pierres, 75cl",
+        "parStock": 5
+      },
+      {
+        "name": "White wine, Achillee Pepin, hesperide, gewurztraminer, 2021, 75cl",
+        "parStock": 4.6
+      },
+      {
+        "name": "White spirit, Maa jai dum, flowery, 40%, 70cl",
+        "parStock": 4.35
+      },
+      {
+        "name": "White wine, Corte Giara, pinot grigio, IGT, 75cl",
+        "parStock": 4.2
+      },
+      {
+        "name": "Red wine, Chateau La Communion",
+        "parStock": 4
+      },
+      {
+        "name": "Red wine, Montes Alpha, Malbec, 75cl",
+        "parStock": 4
+      },
+      {
+        "name": "Seii Nama sake 720ml",
+        "parStock": 4
+      },
+      {
+        "name": "Sparkling wine, cremant paul-edouard d'alsace extra brut, 750 ml",
+        "parStock": 4
+      },
+      {
+        "name": "White wine, chateau la nerthe chateauneuf-du-pape, blanc",
+        "parStock": 4
+      },
+      {
+        "name": "White wine, Domaine du Tariquet, premieres grives, 75cl",
+        "parStock": 4
+      },
+      {
+        "name": "White Wine, Guillerault-Fargette Sancerre 'Iota', Loire, France,  750 ml.",
+        "parStock": 4
+      },
+      {
+        "name": "Gin, Anong, 40%, 750ml",
+        "parStock": 3.96
+      },
+      {
+        "name": "Thai wine, Wildflower blossom honey, 750ml.",
+        "parStock": 3.8
+      },
+      {
+        "name": "Red wine, Ruffino, riserva ducale, chianti, classico, DOCG, 75cl",
+        "parStock": 3.6
+      },
+      {
+        "name": "Rice wine, sato kaowong sticky rice white, nanuanchun, 8%abv, 500ml",
+        "parStock": 3.6
+      },
+      {
+        "name": "White wine, Au Bon Climat Chardonnay",
+        "parStock": 3.4
+      },
+      {
+        "name": "Red wine, GranMonte, asoke, cabernet sauvignon, syrah, 2022, 75cl",
+        "parStock": 3.2
+      },
+      {
+        "name": "Pet nat, into the light wine",
+        "parStock": 3
+      },
+      {
+        "name": "Red wine, Fontanabianca, barbaresco, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "Red Wine, Pinot Noir, Salomon & Andrew, Central Otago, New Zealand, 750 ml.",
+        "parStock": 3
+      },
+      {
+        "name": "Rose wine, Chateau Miraval, cotes de provence, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "Sweet Wine, Schloss Gobelsburg Gruner Veltliner Eiswein, Niederosterreich, Austria, 375 ml.",
+        "parStock": 3
+      },
+      {
+        "name": "Taittinger Prestige Rose Champagne France 750ml.",
+        "parStock": 3
+      },
+      {
+        "name": "Terroir Històric Negre, Terroir al Límit, Priorat, Spain",
+        "parStock": 3
+      },
+      {
+        "name": "White wine, Albamar, albarino, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "White wine, Bodega Garzon, reserva albarino, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "White wine, E Guigal, condrieu, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "White Wine, Fernand & Laurent Pillot Chassagne-Montrachet, Cote de Beaune, France, 750 ml.",
+        "parStock": 3
+      },
+      {
+        "name": "White wine, Monsoon Valley, signature white, 75cl",
+        "parStock": 3
+      },
+      {
+        "name": "Rum, Nasan, 40% ABV, 70cl",
+        "parStock": 2.87
+      },
+      {
+        "name": "Liqueur, Choya, classic umeshu, 65cl",
+        "parStock": 2.71
+      },
+      {
+        "name": "Red wine, La Closerie des Thorins, moulin a vent, beaujolais, 75cl",
+        "parStock": 2.4
+      },
+      {
+        "name": "Liqueur, Drambuie, 40%, 70cl",
+        "parStock": 2.35
+      },
+      {
+        "name": "Champagne, Dom Perignon, 2015, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Champagne, Louis Roederer, blanc de blancs, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Champagne, Louis Roederer, cristal, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Champagne, Louis Roederer, rose, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Champagne, Veuve Clicquot Ponsadin, Brut, yellow label, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Champange, leclerc-briant reserve extra brut",
+        "parStock": 2
+      },
+      {
+        "name": "Dessert wine, Klein Constantia, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Gin, Bombay, sapphire, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Pet nat, kind of blue",
+        "parStock": 2
+      },
+      {
+        "name": "PRAKAAN DOUBLE CASK",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Antinori, chianti classico, badia a passignano, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Antinori, cont ugo bolgheri, DOC, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Arzuaga, crianza, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Chateau Barrail Du Blanc, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Chateau Les Barraillots, margaux, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, chateau malescasse",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Chateau mazeyres",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Chateau, moulin borie, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Cortonesi, brunello di moltalcino, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, domaine des senechaux, Chateauneuf du Pap, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Domaine Jean Chauvenet, nuits saint georges, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Felton Road, bannockburn, pinot noir, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Feudo maccari saia",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Gaja, ca marcanda, promis, toscana, 2021, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Javelier Laurin, gevrey chambertin, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Kaiken, ultra, cabernet sauvignon, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Monsoon Valley, cuvee de siam rouge, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Montes, folly, syrah, 2020, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Pascal Jolivet, attitude, pinot noir, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 750 ml.",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Robert Mondavi, napa, cabernet sauvignon, 2019, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Staglin Family Vineyard, salus, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, The Chocolate Block, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Tinhof, st laurent eisenstadt, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Red wine, Two Paddocks, pinot noir, estate, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "Sweet wine, Emilio Lustau, East India, Solera, 50cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Cloudy Bay, sauvignon blanc, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Domaine Weinbach, gewurztraminer, cuvee laurence, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Domaine Zind Humbrecht, gewurztraminer, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Domaine Zind Humbrecht, riesling, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Edouard Delaunay, chassagne montrachet, AOC, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Edouard Delaunay, meursault, le village, AOC, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Eulogio Pomares, maceracion con pirles, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Felton Road, block 2, chardonnay, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White Wine, Fritz Haag Juffer Riesling Kabinett, Mosel, Germany, 750 ml.",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Gianni Gagliardo, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Joh. Jos. Prum, bernkasteler, riesling, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Johannes Zillinger, parcellaire, sauvignon blanc, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Pascal Jolivet, pouilly fume, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Peter Jakob Kuhn, lenchen EL kabinett, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Robert Mondavi Private Selection Chardonnay, Rmps, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Rotem & Mounir Saouma, cotes du rhone villages, inopia blanc, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Stella Bella, chardonnay, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Terlano, cuvee terlaner, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Tio Pepe, sherry, 70cl",
+        "parStock": 2
+      },
+      {
+        "name": "White wine, Trimbach, riesling, 75cl",
+        "parStock": 2
+      },
+      {
+        "name": "White Wine, Vietti Cascinetta, Moscato d'Asti DOCG, Italy, 750 ml.",
+        "parStock": 2
+      },
+      {
+        "name": "Rum, Malibu, 70cl",
+        "parStock": 1.87
+      },
+      {
+        "name": "Seii Umeshu 500ml",
+        "parStock": 1.82
+      },
+      {
+        "name": "Gin, Iron balls, 70cl",
+        "parStock": 1.78
+      },
+      {
+        "name": "Liqueur, Midori, melon, 70cl",
+        "parStock": 1.78
+      },
+      {
+        "name": "Liqueur, Pernod, 70cl",
+        "parStock": 1.78
+      },
+      {
+        "name": "Rum, Bacardi, white, 70cl",
+        "parStock": 1.78
+      },
+      {
+        "name": "Liqueur, Cointreau, orange, 70cl",
+        "parStock": 1.52
+      },
+      {
+        "name": "Pharya Rum 8 Years 700ml.",
+        "parStock": 1.52
+      },
+      {
+        "name": "Liqueur, Hiram Walker, peach schnapps, 75cl",
+        "parStock": 1.48
+      },
+      {
+        "name": "Cognac, Remy Martin, 1738, accord royal, 70cl",
+        "parStock": 1.35
+      },
+      {
+        "name": "Whisky, Wild Turkey, bourbon, 81proof, 75cl",
+        "parStock": 1.32
+      },
+      {
+        "name": "Whisky, Mekhong, klom, 700ml",
+        "parStock": 1.26
+      },
+      {
+        "name": "Tequila, Jose Cuervo, gold, 70cl",
+        "parStock": 1.09
+      },
+      {
+        "name": "Vodka, Absolut, 70cl",
+        "parStock": 1.09
+      },
+      {
+        "name": "Whisky, Jack Daniels, no.7, 70cl",
+        "parStock": 1.09
+      },
+      {
+        "name": "Gin, Bulldog, 75cl",
+        "parStock": 1.08
+      },
+      {
+        "name": "Champagne, Arlaux, grande cuvee, 1er cru, NV, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Champagne, Billecart Salmon, brut reserve, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Champagne, Laurent Perrier, rose brut, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Champagne, Moet&Chandon, brut imperial, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Champagne, Taittinger, comtes, blanc de blancs, brut, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "CHM Louis Roederer Cristal Rose",
+        "parStock": 1
+      },
+      {
+        "name": "Gin, Caorunn, Ka-roon, small batch scottish, 41.8%, 70cl",
+        "parStock": 1
+      },
+      {
+        "name": "Leclerc-Briant Blanc de Blancs 1er Cru Millésime, France",
+        "parStock": 1
+      },
+      {
+        "name": "Mezcal, Creyente, joven, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Orange wine, Maturana wines, Naranjo",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Chateau Fontenil, merlot, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red Wine, Chateau Pichon-Longueville au Baron de Pichon-Longueville, Pauillac, France",
+        "parStock": 1
+      },
+      {
+        "name": "Red Wine, Chateau Smith Haut Lafitte, Pessac-Leognan, France",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, E Guigal, cote rotie chateau d ampuis, cote rotie, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, E Guigal, gigondas, AOC, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Gaja, sito moresco, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Gianni Gagliardo, Barolo, DOCG, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Kaiken, mai the first A. montes, malbec, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Mouton Cade, margaux, reserve, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red Wine, Piaggia - Vannucci Il Sasso, Carmignano DOCG, Italy, 1500 ml.",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Pio Cesare, oltre langhe, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Red wine, Rocca Di Frassinello, le sughere, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Sparkling wine, Ferrari, maximum blanc de blanc, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Sparkling wine, Ferrari, perle brut trento, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Tequila, 1800 Tequila, cristalino, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Tequila, Don Julio, reposado, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Tequila, McCormick, rose strawberry, 70cl",
+        "parStock": 1
+      },
+      {
+        "name": "Whisky, The Macallan, classic cut, 70cl",
+        "parStock": 1
+      },
+      {
+        "name": "Whisky, The Macallan, double cask, 12years, 70cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Domaine Weinbach, riesling, cuvee colette, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Domaine Zind Humbrecht, pinot gris, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Leeuwin Estate, art series, 2006, riesling, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Penfolds, cellar tasmania, reserve, chardonnay, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Peter Lauer, feils, riesling, no 13, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Peter Lehmann, Senior Fass 6, resling, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "White wine, Wabi Sabi, orange moon, 75cl",
+        "parStock": 1
+      },
+      {
+        "name": "Gin, Hendricks, 70cl",
+        "parStock": 0.96
+      },
+      {
+        "name": "Gin, Lady Trieu, contemporary, 70cl",
+        "parStock": 0.96
+      },
+      {
+        "name": "Liqueur, Baileys, original, irish cream, 70cl",
+        "parStock": 0.96
+      },
+      {
+        "name": "Vermouth, Martini, rosso, 1l",
+        "parStock": 0.91
+      },
+      {
+        "name": "Tequila, Patron, silver, 75cl",
+        "parStock": 0.88
+      },
+      {
+        "name": "Cognac, Martell, cordon bleu, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Liqueur, Benedictine, DOM, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Liqueur, Bols, creme de cassis, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Liqueur, Bols, dry orange, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Liqueur, Kahlua, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Whisky, Chivas Regal, 18years, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Whisky, Compass Box, the peat monster, 70cl",
+        "parStock": 0.87
+      },
+      {
+        "name": "Liqueur, Luxardo, maraschino, 1l",
+        "parStock": 0.85
+      },
+      {
+        "name": "Aperitif, Dubonnet, 75cl",
+        "parStock": 0.8
+      },
+      {
+        "name": "Fortified wine, Penfolds, father, 10year, grand tawny, 75cl",
+        "parStock": 0.8
+      },
+      {
+        "name": "Rose wine, Cocchi Americano, rosa, 75cl",
+        "parStock": 0.8
+      },
+      {
+        "name": "White wine, Domaine Christian Moreau, pere & fils chablis, 75cl",
+        "parStock": 0.8
+      },
+      {
+        "name": "Liqueur, Hiram Walker, amaretto, 75cl",
+        "parStock": 0.72
+      },
+      {
+        "name": "Rum, Captain Morgan, dark, 75cl",
+        "parStock": 0.72
+      },
+      {
+        "name": "Rum, Phraya, 75cl",
+        "parStock": 0.72
+      },
+      {
+        "name": "Sherry wine, Harveys, Bristol Cream, 75cl",
+        "parStock": 0.72
+      },
+      {
+        "name": "Whisky, Suntory, hibiki, 43%, 70cl",
+        "parStock": 0.61
+      },
+      {
+        "name": "Whisky, The Macallan, double cask, 15years, 70cl",
+        "parStock": 0.61
+      },
+      {
+        "name": "Liqueur, Campari, 75cl",
+        "parStock": 0.52
+      },
+      {
+        "name": "PRAKAAN PEATED MALT",
+        "parStock": 0.52
+      },
+      {
+        "name": "PRAKAAN SELECT CASK",
+        "parStock": 0.52
+      },
+      {
+        "name": "Rum, Canario, cashaca, 70cl",
+        "parStock": 0.52
+      },
+      {
+        "name": "Rum, Chalong bay, 70cl",
+        "parStock": 0.52
+      },
+      {
+        "name": "Gin, Nakin, 40%, 750ml",
+        "parStock": 0.48
+      },
+      {
+        "name": "Vodka, Ketel One, 75cl",
+        "parStock": 0.48
+      },
+      {
+        "name": "Vermouth, Martini, bianco, 1l",
+        "parStock": 0.45
+      },
+      {
+        "name": "Vermouth, Martini, extra dry, 1l",
+        "parStock": 0.45
+      },
+      {
+        "name": "Whisky, Old Pulteney, 21years, 70cl",
+        "parStock": 0.43
+      },
+      {
+        "name": "Vodka, Grey Goose, original, 75cl",
+        "parStock": 0.4
+      },
+      {
+        "name": "Liqueur, Aperol, 70cl",
+        "parStock": 0.35
+      },
+      {
+        "name": "Whisky, John Jameson, 40%, 70cl",
+        "parStock": 0.35
+      },
+      {
+        "name": "Liqueur, Ricard, 75cl",
+        "parStock": 0.32
+      },
+      {
+        "name": "Liqueur, Bols, kiwi, 70cl",
+        "parStock": 0.26
+      },
+      {
+        "name": "Whisky, Johnnie Walker, black label, 70cl",
+        "parStock": 0.26
+      },
+      {
+        "name": "Vodka, Belvedere, 70cl",
+        "parStock": 0.09
+      },
+      {
+        "name": "Escape Glow",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Botanical Muse",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Wine Pairing 5 Glasses",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Wine Pairing 7 Glasses",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "New Year Eve Wine Pairing",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Old Fashioned",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Cosmopolitan",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Lime Lime Group Wine Pairing",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Hennessy XO",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Gin Martini",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Negroni",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Sato Duck fat",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Grappa-Sassicaia",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Soda water, Schweppes, can, 330ml",
+        "category": "Unknown",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "chablis",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "Rice wine, Sato Duck fat - Made from Duck fat sticky rice Content net, 500 ml",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
+      },
+      {
+        "name": "White wine, Willm, gewurztraminer reserve, 75cl",
+        "category": "Uncategorized",
+        "opening": 0,
+        "current": 0,
+        "parStock": 0
       }
     ],
     "conversionSettings": {}
