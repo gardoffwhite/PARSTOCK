@@ -2019,10 +2019,10 @@
             if (item.originalNames && item.originalNames.length > 0) {
                 const uniqueNames = [...new Set(item.originalNames)];
                 matchedNamesCardHtml = uniqueNames.map(name =>
-                    `< p class="text-sm text-gray-600 mt-1" >← ${name}</p > `
+                    `<p class="text-sm text-gray-600 mt-1">← ${name}</p>`
                 ).join('');
             } else if (item.originalName && item.originalName !== item.name) {
-                matchedNamesCardHtml = `< p class="text-sm text-gray-600 mt-1" >← ${item.originalName}</p > `;
+                matchedNamesCardHtml = `<p class="text-sm text-gray-600 mt-1">← ${item.originalName}</p>`;
             }
 
             // Display item details
@@ -2396,7 +2396,7 @@
             let parOptions = '';
             if (allParStockItems.length > 0) {
                 allParStockItems.forEach(itemName => {
-                    parOptions += `< option value = "${itemName}" > `;
+                    parOptions += `<option value="${itemName}">`;
                 });
                 console.log(`📋 Added ${allParStockItems.length} items to datalist for row ${index}`);
             } else {
@@ -2404,13 +2404,13 @@
             }
 
             row.innerHTML = `
-                < input type = "text"
-            class="sub-item-parname"
-            value = "${parName}"
-            placeholder = "พิมพ์เพื่อค้นหา PAR Stock... (มี ${allParStockItems.length} รายการ)"
-            list = "parStockList${index}"
-            autocomplete = "off"
-            style = "padding: 8px; border: 2px solid #ccc; border-radius: 5px;" >
+                <input type="text"
+                    class="sub-item-parname"
+                    value="${parName}"
+                    placeholder="พิมพ์เพื่อค้นหา PAR Stock... (มี ${allParStockItems.length} รายการ)"
+                    list="parStockList${index}"
+                    autocomplete="off"
+                    style="padding: 8px; border: 2px solid #ccc; border-radius: 5px;">
                 <datalist id="parStockList${index}">
                     ${parOptions}
                 </datalist>
@@ -3248,7 +3248,7 @@
 
             } catch (error) {
                 console.error('Load transfer items error:', error);
-                container.innerHTML = `< p style = "color: #f44336;" > เกิดข้อผิดพลาด: ${error.message}</p > `;
+                container.innerHTML = `<p style="color: #f44336;">เกิดข้อผิดพลาด: ${error.message}</p>`;
             } finally {
                 loading.style.display = 'none';
             }
@@ -3390,15 +3390,15 @@
                 </table>
             `;
                 } else {
-                    html += `< p style = "color: #999; text-align: center; padding: 20px;" > ไม่มียอดขาย</p > `;
+                    html += `<p style="color: #999; text-align: center; padding: 20px;">ไม่มียอดขาย</p>`;
                 }
 
                 // Transfer section
                 if (data.transfers && data.transfers.length > 0) {
                     html += `
-                < h4 style = "color: #10b981; margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 8px;" >
+                <h4 style="color: #10b981; margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
                             🔄 Transfer
-                        </h4 >
+                        </h4>
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead>
                         <tr style="background: #f3f4f6; border-bottom: 2px solid #e5e7eb;">
@@ -3441,7 +3441,7 @@
                 </table>
             `;
                 } else {
-                    html += `< p style = "color: #999; text-align: center; padding: 20px;" > ไม่มี Transfer</p > `;
+                    html += `<p style="color: #999; text-align: center; padding: 20px;">ไม่มี Transfer</p>`;
                 }
 
                 html += '</div>';
